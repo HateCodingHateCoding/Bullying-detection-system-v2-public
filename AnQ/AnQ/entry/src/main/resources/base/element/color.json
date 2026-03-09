@@ -1,0 +1,16 @@
+{
+  "color": [
+    {
+      "name": "start_window_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "IndexOne",
+      "value": "#FFCAD5E0"
+    },
+    {
+      "name": "IndexTwo",
+      "value": "#F8FAFC"
+    }
+  ]
+}

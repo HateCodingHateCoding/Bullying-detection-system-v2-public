@@ -1,0 +1,10 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/Login",
+    "pages/PageOne",
+    "pages/PageTwo",
+    "pages/PageThree",
+    "pages/PageFour"
+  ]
+}
