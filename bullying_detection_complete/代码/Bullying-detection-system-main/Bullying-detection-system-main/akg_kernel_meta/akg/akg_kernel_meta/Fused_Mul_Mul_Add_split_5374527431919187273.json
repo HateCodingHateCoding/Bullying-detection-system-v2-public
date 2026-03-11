@@ -1,0 +1,8 @@
+{
+    "binFileName":"Fused_Mul_Mul_Add_split_5374527431919187273",
+    "binFileSuffix":".o",
+    "blockDim":1,
+    "kernelName":"Fused_Mul_Mul_Add_split_5374527431919187273_kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "sha256":"43ac4453ac3a260b7145e1536540c7ec9b6bfb952a71c7c809c9b7ae82ca28c9"
+}

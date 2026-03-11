@@ -1,0 +1,25 @@
+{
+    "binFileName":"mat_mul_292562009613275211_0",
+    "binFileSuffix":".o",
+    "blockDim":1,
+    "kernelName":"mat_mul_292562009613275211_0__kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "opParaSize":0,
+    "parameters":[
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "sha256":"0f9b5c256530f2664265466c9390df0553d5a48311e36f4724edc139a61a0ea6",
+    "workspace":{
+        "num":1,
+        "size":[
+            8
+        ],
+        "type":[
+            0
+        ]
+    }
+}

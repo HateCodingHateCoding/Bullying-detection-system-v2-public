@@ -1,0 +1,8 @@
+{
+    "binFileName":"Fused_Cast_fusion_13933867086058082048",
+    "binFileSuffix":".o",
+    "blockDim":4,
+    "kernelName":"Fused_Cast_fusion_13933867086058082048_kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "sha256":"bd2d9f0bd6278dd9d00d0f162b37cad014c4f21c626929e753791db1a94cc641"
+}

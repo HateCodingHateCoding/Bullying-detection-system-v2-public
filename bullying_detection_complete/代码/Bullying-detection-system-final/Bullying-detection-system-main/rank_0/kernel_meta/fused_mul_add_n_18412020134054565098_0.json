@@ -1,0 +1,16 @@
+{
+    "batchBindOnly":1,
+    "binFileName":"fused_mul_add_n_18412020134054565098_0",
+    "binFileSuffix":".o",
+    "blockDim":1,
+    "kernelName":"fused_mul_add_n_18412020134054565098_0__kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "opParaSize":0,
+    "parameters":[
+        0,
+        0,
+        0,
+        0
+    ],
+    "sha256":"d3d52cd6e5d95c5934106b0a81272eee612a6dad382fbcae5ece248f32df627d"
+}

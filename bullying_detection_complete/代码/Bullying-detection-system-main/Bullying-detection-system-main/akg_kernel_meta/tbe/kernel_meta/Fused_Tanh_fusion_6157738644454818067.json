@@ -1,0 +1,14 @@
+{
+    "batchBindOnly":1,
+    "binFileName":"Fused_Tanh_fusion_6157738644454818067",
+    "binFileSuffix":".o",
+    "blockDim":4,
+    "kernelName":"Fused_Tanh_fusion_6157738644454818067__kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "opParaSize":0,
+    "parameters":[
+        0,
+        0
+    ],
+    "sha256":"ac86cc4fd1d935996e14dbf5754df2190ed592de823e0753644798c92325fb89"
+}

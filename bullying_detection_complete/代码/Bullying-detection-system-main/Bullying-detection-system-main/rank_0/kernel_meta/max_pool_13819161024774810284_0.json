@@ -1,0 +1,14 @@
+{
+    "binFileName":"max_pool_13819161024774810284_0",
+    "binFileSuffix":".o",
+    "blockDim":32,
+    "cache_read_mode":1,
+    "kernelName":"max_pool_13819161024774810284_0__kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "opParaSize":0,
+    "parameters":[
+        0,
+        0
+    ],
+    "sha256":"4240a1bbb55c75d1cd6cf2dbd521d63323a9dadb7dd9f90f4e4779d19b8f6af9"
+}

@@ -1,0 +1,29 @@
+
+>>>>>>>>>> group_filter_map <<<<<<<<<<
+
+>>>>>>>>>> dependences <<<<<<<<<<
+{  }
+
+>>>>>>>>>> constraints <<<<<<<<<<
+domain: "{ S_0[cc0] : 0 <= cc0 <= 51199 }"
+
+>>>>>>>>>> time_records <<<<<<<<<<
+[ Polyhedral exec time ], InitSchedule spent 0.901543 ms
+[ Polyhedral exec time ], ConstrainSchedule spent 1.75404 ms
+[ Polyhedral exec time ], GroupStatements spent 0.00885 ms
+[ Polyhedral exec time ], ComputeSchedule spent 0.142812 ms
+[ Polyhedral exec time ], SinkLastAxis spent 0.00439 ms
+[ Polyhedral exec time ], UnGroupStatements spent 0.00177 ms
+[ Polyhedral exec time ], ComputeInnerBandDependency spent 0.00628 ms
+[ Polyhedral exec time ], AnalyzeSchedule spent 0.080041 ms
+[ Polyhedral exec time ], TileOuterBand spent 4.29274 ms
+[ Polyhedral exec time ], ResetCoincidenceOfReduce spent 0.01948 ms
+[ Polyhedral exec time ], Reschedule spent 0.194142 ms
+[ Polyhedral exec time ], ReorderInnerBand spent 0.01532 ms
+[ Polyhedral exec time ], ChangeMarkNodePosition spent 0.00169 ms
+[ Polyhedral exec time ], LabelRealizeOutPosition spent 0.011041 ms
+[ Polyhedral exec time ], MemoryManager spent 4.08737 ms
+[ Polyhedral exec time ], TransferStmt spent 0.0028 ms
+[ Polyhedral exec time ], ReorderMarkNodes spent 0.02815 ms
+[ Polyhedral exec time ], MarkFuseOp spent 0.014081 ms
+[ Polyhedral exec time ], MarkOuterMost spent 0.03216 ms

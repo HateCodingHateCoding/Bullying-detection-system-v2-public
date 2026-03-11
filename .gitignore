@@ -23,6 +23,15 @@ __pycache__/
 .Python
 *.egg-info/
 bullying_env/
+.venv/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Node / HarmonyOS build
+node_modules/
+oh_modules/
+.preview/
+
+# Large files (>100MB, GitHub limit)
+bullying_detection_complete/三英战光谷杯 决赛.pptx

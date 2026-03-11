@@ -1,0 +1,14 @@
+{
+    "batchBindOnly":1,
+    "binFileName":"Fused_Cast_fusion_7500478110167411654",
+    "binFileSuffix":".o",
+    "blockDim":25,
+    "kernelName":"Fused_Cast_fusion_7500478110167411654__kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "opParaSize":0,
+    "parameters":[
+        0,
+        0
+    ],
+    "sha256":"7cd9e98a734a90ca789bdf7eced1258f583c73ebb427979c130e8b722c437be2"
+}

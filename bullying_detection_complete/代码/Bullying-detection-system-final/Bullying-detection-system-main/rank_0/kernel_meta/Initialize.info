@@ -1,0 +1,42 @@
+{
+    "job_content": {
+        "LicInfo": {
+            "op_tune_list": "ALL",
+            "op_tune_switch": "on",
+            "pass_list": "ALL",
+            "rl_tune_list": "ALL",
+            "rl_tune_switch": "on"
+        },
+        "SocInfo": {
+            "autoTilingMode": "NO_TUNE",
+            "coreNum": "32",
+            "coreType": "",
+            "deviceId": "0",
+            "kernel_meta_temp_dir": "./rank_0/kernel_meta_temp_dir/",
+            "l1Fusion": "false",
+            "l2Fusion": "false",
+            "l2Mode": "2",
+            "mdl_bank_path": "",
+            "offlineTune": false,
+            "op_bank_path": "",
+            "op_bank_update": false,
+            "op_debug_dir": "./rank_0/",
+            "op_debug_level": "3",
+            "op_impl_mode": "",
+            "op_impl_mode_list": [],
+            "socVersion": "Ascend910A",
+            "vector_fp_ceiling": ""
+        },
+        "TuneInfo": {
+            "tune_bank_path": "",
+            "tune_dump_path": "",
+            "tune_op_list": []
+        },
+        "para_debug_path": "",
+        "process_num": 20,
+        "tbe_impl_path": ""
+    },
+    "job_id": 0,
+    "job_type": "Initialize",
+    "source_id": 0
+}

@@ -2,35 +2,62 @@ import paho.mqtt.client as mqtt
 import json
 import time
 import ssl
+import hmac
+import hashlib
 
 class HuaweiIoTUploader:
-    def __init__(self, device_id, secret, iot_platform_url):
+    def __init__(self, device_id, secret, iot_platform_url, port=8883, username=None, client_id=None, auth_mode="hmac"):
         self.device_id = device_id
         self.secret = secret
         self.broker = iot_platform_url
-        self.port = 8883
+        self.port = port
+        self.username = username or device_id
+        self.client_id = client_id or device_id
+        self.auth_mode = auth_mode
         self.client = None
         self.connected = False
 
-    def on_connect(self, client, userdata, flags, rc):
+    def on_connect(self, client, userdata, flags, rc, properties=None):
         if rc == 0:
             self.connected = True
             print(f"✅ IoT连接成功: {self.device_id}")
         else:
             print(f"❌ IoT连接失败, code: {rc}")
 
+    def on_disconnect(self, client, userdata, rc, properties=None):
+        self.connected = False
+
+    def _build_password(self):
+        # Huawei IoTDA MQTT commonly requires timestamp + HMAC-SHA256 signature.
+        if self.auth_mode == "plain":
+            return self.secret
+
+        timestamp = str(int(time.time() * 1000))
+        signature = hmac.new(
+            self.secret.encode("utf-8"),
+            timestamp.encode("utf-8"),
+            hashlib.sha256,
+        ).hexdigest()
+        return f"{timestamp}_{signature}"
+
     def connect(self):
-        self.client = mqtt.Client(client_id=self.device_id)
-        self.client.username_pw_set(self.device_id, self.secret)
+        self.client = mqtt.Client(client_id=self.client_id)
+        self.client.username_pw_set(self.username, self._build_password())
         self.client.tls_set(cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLSv1_2)
         self.client.on_connect = self.on_connect
+        self.client.on_disconnect = self.on_disconnect
 
         try:
             self.client.connect(self.broker, self.port, 60)
             self.client.loop_start()
-            time.sleep(2)
+            for _ in range(30):
+                if self.connected:
+                    return True
+                time.sleep(0.1)
+            return False
         except Exception as e:
             print(f"❌ IoT连接异常: {e}")
+            return False
 
     def upload_alarm(self, alarm_type, confidence, location, audio_level, radar_summary="", evidence_url=""):
         if not self.connected:

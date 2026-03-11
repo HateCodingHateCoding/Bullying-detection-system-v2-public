@@ -1,0 +1,19 @@
+{
+    "batchBindOnly":1,
+    "binFileName":"Fused_AddN_Mul_Mul_fusion_6730923103643952054",
+    "binFileSuffix":".o",
+    "blockDim":4,
+    "kernelName":"Fused_AddN_Mul_Mul_fusion_6730923103643952054__kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "opParaSize":0,
+    "parameters":[
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "sha256":"401392f1ba471f67afff9c5429d5ac2af06393ff53a51d4fdbc812c8c4198532"
+}

@@ -1,0 +1,435 @@
+{
+    "job_content": {
+        "SocInfo": {
+            "autoTilingMode": "NO_TUNE",
+            "coreNum": "32",
+            "coreType": "AiCore",
+            "deviceId": "0",
+            "kernel_meta_temp_dir": "./rank_0/kernel_meta_temp_dir/",
+            "l1Fusion": "false",
+            "l2Fusion": "false",
+            "l2Mode": "2",
+            "mdl_bank_path": "",
+            "offlineTune": false,
+            "op_bank_path": "",
+            "op_bank_update": false,
+            "op_debug_dir": "./rank_0/",
+            "op_debug_level": "3",
+            "op_impl_mode": "",
+            "op_impl_mode_list": [],
+            "socVersion": "Ascend910A",
+            "vector_fp_ceiling": ""
+        },
+        "full_name": "Gradients/Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/relu-ReLU/gradReLU/FusionOp_MatMul_ReluGrad-op7703",
+        "fusion_op_name": "te_fusion_mat_mul_relu_grad_8747552705772230131_0",
+        "graph_name": "",
+        "l1_size": -1,
+        "op_list": [
+            {
+                "name": "Gradients/Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/sigmoid-Sigmoid/gradSigmoid/SigmoidGrad-op869",
+                "output_desc": [
+                    {
+                        "L1_addr_offset": 0,
+                        "L1_fusion_type": -1,
+                        "L1_workspace_size": -1,
+                        "addr_type": 0,
+                        "data_type": "float32",
+                        "dtype": "float32",
+                        "format": "ND",
+                        "name": "Gradients/Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/sigmoid-Sigmoid/gradSigmoid/SigmoidGrad-op869",
+                        "ori_format": "NCHW",
+                        "ori_shape": [
+                            16,
+                            1
+                        ],
+                        "output_index": 0,
+                        "shape": [
+                            16,
+                            1
+                        ],
+                        "slice_offset": [],
+                        "split_index": 0,
+                        "total_shape": [],
+                        "valid_shape": []
+                    }
+                ],
+                "type": "Data"
+            },
+            {
+                "name": "network.fc4.weight",
+                "output_desc": [
+                    {
+                        "L1_addr_offset": 0,
+                        "L1_fusion_type": -1,
+                        "L1_workspace_size": -1,
+                        "addr_type": 0,
+                        "data_type": "float32",
+                        "dtype": "float32",
+                        "format": "ND",
+                        "name": "network.fc4.weight",
+                        "ori_format": "NCHW",
+                        "ori_shape": [
+                            1,
+                            64
+                        ],
+                        "output_index": 0,
+                        "shape": [
+                            1,
+                            64
+                        ],
+                        "slice_offset": [],
+                        "split_index": 0,
+                        "total_shape": [],
+                        "valid_shape": []
+                    }
+                ],
+                "type": "Data"
+            },
+            {
+                "name": "optional_0",
+                "output_desc": [
+                    {
+                        "data_type": 0,
+                        "name": "optional_0",
+                        "shape": "NULL"
+                    }
+                ],
+                "type": "Data"
+            },
+            {
+                "name": "optional_1",
+                "output_desc": [
+                    {
+                        "data_type": 0,
+                        "name": "optional_1",
+                        "shape": "NULL"
+                    }
+                ],
+                "type": "Data"
+            },
+            {
+                "name": "Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/relu-ReLU/ReLU-op862",
+                "output_desc": [
+                    {
+                        "L1_addr_offset": 0,
+                        "L1_fusion_type": -1,
+                        "L1_workspace_size": -1,
+                        "addr_type": 0,
+                        "data_type": "float32",
+                        "dtype": "float32",
+                        "format": "ND",
+                        "name": "Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/relu-ReLU/ReLU-op862",
+                        "ori_format": "NCHW",
+                        "ori_shape": [
+                            16,
+                            64
+                        ],
+                        "output_index": 0,
+                        "shape": [
+                            16,
+                            64
+                        ],
+                        "slice_offset": [],
+                        "split_index": 0,
+                        "total_shape": [],
+                        "valid_shape": []
+                    }
+                ],
+                "type": "Data"
+            },
+            {
+                "attr_desc": [
+                    false,
+                    false,
+                    0
+                ],
+                "attrs": [
+                    {
+                        "dtype": "bool",
+                        "name": "transpose_x1",
+                        "valid": true,
+                        "value": false
+                    },
+                    {
+                        "dtype": "bool",
+                        "name": "transpose_x2",
+                        "valid": true,
+                        "value": false
+                    },
+                    {
+                        "dtype": "int32",
+                        "name": "offset_x",
+                        "valid": true,
+                        "value": 0
+                    }
+                ],
+                "dynamic_compile_static": false,
+                "func_name": "mat_mul",
+                "input_desc": [
+                    {
+                        "L1_addr_offset": 0,
+                        "L1_fusion_type": -1,
+                        "L1_workspace_size": -1,
+                        "addr_type": 0,
+                        "data_type": "float32",
+                        "dtype": "float32",
+                        "format": "ND",
+                        "name": "Gradients/Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/sigmoid-Sigmoid/gradSigmoid/SigmoidGrad-op869",
+                        "ori_format": "NCHW",
+                        "ori_shape": [
+                            16,
+                            1
+                        ],
+                        "output_index": 0,
+                        "shape": [
+                            16,
+                            1
+                        ],
+                        "slice_offset": [],
+                        "split_index": 0,
+                        "total_shape": [],
+                        "valid_shape": []
+                    },
+                    {
+                        "L1_addr_offset": 0,
+                        "L1_fusion_type": -1,
+                        "L1_workspace_size": -1,
+                        "addr_type": 0,
+                        "data_type": "float32",
+                        "dtype": "float32",
+                        "format": "ND",
+                        "name": "network.fc4.weight",
+                        "ori_format": "NCHW",
+                        "ori_shape": [
+                            1,
+                            64
+                        ],
+                        "output_index": 0,
+                        "shape": [
+                            1,
+                            64
+                        ],
+                        "slice_offset": [],
+                        "split_index": 0,
+                        "total_shape": [],
+                        "valid_shape": []
+                    },
+                    {
+                        "data_type": 0,
+                        "name": "optional_0",
+                        "shape": "NULL"
+                    },
+                    {
+                        "data_type": 0,
+                        "name": "optional_1",
+                        "shape": "NULL"
+                    }
+                ],
+                "int64mode": false,
+                "is_dynamic_impl": false,
+                "module_name": "impl.mat_mul",
+                "name": "Gradients/Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/fc4-Dense/gradMatMul/MatMul-op918",
+                "op_name": "te_fusion_mat_mul_relu_grad_8747552705772230131_0",
+                "ori_name": [
+                    "Gradients/Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/relu-ReLU/gradReLU/FusionOp_MatMul_ReluGrad-op7703"
+                ],
+                "output_data_desc": [
+                    {
+                        "L1_addr_offset": 0,
+                        "L1_fusion_type": -1,
+                        "L1_workspace_size": -1,
+                        "addr_type": 0,
+                        "data_type": "float32",
+                        "dtype": "float32",
+                        "format": "ND",
+                        "ori_format": "NCHW",
+                        "ori_shape": [
+                            16,
+                            64
+                        ],
+                        "param_type": "required",
+                        "range": [
+                            [
+                                16,
+                                16
+                            ],
+                            [
+                                64,
+                                64
+                            ]
+                        ],
+                        "shape": [
+                            16,
+                            64
+                        ],
+                        "slice_offset": [],
+                        "split_index": 0,
+                        "total_shape": [],
+                        "valid_shape": []
+                    }
+                ],
+                "output_desc": [
+                    {
+                        "L1_addr_offset": 0,
+                        "L1_fusion_type": -1,
+                        "L1_workspace_size": -1,
+                        "addr_type": 0,
+                        "data_type": "float32",
+                        "dtype": "float32",
+                        "format": "ND",
+                        "name": "Gradients/Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/fc4-Dense/gradMatMul/MatMul-op918",
+                        "ori_format": "NCHW",
+                        "ori_shape": [
+                            16,
+                            64
+                        ],
+                        "output_index": 0,
+                        "shape": [
+                            16,
+                            64
+                        ],
+                        "slice_offset": [],
+                        "split_index": 0,
+                        "total_shape": [],
+                        "valid_shape": []
+                    }
+                ],
+                "pattern": "Opaque",
+                "py_module_path": "/usr/local/Ascend/latest/opp/built-in/op_impl/ai_core/tbe",
+                "type": "MatMul",
+                "unknown_shape": false
+            },
+            {
+                "dynamic_compile_static": false,
+                "func_name": "relu_grad",
+                "input_desc": [
+                    {
+                        "L1_addr_offset": 0,
+                        "L1_fusion_type": -1,
+                        "L1_workspace_size": -1,
+                        "addr_type": 0,
+                        "data_type": "float32",
+                        "dtype": "float32",
+                        "format": "ND",
+                        "name": "Gradients/Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/fc4-Dense/gradMatMul/MatMul-op918",
+                        "ori_format": "NCHW",
+                        "ori_shape": [
+                            16,
+                            64
+                        ],
+                        "output_index": 0,
+                        "shape": [
+                            16,
+                            64
+                        ],
+                        "slice_offset": [],
+                        "split_index": 0,
+                        "total_shape": [],
+                        "valid_shape": []
+                    },
+                    {
+                        "L1_addr_offset": 0,
+                        "L1_fusion_type": -1,
+                        "L1_workspace_size": -1,
+                        "addr_type": 0,
+                        "data_type": "float32",
+                        "dtype": "float32",
+                        "format": "ND",
+                        "name": "Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/relu-ReLU/ReLU-op862",
+                        "ori_format": "NCHW",
+                        "ori_shape": [
+                            16,
+                            64
+                        ],
+                        "output_index": 0,
+                        "shape": [
+                            16,
+                            64
+                        ],
+                        "slice_offset": [],
+                        "split_index": 0,
+                        "total_shape": [],
+                        "valid_shape": []
+                    }
+                ],
+                "int64mode": false,
+                "is_dynamic_impl": false,
+                "module_name": "impl.relu_grad",
+                "name": "Gradients/Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/relu-ReLU/gradReLU/ReluGrad-op863",
+                "op_name": "te_fusion_mat_mul_relu_grad_8747552705772230131_0",
+                "ori_name": [
+                    "Gradients/Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/relu-ReLU/gradReLU/FusionOp_MatMul_ReluGrad-op7703"
+                ],
+                "output_data_desc": [
+                    {
+                        "L1_addr_offset": 0,
+                        "L1_fusion_type": -1,
+                        "L1_workspace_size": -1,
+                        "addr_type": 0,
+                        "data_type": "float32",
+                        "dtype": "float32",
+                        "format": "ND",
+                        "ori_format": "NCHW",
+                        "ori_shape": [
+                            16,
+                            64
+                        ],
+                        "param_type": "required",
+                        "range": [
+                            [
+                                16,
+                                16
+                            ],
+                            [
+                                64,
+                                64
+                            ]
+                        ],
+                        "shape": [
+                            16,
+                            64
+                        ],
+                        "slice_offset": [],
+                        "split_index": 0,
+                        "total_shape": [],
+                        "valid_shape": []
+                    }
+                ],
+                "output_desc": [
+                    {
+                        "L1_addr_offset": 0,
+                        "L1_fusion_type": -1,
+                        "L1_workspace_size": -1,
+                        "addr_type": 0,
+                        "data_type": "float32",
+                        "dtype": "float32",
+                        "format": "ND",
+                        "name": "Gradients/Default/network-BullyingDetectionWithLoss/network-BullyingDetectionModel/relu-ReLU/gradReLU/ReluGrad-op863",
+                        "ori_format": "NCHW",
+                        "ori_shape": [
+                            16,
+                            64
+                        ],
+                        "output_index": 0,
+                        "shape": [
+                            16,
+                            64
+                        ],
+                        "slice_offset": [],
+                        "split_index": 0,
+                        "total_shape": [],
+                        "valid_shape": []
+                    }
+                ],
+                "pattern": "ElemWise",
+                "py_module_path": "/usr/local/Ascend/latest/opp/built-in/op_impl/ai_core/tbe",
+                "type": "ReluGrad",
+                "unknown_shape": false
+            }
+        ],
+        "scope_id": 13
+    },
+    "job_id": 45895,
+    "job_type": "FusionOpCompile",
+    "source_id": 0
+}

@@ -1,0 +1,17 @@
+{
+    "batchBindOnly":1,
+    "binFileName":"Fused_Mul_Mul_Add_split_5374527431919187273",
+    "binFileSuffix":".o",
+    "blockDim":2,
+    "kernelName":"Fused_Mul_Mul_Add_split_5374527431919187273__kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "opParaSize":0,
+    "parameters":[
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "sha256":"31869112f2b0ee69dda96b14f127bc8840427b1cfa8505e7739ccab8cc0f1e00"
+}

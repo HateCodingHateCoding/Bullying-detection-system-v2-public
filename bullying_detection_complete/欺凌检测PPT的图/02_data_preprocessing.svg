@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" width="1400" height="900">
+  <defs>
+    <linearGradient id="audioGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="imuGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#db2777"/>
+    </linearGradient>
+    <linearGradient id="processGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="outputGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="modelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="deviceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#0d9488"/>
+    </linearGradient>
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+    <linearGradient id="alarmGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    
+    <!-- 箭头定义 - 使用refX=10让线条不盖住箭头 -->
+    <marker id="arrowGray" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,10 L10,5 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,10 L10,5 z" fill="#10b981"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,10 L10,5 z" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,10 L10,5 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowTeal" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,10 L10,5 z" fill="#14b8a6"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,10 L10,5 z" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,10 L10,5 z" fill="#6366f1"/>
+    </marker>
+    <marker id="arrowPink" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,10 L10,5 z" fill="#ec4899"/>
+    </marker>
+    <marker id="arrowCyan" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,10 L10,5 z" fill="#06b6d4"/>
+    </marker>
+    
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  
+  <!-- ==================== 端侧采集 ==================== -->
+  <rect x="40" y="40" width="180" height="340" rx="16" fill="rgba(20,184,166,0.1)" stroke="rgba(20,184,166,0.4)" stroke-width="2"/>
+  <text x="130" y="75" fill="#14b8a6" font-size="20" font-weight="700" text-anchor="middle">端侧采集</text>
+  
+  <rect x="55" y="95" width="150" height="80" rx="12" fill="url(#deviceGrad)" filter="url(#shadow)"/>
+  <text x="130" y="145" fill="white" font-size="17" font-weight="600" text-anchor="middle">麦克风</text>
+  
+  <rect x="55" y="200" width="150" height="80" rx="12" fill="url(#deviceGrad)" filter="url(#shadow)"/>
+  <text x="130" y="250" fill="white" font-size="17" font-weight="600" text-anchor="middle">六轴IMU</text>
+  
+  <rect x="55" y="305" width="150" height="55" rx="12" fill="url(#processGrad)" filter="url(#shadow)"/>
+  <text x="130" y="340" fill="white" font-size="15" font-weight="600" text-anchor="middle">星闪SLE</text>
+  
+  <!-- 端侧内部连接线 -->
+  <line x1="130" y1="175" x2="130" y2="200" stroke="#14b8a6" stroke-width="3" marker-end="url(#arrowTeal)"/>
+  <line x1="130" y1="280" x2="130" y2="305" stroke="#14b8a6" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  
+  <!-- ==================== 音频处理流程 ==================== -->
+  <rect x="250" y="40" width="700" height="140" rx="16" fill="rgba(99,102,241,0.1)" stroke="rgba(99,102,241,0.4)" stroke-width="2"/>
+  <text x="300" y="75" fill="#818cf8" font-size="20" font-weight="700">音频处理</text>
+  
+  <rect x="270" y="95" width="140" height="65" rx="12" fill="url(#audioGrad)" filter="url(#shadow)"/>
+  <text x="340" y="135" fill="white" font-size="16" font-weight="600" text-anchor="middle">原始音频</text>
+  
+  <rect x="460" y="95" width="140" height="65" rx="12" fill="url(#audioGrad)" filter="url(#shadow)"/>
+  <text x="530" y="135" fill="white" font-size="16" font-weight="600" text-anchor="middle">梅尔频谱</text>
+  
+  <rect x="650" y="95" width="140" height="65" rx="12" fill="url(#audioGrad)" filter="url(#shadow)"/>
+  <text x="720" y="135" fill="white" font-size="16" font-weight="600" text-anchor="middle">标准化</text>
+  
+  <rect x="840" y="95" width="90" height="65" rx="12" fill="url(#outputGrad)" filter="url(#shadow)"/>
+  <text x="885" y="120" fill="white" font-size="12" font-weight="600" text-anchor="middle">音频特征</text>
+  <text x="885" y="142" fill="rgba(255,255,255,0.8)" font-size="11" text-anchor="middle">(1,64,128)</text>
+  
+  <!-- 音频处理连接线 -->
+  <line x1="410" y1="127" x2="460" y2="127" stroke="#6366f1" stroke-width="3" marker-end="url(#arrowPurple)"/>
+  <line x1="600" y1="127" x2="650" y2="127" stroke="#6366f1" stroke-width="3" marker-end="url(#arrowPurple)"/>
+  <line x1="790" y1="127" x2="840" y2="127" stroke="#6366f1" stroke-width="3" marker-end="url(#arrowGreen)"/>
+  
+  <!-- ==================== 振动处理流程 ==================== -->
+  <rect x="250" y="200" width="700" height="140" rx="16" fill="rgba(236,72,153,0.1)" stroke="rgba(236,72,153,0.4)" stroke-width="2"/>
+  <text x="300" y="235" fill="#f472b6" font-size="20" font-weight="700">振动处理</text>
+  
+  <rect x="270" y="255" width="140" height="65" rx="12" fill="url(#imuGrad)" filter="url(#shadow)"/>
+  <text x="340" y="295" fill="white" font-size="16" font-weight="600" text-anchor="middle">原始IMU</text>
+  
+  <rect x="460" y="255" width="140" height="65" rx="12" fill="url(#imuGrad)" filter="url(#shadow)"/>
+  <text x="530" y="295" fill="white" font-size="16" font-weight="600" text-anchor="middle">低通滤波</text>
+  
+  <rect x="650" y="255" width="140" height="65" rx="12" fill="url(#imuGrad)" filter="url(#shadow)"/>
+  <text x="720" y="295" fill="white" font-size="16" font-weight="600" text-anchor="middle">标准化</text>
+  
+  <rect x="840" y="255" width="90" height="65" rx="12" fill="url(#outputGrad)" filter="url(#shadow)"/>
+  <text x="885" y="280" fill="white" font-size="12" font-weight="600" text-anchor="middle">振动特征</text>
+  <text x="885" y="302" fill="rgba(255,255,255,0.8)" font-size="11" text-anchor="middle">(200,6)</text>
+  
+  <!-- 振动处理连接线 -->
+  <line x1="410" y1="287" x2="460" y2="287" stroke="#ec4899" stroke-width="3" marker-end="url(#arrowPink)"/>
+  <line x1="600" y1="287" x2="650" y2="287" stroke="#ec4899" stroke-width="3" marker-end="url(#arrowPink)"/>
+  <line x1="790" y1="287" x2="840" y2="287" stroke="#ec4899" stroke-width="3" marker-end="url(#arrowGreen)"/>
+  
+  <!-- 端侧到处理的连接线 -->
+  <path d="M 205 135 L 240 130 L 270 127" stroke="#14b8a6" stroke-width="3" fill="none" marker-end="url(#arrowPurple)"/>
+  <path d="M 205 240 L 240 265 L 270 287" stroke="#14b8a6" stroke-width="3" fill="none" marker-end="url(#arrowPink)"/>
+  
+  <!-- ==================== 模型推理 ==================== -->
+  <rect x="980" y="40" width="380" height="300" rx="16" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.4)" stroke-width="2"/>
+  <text x="1030" y="75" fill="#f59e0b" font-size="20" font-weight="700">模型推理</text>
+  
+  <!-- Audio CNN 在上方 -->
+  <rect x="1000" y="95" width="160" height="65" rx="12" fill="url(#modelGrad)" filter="url(#shadow)"/>
+  <text x="1080" y="135" fill="white" font-size="16" font-weight="600" text-anchor="middle">Audio CNN</text>
+  
+  <!-- IMU BiLSTM 在下方 -->
+  <rect x="1000" y="180" width="160" height="65" rx="12" fill="url(#modelGrad)" filter="url(#shadow)"/>
+  <text x="1080" y="220" fill="white" font-size="16" font-weight="600" text-anchor="middle">IMU BiLSTM</text>
+  
+  <!-- 跨模态注意力融合 在右边 -->
+  <rect x="1190" y="95" width="150" height="150" rx="12" fill="url(#modelGrad)" filter="url(#shadow)"/>
+  <text x="1265" y="165" fill="white" font-size="14" font-weight="600" text-anchor="middle">跨模态</text>
+  <text x="1265" y="185" fill="white" font-size="14" font-weight="600" text-anchor="middle">注意力融合</text>
+  
+  <!-- 输出概率 -->
+  <rect x="1060" y="275" width="220" height="55" rx="12" fill="url(#outputGrad)" filter="url(#shadow)"/>
+  <text x="1170" y="310" fill="white" font-size="18" font-weight="700" text-anchor="middle">P(欺凌) ∈ [0,1]</text>
+  
+  <!-- 特征到模型的连接线 - 音频特征水平连接到Audio CNN -->
+  <line x1="930" y1="127" x2="1000" y2="127" stroke="#6366f1" stroke-width="3" marker-end="url(#arrowOrange)"/>
+  
+  <!-- 振动特征连接到IMU BiLSTM - 避开Audio CNN -->
+  <path d="M 930 287 L 965 287 L 965 212 L 1000 212" stroke="#ec4899" stroke-width="3" fill="none" marker-end="url(#arrowOrange)"/>
+  
+  <!-- 模型内部连接线 - CNN和BiLSTM连接到融合模块 -->
+  <line x1="1160" y1="127" x2="1190" y2="140" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrowOrange)"/>
+  <line x1="1160" y1="212" x2="1190" y2="200" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrowOrange)"/>
+  
+  <!-- 融合到输出 -->
+  <path d="M 1265 245 L 1265 265 L 1200 275" stroke="#f59e0b" stroke-width="3" fill="none" marker-end="url(#arrowGreen)"/>
+  
+  <!-- ==================== 干预与上报 - 往下移动 ==================== -->
+  <rect x="980" y="420" width="380" height="130" rx="16" fill="rgba(239,68,68,0.1)" stroke="rgba(239,68,68,0.4)" stroke-width="2"/>
+  <text x="1030" y="455" fill="#ef4444" font-size="20" font-weight="700">干预与上报</text>
+  
+  <rect x="1000" y="475" width="160" height="55" rx="12" fill="url(#alarmGrad)" filter="url(#shadow)"/>
+  <text x="1080" y="510" fill="white" font-size="16" font-weight="600" text-anchor="middle">声光干预</text>
+  
+  <rect x="1180" y="475" width="160" height="55" rx="12" fill="url(#processGrad)" filter="url(#shadow)"/>
+  <text x="1260" y="510" fill="white" font-size="16" font-weight="600" text-anchor="middle">数据上报</text>
+  
+  <!-- 模型到干预/上报的连接线 - 更长的线条 -->
+  <line x1="1170" y1="330" x2="1170" y2="420" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrowRed)"/>
+  
+  <!-- ==================== 云端训练 - 往下移动 ==================== -->
+  <rect x="250" y="420" width="700" height="130" rx="16" fill="rgba(6,182,212,0.1)" stroke="rgba(6,182,212,0.4)" stroke-width="2"/>
+  <text x="300" y="455" fill="#06b6d4" font-size="20" font-weight="700">云端增量训练</text>
+  
+  <rect x="270" y="475" width="140" height="55" rx="12" fill="url(#cloudGrad)" filter="url(#shadow)"/>
+  <text x="340" y="510" fill="white" font-size="16" font-weight="600" text-anchor="middle">IoTDA</text>
+  
+  <rect x="460" y="475" width="140" height="55" rx="12" fill="url(#cloudGrad)" filter="url(#shadow)"/>
+  <text x="530" y="510" fill="white" font-size="16" font-weight="600" text-anchor="middle">OBS</text>
+  
+  <rect x="650" y="475" width="140" height="55" rx="12" fill="url(#cloudGrad)" filter="url(#shadow)"/>
+  <text x="720" y="510" fill="white" font-size="16" font-weight="600" text-anchor="middle">增量训练</text>
+  
+  <rect x="840" y="475" width="90" height="55" rx="12" fill="rgba(20,184,166,0.2)" stroke="#14b8a6" stroke-width="2"/>
+  <text x="885" y="510" fill="#14b8a6" font-size="16" font-weight="600" text-anchor="middle">OTA</text>
+  
+  <!-- 云端连接线 -->
+  <line x1="410" y1="502" x2="460" y2="502" stroke="#06b6d4" stroke-width="3" marker-end="url(#arrowCyan)"/>
+  <line x1="600" y1="502" x2="650" y2="502" stroke="#06b6d4" stroke-width="3" marker-end="url(#arrowCyan)"/>
+  <line x1="790" y1="502" x2="840" y2="502" stroke="#06b6d4" stroke-width="3" marker-end="url(#arrowTeal)"/>
+  
+  <!-- 上报到云端的连接线 -->
+  <path d="M 1260 530 L 1260 600 L 340 600 L 340 530" stroke="#3b82f6" stroke-width="3" fill="none" marker-end="url(#arrowCyan)"/>
+  <text x="800" y="592" fill="#3b82f6" font-size="15" font-weight="600">报警数据回流</text>
+  
+  <!-- OTA到边侧的连接线 -->
+  <path d="M 885 475 L 885 390 L 1170 390 L 1170 330" stroke="#14b8a6" stroke-width="3" fill="none" stroke-dasharray="8,4" marker-end="url(#arrowOrange)"/>
+  <text x="1020" y="382" fill="#14b8a6" font-size="15" font-weight="600">模型更新</text>
+  
+  <!-- ==================== 底部说明 - 透明背景 ==================== -->
+  <rect x="40" y="650" width="1320" height="230" rx="16" fill="rgba(100,116,139,0.08)" stroke="rgba(100,116,139,0.2)" stroke-width="1"/>
+  
+  <text x="80" y="700" fill="#475569" font-size="18" font-weight="600">数据参数:</text>
+  <text x="200" y="700" fill="#6366f1" font-size="15">音频: 16kHz采样, 4秒窗口, 64维梅尔频谱</text>
+  <text x="600" y="700" fill="#ec4899" font-size="15">IMU: 100Hz采样, 2秒窗口, 6轴数据</text>
+  <text x="950" y="700" fill="#f59e0b" font-size="15">模型: CNN+BiLSTM+Attention</text>
+  
+  <text x="80" y="760" fill="#475569" font-size="18" font-weight="600">数据闭环:</text>
+  <text x="200" y="760" fill="#64748b" font-size="15">端侧采集 → 边侧处理 → 模型推理 → 干预执行 → 数据上报 → 增量训练 → OTA更新</text>
+  
+  <text x="80" y="820" fill="#475569" font-size="18" font-weight="600">隐私保护:</text>
+  <text x="200" y="820" fill="#10b981" font-size="15">仅传输特征数据，不采集原始音视频，保护学生隐私</text>
+</svg>

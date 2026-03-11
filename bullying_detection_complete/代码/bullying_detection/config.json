@@ -1,0 +1,168 @@
+{
+    "project": {
+        "name": "明瞳-校园欺凌智能干预系统",
+        "version": "1.0.0",
+        "team": "三英战ICT",
+        "school": "华中师范大学"
+    },
+    
+    "model": {
+        "name": "BullyingDetectionModel",
+        "framework": "MindSpore",
+        "version": "1.8.0",
+        
+        "input": {
+            "audio": {
+                "type": "mel_spectrogram",
+                "shape": [1, 64, 128],
+                "description": "梅尔频谱图: (channels, n_mels, time_steps)"
+            },
+            "imu": {
+                "type": "sequence",
+                "shape": [200, 6],
+                "description": "IMU序列: (seq_len, features) - [ax, ay, az, gx, gy, gz]"
+            }
+        },
+        
+        "output": {
+            "probability": {
+                "type": "float",
+                "range": [0, 1],
+                "description": "霸凌事件概率"
+            },
+            "attention_weight": {
+                "type": "float",
+                "range": [0, 1],
+                "description": "跨模态注意力权重 (倾向声音=0, 倾向振动=1)"
+            }
+        },
+        
+        "hyperparameters": {
+            "n_mels": 64,
+            "audio_time_steps": 128,
+            "vibration_seq_len": 200,
+            "audio_feature_dim": 256,
+            "vibration_feature_dim": 128,
+            "fusion_dim": 128
+        }
+    },
+    
+    "training": {
+        "epochs": 100,
+        "batch_size": 32,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0001,
+        "warmup_epochs": 5,
+        "lr_scheduler": "cosine",
+        
+        "loss": {
+            "type": "focal_loss",
+            "alpha": 0.25,
+            "gamma": 2.0
+        },
+        
+        "optimizer": "Adam",
+        
+        "data_augmentation": {
+            "time_mask": {
+                "enabled": true,
+                "max_width": 20
+            },
+            "freq_mask": {
+                "enabled": true,
+                "max_width": 10
+            },
+            "noise_injection": {
+                "enabled": true,
+                "std": 0.1
+            }
+        }
+    },
+    
+    "inference": {
+        "alarm_thresholds": {
+            "none": 0.0,
+            "low": 0.5,
+            "medium": 0.7,
+            "high": 0.85
+        },
+        "confirm_count": 2,
+        "cooldown_seconds": 30
+    },
+    
+    "hardware": {
+        "device_side": {
+            "mcu": "HiSilicon K01",
+            "sensors": {
+                "imu": "MPU6050 / BMI160",
+                "microphone": "全向MEMS麦克风",
+                "sample_rate_audio": 16000,
+                "sample_rate_imu": 100
+            },
+            "actuators": {
+                "buzzer": "有源蜂鸣器",
+                "led": "WS2812 LED灯带"
+            },
+            "communication": "星闪SLE"
+        },
+        
+        "edge_side": {
+            "board": "香橙派 Orange Pi 5 Max",
+            "npu": "昇腾310",
+            "memory": "16GB",
+            "storage": "64GB eMMC",
+            "os": "Ubuntu 22.04"
+        },
+        
+        "cloud_side": {
+            "platform": "华为云",
+            "services": ["IoTDA", "ModelArts", "OBS", "DIS", "FunctionGraph"]
+        }
+    },
+    
+    "cloud_config": {
+        "region": "cn-north-4",
+        
+        "iotda": {
+            "product_id": "bullying_detector",
+            "mqtt_host": "iot-mqtts.cn-north-4.myhuaweicloud.com",
+            "mqtt_port": 8883
+        },
+        
+        "modelarts": {
+            "runtime": "mindspore_1.8.0-cann_5.1.0-py_3.7-euler_2.8.3-aarch64",
+            "specification": "modelarts.vm.cpu.2u"
+        },
+        
+        "obs": {
+            "bucket": "bullying-detection-data",
+            "model_path": "models/",
+            "data_path": "training_data/",
+            "log_path": "logs/"
+        }
+    },
+    
+    "audio_processing": {
+        "sample_rate": 16000,
+        "duration": 4.0,
+        "n_mels": 64,
+        "n_fft": 1024,
+        "hop_length": 512,
+        "normalize": true
+    },
+    
+    "imu_processing": {
+        "sample_rate": 100,
+        "duration": 2.0,
+        "low_pass_cutoff": 20.0,
+        "normalize": true,
+        "accelerometer": {
+            "range": "±8g",
+            "sensitivity": 4096
+        },
+        "gyroscope": {
+            "range": "±500°/s",
+            "sensitivity": 65.5
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "binFileName":"Fused_Mul_Sub_Mul_Add_Mul_Sub_Mul_Add_Sub_Pow_Mul_Neg_Add_Log_Mul_Add_Log_Mul_S_more_fusion_13597970838782487173",
+    "binFileSuffix":".o",
+    "blockDim":1,
+    "kernelName":"Fused_Mul_Sub_Mul_Add_Mul_Sub_Mul_Add_Sub_Pow_Mul_Neg_Add_Log_Mul_Add_Log_Mul_S_more_fusion_13597970838782487173_kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "sha256":"4de0f833aeb02c143e4677ce7b5b07a0df8b0b8b3881941ada43bf5369eb86fe"
+}

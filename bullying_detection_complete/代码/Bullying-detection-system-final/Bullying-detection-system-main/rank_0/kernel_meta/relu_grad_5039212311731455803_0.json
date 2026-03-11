@@ -1,0 +1,15 @@
+{
+    "batchBindOnly":1,
+    "binFileName":"relu_grad_5039212311731455803_0",
+    "binFileSuffix":".o",
+    "blockDim":8,
+    "kernelName":"relu_grad_5039212311731455803_0__kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "opParaSize":0,
+    "parameters":[
+        0,
+        0,
+        0
+    ],
+    "sha256":"9c82ae090d70d9121de416f77380e4558c071f9db30cbf0bde7b8b886c3b9a9b"
+}

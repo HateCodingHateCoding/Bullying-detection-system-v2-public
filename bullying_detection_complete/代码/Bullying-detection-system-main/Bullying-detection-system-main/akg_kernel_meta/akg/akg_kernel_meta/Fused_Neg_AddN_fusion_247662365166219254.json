@@ -1,0 +1,8 @@
+{
+    "binFileName":"Fused_Neg_AddN_fusion_247662365166219254",
+    "binFileSuffix":".o",
+    "blockDim":1,
+    "kernelName":"Fused_Neg_AddN_fusion_247662365166219254_kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "sha256":"6c3d26e7ad4f3246e0dbcf7697df25e545e85c1a28bcf83873d7d361851ad65e"
+}

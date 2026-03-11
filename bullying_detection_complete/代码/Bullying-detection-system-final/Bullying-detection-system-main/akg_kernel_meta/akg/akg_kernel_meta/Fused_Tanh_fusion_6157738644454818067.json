@@ -1,0 +1,8 @@
+{
+    "binFileName":"Fused_Tanh_fusion_6157738644454818067",
+    "binFileSuffix":".o",
+    "blockDim":1,
+    "kernelName":"Fused_Tanh_fusion_6157738644454818067_kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "sha256":"27971917007dc67c82e8e4cf217a71e89cb362cfc26fb07fc8720dcbe73a30a0"
+}

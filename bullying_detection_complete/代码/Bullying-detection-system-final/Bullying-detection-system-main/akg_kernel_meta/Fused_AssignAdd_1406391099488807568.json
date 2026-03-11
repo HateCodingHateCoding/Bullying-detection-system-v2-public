@@ -1,0 +1,8 @@
+{
+    "binFileName":"Fused_AssignAdd_1406391099488807568",
+    "binFileSuffix":".o",
+    "blockDim":1,
+    "kernelName":"Fused_AssignAdd_1406391099488807568_kernel0",
+    "magic":"RT_DEV_BINARY_MAGIC_ELF",
+    "sha256":"5ef622142c98f7acaaa3dd50fa83c243220e88230cf1c8159e6862f7eeecc7cf"
+}
