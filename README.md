@@ -35,20 +35,35 @@
 ## 项目结构
 
 ```
-├── AnQ/
+├── models/                      # AI 模型文件
+│   ├── sentinel_model.ckpt      # MindSpore 模型权重
+│   └── sentinel.mindir          # MindIR 离线推理模型
+├── scripts/                     # 推理和数据采集脚本
 │   ├── moke_infer_iot.py        # 主推理程序（IoTDA + OBS 完整版）
 │   ├── moke_infer_simple.py     # 简化版（HTTP 直连后端）
 │   ├── moke_infer_full.py       # 中间版（OBS + HTTP）
+│   ├── moke_infer_ckpt.py       # CKPT 模型推理
 │   ├── iot_uploader.py          # 华为 IoTDA MQTT 客户端
 │   ├── obs_uploader.py          # 华为 OBS 上传
-│   ├── backend_api.py           # Flask 轻量后端（备用）
-│   ├── backend/                 # Spring Boot 正式后端
-│   └── AnQ/                     # HarmonyOS NEXT 前端 APP
-├── serial_audio_capture.py      # 串口音频采集
-├── serial_radar_capture.py      # 串口雷达数据采集
-├── sentinel_model.ckpt          # MindSpore 模型权重
-├── sentinel.mindir              # MindIR 离线推理模型
-├── bullying_detection_complete/  # 早期代码、文档、训练脚本
+│   ├── serial_audio_capture.py  # 串口音频采集
+│   ├── serial_radar_capture.py  # 串口雷达数据采集
+│   ├── test_minimal.py          # 最小测试脚本
+│   ├── bullying_analysis_v1.ipynb  # 数据分析 Notebook v1
+│   └── bullying_analysis_v2.ipynb  # 数据分析 Notebook v2
+├── backend/                     # 后端服务
+│   ├── spring-boot/             # Spring Boot 正式后端
+│   └── backend_api.py           # Flask 轻量后端（备用）
+├── frontend/                    # 前端应用
+│   └── harmonyos-app/           # HarmonyOS NEXT APP
+├── config/                      # 配置文件
+│   ├── credentials.csv          # 凭证配置（不提交到 git）
+│   ├── device_key.txt           # 设备密钥（不提交到 git）
+│   └── productProfileExample.zip # 产品配置示例
+├── data/                        # 测试数据
+│   ├── real_audio_normal.npy    # 正常音频样本
+│   └── real_radar_normal.npy    # 正常雷达样本
+├── docs/                        # 文档
+│   └── archive/                 # 早期代码、文档、训练脚本归档
 └── wheels/                      # 离线 pip 依赖包
 ```
 

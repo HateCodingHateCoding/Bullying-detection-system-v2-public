@@ -1,8 +1,0 @@
-{
-    "binFileName":"Fused_Mul_Add_Log_Mul_Sub_Sub_Add_Log_Mul_Sub_Reciprocal_Mul_Mul_Reciprocal_Mul_more_fusion_8579285690375235470",
-    "binFileSuffix":".o",
-    "blockDim":1,
-    "kernelName":"Fused_Mul_Add_Log_Mul_Sub_Sub_Add_Log_Mul_Sub_Reciprocal_Mul_Mul_Reciprocal_Mul_more_fusion_8579285690375235470_kernel0",
-    "magic":"RT_DEV_BINARY_MAGIC_ELF",
-    "sha256":"0204aba14c0a02a9426da1e52f4816b5415a5ed972420a75d5c7fa9c26a54425"
-}

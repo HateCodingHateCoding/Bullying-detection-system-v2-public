@@ -1,8 +1,0 @@
-{
-    "username": "69a8ce6be094d6159222bfa4_orangepi_001",
-    "password": "72757c0ba7410398ed002ad8bab57300323354d8886ea9d6afcb718afddb07ff",
-    "clientId": "69a8ce6be094d6159222bfa4_orangepi_001_0_0_2026030916",
-    "hostname": "7ac381d282.st1.iotda-device.cn-east-3.myhuaweicloud.com",
-    "port": 8883,
-    "protocol": "MQTTS"
-}

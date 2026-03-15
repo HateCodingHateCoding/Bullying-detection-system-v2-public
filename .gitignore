@@ -33,5 +33,20 @@ node_modules/
 oh_modules/
 .preview/
 
-# Large files (>100MB, GitHub limit)
-bullying_detection_complete/三英战光谷杯 决赛.pptx
+# Credentials and sensitive files
+config/credentials.csv
+config/device_key.txt
+
+# Large files
+wheels/
+*.zip
+
+# Model files (optional, uncomment if too large)
+# models/*.ckpt
+# models/*.mindir
+
+# Data files
+data/*.npy
+
+# Archive
+docs/archive/

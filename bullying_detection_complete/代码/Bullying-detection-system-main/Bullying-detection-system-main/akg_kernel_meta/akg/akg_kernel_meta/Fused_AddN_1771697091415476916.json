@@ -1,8 +1,0 @@
-{
-    "binFileName":"Fused_AddN_1771697091415476916",
-    "binFileSuffix":".o",
-    "blockDim":5,
-    "kernelName":"Fused_AddN_1771697091415476916_kernel0",
-    "magic":"RT_DEV_BINARY_MAGIC_ELF",
-    "sha256":"b1acb7c58210f3b179fa5e1d1a2ff9587b704c6d1d7181e7ef4b23b032440548"
-}
