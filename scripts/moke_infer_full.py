@@ -106,7 +106,7 @@ def send_alert(location, confidence, evidence_url):
 
 print("1. 加载模型...")
 net = AscendSentinelNet()
-ms.load_param_into_net(net, ms.load_checkpoint("sentinel_model.ckpt"), strict_load=False)
+ms.load_param_into_net(net, ms.load_checkpoint("../models/sentinel_model.ckpt"), strict_load=False)
 net = ms.amp.auto_mixed_precision(net, amp_level="O2")
 net.set_train(False)
 

@@ -34,8 +34,10 @@ def _load_device_key_file():
 
     def _collect_key_files(base_dir):
         files = []
-        files.extend(base_dir.glob("DEVICES-KEY-*.txt"))
-        files.extend(base_dir.glob("DEVICES-CONNECT-KEY-*.txt"))
+        config_dir = base_dir / "config"
+        files.extend(config_dir.glob("DEVICES-KEY-*.txt"))
+        files.extend(config_dir.glob("DEVICES-CONNECT-KEY-*.txt"))
+        files.extend(config_dir.glob("device_key.txt"))
         return files
 
     def _normalize_key_data(raw):
@@ -208,7 +210,7 @@ obs = None
 
 print("2. 加载模型...")
 net = AscendSentinelNet()
-ms.load_param_into_net(net, ms.load_checkpoint("sentinel_model.ckpt"), strict_load=False)
+ms.load_param_into_net(net, ms.load_checkpoint("../models/sentinel_model.ckpt"), strict_load=False)
 amp_level = (os.getenv("MS_AMP_LEVEL", "O2") or "O2").upper()
 if amp_level != "O0":
     net = ms.amp.auto_mixed_precision(net, amp_level=amp_level)

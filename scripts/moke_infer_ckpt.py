@@ -36,13 +36,13 @@ class AscendSentinelNet(nn.Cell):
 
 print("1. Build Network and Load CKPT...")
 net = AscendSentinelNet()
-ms.load_param_into_net(net, ms.load_checkpoint("sentinel_model.ckpt"), strict_load=False)
+ms.load_param_into_net(net, ms.load_checkpoint("../models/sentinel_model.ckpt"), strict_load=False)
 net = ms.amp.auto_mixed_precision(net, amp_level="O2")
 net.set_train(False)
 
 print("2. Load REAL Normal Data...")
-real_radar = ms.Tensor(np.load("real_radar_normal.npy").astype(np.float32))
-real_audio = ms.Tensor(np.load("real_audio_normal.npy").astype(np.float32))
+real_radar = ms.Tensor(np.load("../data/real_radar_normal.npy").astype(np.float32))
+real_audio = ms.Tensor(np.load("../data/real_audio_normal.npy").astype(np.float32))
 
 print("3. Start NPU Warm-up (Compiling Graph)...")
 _ = net(real_radar, real_audio) 

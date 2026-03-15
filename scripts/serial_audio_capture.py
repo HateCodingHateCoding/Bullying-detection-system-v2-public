@@ -56,8 +56,8 @@ def read_audio_from_serial():
     audio_array = audio_array.reshape(1, 1, AUDIO_LENGTH)
 
     # 保存为npy文件
-    np.save("real_audio_normal.npy", audio_array)
-    print(f"✅ 音频数据已保存: real_audio_normal.npy, shape={audio_array.shape}")
+    np.save("../data/real_audio_normal.npy", audio_array)
+    print(f"✅ 音频数据已保存: ../data/real_audio_normal.npy, shape={audio_array.shape}")
 
     ser.close()
     return audio_array

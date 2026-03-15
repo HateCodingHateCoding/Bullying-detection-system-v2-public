@@ -76,8 +76,8 @@ def collect_radar_data():
     radar_array = radar_array.reshape(1, 5, 64)
 
     # 保存
-    np.save("real_radar_normal.npy", radar_array)
-    print(f"✅ 雷达数据已保存: real_radar_normal.npy, shape={radar_array.shape}")
+    np.save("../data/real_radar_normal.npy", radar_array)
+    print(f"✅ 雷达数据已保存: ../data/real_radar_normal.npy, shape={radar_array.shape}")
 
     ser.close()
     return radar_array
