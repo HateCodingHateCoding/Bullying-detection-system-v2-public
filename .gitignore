@@ -71,3 +71,5 @@ scripts/solution_*.md
 scripts/bullying_analysis_v1.ipynb
 scripts/bullying_analysis_v2.ipynb
 docs/archive/
+docs/*.pdf
+docs/*.docx
