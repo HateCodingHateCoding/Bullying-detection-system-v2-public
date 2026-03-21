@@ -8,7 +8,7 @@
 
 ```
 硬件层
-  RS6240 毫米波雷达 (60GHz)          INMP441音频模块
+  RS6240 毫米波雷达 (60GHz)          INMP441全向麦克风
         │ SPI->D02->SLE->D02->UART        │ UART->D02->SLE->D02->UART
         ▼                                 ▼
   radar_receiver.py                audio_receiver.py
@@ -185,7 +185,7 @@ cp config/device_key.json.template config/device_key.json
 | 设备 | 接口 | 香橙派设备节点 |
 |---|---|---|
 | RS6240 雷达 | SPI 接 D02——SLE——D02 接 TTL 转 USB | /dev/ttyUSB0 |
-| INMP441 音频模块 | I2S 接 D02——SLE——D02 接 TTL 转 USB | /dev/ttyUSB1 |
+| INMP441 全向麦克风 | I2S 接 D02——SLE——D02 接 TTL 转 USB | /dev/ttyUSB1 |
 | 声光报警模块 | GPIO UART 接 D02——SLE——D02 接 UART | /dev/ttyAMA0 |
 
 ### 4. 启动主流水线
