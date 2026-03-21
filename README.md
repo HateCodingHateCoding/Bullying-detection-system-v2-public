@@ -235,6 +235,3 @@ App 启动时自动连接 WebSocket，检测到欺凌时实时弹出警情通知
 - 无 Ascend NPU 时自动降级为随机占位推理（仅用于链路调试）
 - MMFi 数据集需自行申请下载，见 data/samples/DOWNLOAD.md
 - serial_audio_capture.py 包尾应为 AA 55（与帧头相同）
-
-
-你直接给我修改后的md格式，哪些要改动的直接替换 标出来让我看看是哪些
