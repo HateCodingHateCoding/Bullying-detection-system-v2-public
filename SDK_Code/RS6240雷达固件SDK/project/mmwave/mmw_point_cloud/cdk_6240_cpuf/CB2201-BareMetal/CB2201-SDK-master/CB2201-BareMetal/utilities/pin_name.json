@@ -1,0 +1,830 @@
+[
+    {
+        "pin_num"    : "3",
+        "pin_name"   : "PA8",
+        "pin_select" : "SYS.WKUP",
+        "pin_func"   : "PA8_SYS_WKUP"
+    },
+    {
+        "pin_num"    : "3",
+        "pin_name"   : "PA8",
+        "pin_select" : "ADC.A0",
+        "pin_func"   : "PA8_ADC_A0"
+    },
+    {
+        "pin_num"    : "3",
+        "pin_name"   : "PA8",
+        "pin_select" : "ACMP.P0",
+        "pin_func"   : "PA8_ACMP_P0"
+    },
+    {
+        "pin_num"    : "3",
+        "pin_name"   : "PA8",
+        "pin_select" : "GPIOA8",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "4",
+        "pin_name"   : "PA9",
+        "pin_select" : "BOOT",
+        "pin_func"   : "PA9_BOOT"
+    },
+    {
+        "pin_num"    : "4",
+        "pin_name"   : "PA9",
+        "pin_select" : "ADC.A1",
+        "pin_func"   : "PA9_ADC_A1"
+    },
+    {
+        "pin_num"    : "4",
+        "pin_name"   : "PA9",
+        "pin_select" : "PWM.FAULT",
+        "pin_func"   : "PA9_PWM_FAULT"
+    },
+    {
+        "pin_num"    : "4",
+        "pin_name"   : "PA9",
+        "pin_select" : "GPIOA9",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "5",
+        "pin_name"   : "PA10",
+        "pin_select" : "ADC.A2",
+        "pin_func"   : "PA10_ADC_A2"
+    },
+    {
+        "pin_num"    : "5",
+        "pin_name"   : "PA10",
+        "pin_select" : "UART0.TX",
+        "pin_func"   : "PA10_UART0_TX"
+    },
+    {
+        "pin_num"    : "5",
+        "pin_name"   : "PA10",
+        "pin_select" : "UART0.SIROUT",
+        "pin_func"   : "PA10_UART0_SIROUT"
+    },
+    {
+        "pin_num"    : "5",
+        "pin_name"   : "PA10",
+        "pin_select" : "GPIOA10",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "6",
+        "pin_name"   : "PA11",
+        "pin_select" : "ACMP.N0",
+        "pin_func"   : "PA11_ACMP_N0"
+    },
+    {
+        "pin_num"    : "6",
+        "pin_name"   : "PA11",
+        "pin_select" : "ADC.A3",
+        "pin_func"   : "PA11_ADC_A3"
+    },
+    {
+        "pin_num"    : "6",
+        "pin_name"   : "PA11",
+        "pin_select" : "UART0.RX",
+        "pin_func"   : "PA11_UART0_RX"
+    },
+    {
+        "pin_num"    : "6",
+        "pin_name"   : "PA11",
+        "pin_select" : "UART0.SIRIN",
+        "pin_func"   : "PA11_UART0_SIRIN"
+    },
+    {
+        "pin_num"    : "6",
+        "pin_name"   : "PA11",
+        "pin_select" : "GPIOA11",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "7",
+        "pin_name"   : "PA12",
+        "pin_select" : "PWM.CH8",
+        "pin_func"   : "PA12_PWM_CH8"
+    },
+    {
+        "pin_num"    : "7",
+        "pin_name"   : "PA12",
+        "pin_select" : "JTAG.TCK",
+        "pin_func"   : "PA12_JTAG_TCK"
+    },
+    {
+        "pin_num"    : "7",
+        "pin_name"   : "PA12",
+        "pin_select" : "ADC.A4",
+        "pin_func"   : "PA12_ADC_A4"
+    },
+    {
+        "pin_num"    : "7",
+        "pin_name"   : "PA12",
+        "pin_select" : "GPIOA12",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "8",
+        "pin_name"   : "PA13",
+        "pin_select" : "PWM.CH9",
+        "pin_func"   : "PA13_PWM_CH9"
+    },
+    {
+        "pin_num"    : "8",
+        "pin_name"   : "PA13",
+        "pin_select" : "JTAG.TMS",
+        "pin_func"   : "PA13_JTAG_TMS"
+    },
+    {
+        "pin_num"    : "8",
+        "pin_name"   : "PA13",
+        "pin_select" : "ADC.A5",
+        "pin_func"   : "PA13_ADC_A5"
+    },
+    {
+        "pin_num"    : "8",
+        "pin_name"   : "PA13",
+        "pin_select" : "GPIOA13",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "9",
+        "pin_name"   : "PA14",
+        "pin_select" : "PWM.CH10",
+        "pin_func"   : "PA14_PWM_CH10"
+    },
+    {
+        "pin_num"    : "9",
+        "pin_name"   : "PA14",
+        "pin_select" : "ADC.A6",
+        "pin_func"   : "PA14_ADC_A6"
+    },
+    {
+        "pin_num"    : "9",
+        "pin_name"   : "PA14",
+        "pin_select" : "GPIOA14",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "10",
+        "pin_name"   : "PA15",
+        "pin_select" : "PWM.CH11",
+        "pin_func"   : "PA15_PWM_CH11"
+    },
+    {
+        "pin_num"    : "10",
+        "pin_name"   : "PA15",
+        "pin_select" : "ADC.A7",
+        "pin_func"   : "PA15_ADC_A7"
+    },
+    {
+        "pin_num"    : "10",
+        "pin_name"   : "PA15",
+        "pin_select" : "GPIOA15",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "11",
+        "pin_name"   : "PA22",
+        "pin_select" : "SPI1.MISO",
+        "pin_func"   : "PA22_SPI1_MISO"
+    },
+    {
+        "pin_num"    : "11",
+        "pin_name"   : "PA22",
+        "pin_select" : "PWM.CH0",
+        "pin_func"   : "PA22_PWM_CH0"
+    },
+    {
+        "pin_num"    : "11",
+        "pin_name"   : "PA22",
+        "pin_select" : "ADC.A10",
+        "pin_func"   : "PA22_ADC_A10"
+    },
+    {
+        "pin_num"    : "11",
+        "pin_name"   : "PA22",
+        "pin_select" : "GPIOA22",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "12",
+        "pin_name"   : "PA23",
+        "pin_select" : "SPI1.MOSI",
+        "pin_func"   : "PA23_SPI1_MOSI"
+    },
+    {
+        "pin_num"    : "12",
+        "pin_name"   : "PA23",
+        "pin_select" : "PWM.CH1",
+        "pin_func"   : "PA23_PWM_CH1"
+    },
+    {
+        "pin_num"    : "12",
+        "pin_name"   : "PA23",
+        "pin_select" : "ADC.A11",
+        "pin_func"   : "PA23_ADC_A11"
+    },
+    {
+        "pin_num"    : "12",
+        "pin_name"   : "PA23",
+        "pin_select" : "GPIOA23",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "13",
+        "pin_name"   : "PA26",
+        "pin_select" : "UART2.CTS",
+        "pin_func"   : "PA26_UART2_CTS"
+    },
+    {
+        "pin_num"    : "13",
+        "pin_name"   : "PA26",
+        "pin_select" : "I2S.WSCLK",
+        "pin_func"   : "PA26_I2S_WSCLK"
+    },
+    {
+        "pin_num"    : "13",
+        "pin_name"   : "PA26",
+        "pin_select" : "ADC.A12",
+        "pin_func"   : "PA26_ADC_A12"
+    },
+    {
+        "pin_num"    : "13",
+        "pin_name"   : "PA26",
+        "pin_select" : "GPIOA26",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "14",
+        "pin_name"   : "PA27",
+        "pin_select" : "UART2.RTS",
+        "pin_func"   : "PA27_UART2_RTS"
+    },
+    {
+        "pin_num"    : "14",
+        "pin_name"   : "PA27",
+        "pin_select" : "I2S.SDA",
+        "pin_func"   : "PA27_I2S_SDA"
+    },
+    {
+        "pin_num"    : "14",
+        "pin_name"   : "PA27",
+        "pin_select" : "ADC.A13",
+        "pin_func"   : "PA27_ADC_A13"
+    },
+    {
+        "pin_num"    : "14",
+        "pin_name"   : "PA27",
+        "pin_select" : "GPIOA27",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "15",
+        "pin_name"   : "PC0",
+        "pin_select" : "I2C1.SCL",
+        "pin_func"   : "PC0_I2C1_SCL"
+    },
+    {
+        "pin_num"    : "15",
+        "pin_name"   : "PC0",
+        "pin_select" : "UART1.CTS",
+        "pin_func"   : "PC0_UART1_CTS"
+    },
+    {
+        "pin_num"    : "15",
+        "pin_name"   : "PC0",
+        "pin_select" : "PWM.CH10",
+        "pin_func"   : "PC0_PWM_CH10"
+    },
+    {
+        "pin_num"    : "15",
+        "pin_name"   : "PC0",
+        "pin_select" : "ADC.A14",
+        "pin_func"   : "PC0_ADC_A14"
+    },
+    {
+        "pin_num"    : "15",
+        "pin_name"   : "PC0",
+        "pin_select" : "GPIOC0",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "16",
+        "pin_name"   : "PC1",
+        "pin_select" : "I2C1.SDA",
+        "pin_func"   : "PC1_I2C1_SDA"
+    },
+    {
+        "pin_num"    : "16",
+        "pin_name"   : "PC1",
+        "pin_select" : "UART1.RTS",
+        "pin_func"   : "PC1_UART1_RTS"
+    },
+    {
+        "pin_num"    : "16",
+        "pin_name"   : "PC1",
+        "pin_select" : "PWM.CH11",
+        "pin_func"   : "PC1_PWM_CH11"
+    },
+    {
+        "pin_num"    : "16",
+        "pin_name"   : "PC1",
+        "pin_select" : "ADC.A15",
+        "pin_func"   : "PC1_ADC_A15"
+    },
+    {
+        "pin_num"    : "16",
+        "pin_name"   : "PC1",
+        "pin_select" : "GPIOC1",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "33",
+        "pin_name"   : "PA0",
+        "pin_select" : "ETB_TRIG0",
+        "pin_func"   : "PA0_ETB_TRIG0"
+    },
+    {
+        "pin_num"    : "33",
+        "pin_name"   : "PA0",
+        "pin_select" : "JTAG.TCK",
+        "pin_func"   : "PA0_JTAG_TCK"
+    },
+    {
+        "pin_num"    : "33",
+        "pin_name"   : "PA0",
+        "pin_select" : "GPIOA0",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "34",
+        "pin_name"   : "PA1",
+        "pin_select" : "ETB.TRIG1",
+        "pin_func"   : "PA1_ETB_TRIG1"
+    },
+    {
+        "pin_num"    : "34",
+        "pin_name"   : "PA1",
+        "pin_select" : "JTAG.TMS",
+        "pin_func"   : "PA1_JTAG_TMS"
+    },
+    {
+        "pin_num"    : "34",
+        "pin_name"   : "PA1",
+        "pin_select" : "GPIOA1",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "35",
+        "pin_name"   : "PA6",
+        "pin_select" : "SPI0.MOSI",
+        "pin_func"   : "PA6_SPI0_MOSI"
+    },
+    {
+        "pin_num"    : "35",
+        "pin_name"   : "PA6",
+        "pin_select" : "PWM.CH6",
+        "pin_func"   : "PA6_PWM_CH6"
+    },
+    {
+        "pin_num"    : "35",
+        "pin_name"   : "PA6",
+        "pin_select" : "I2C0.SCL",
+        "pin_func"   : "PA6_I2C0_SCL"
+    },
+    {
+        "pin_num"    : "35",
+        "pin_name"   : "PA6",
+        "pin_select" : "GPIOA6",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "36",
+        "pin_name"   : "PA7",
+        "pin_select" : "SPI0.CS",
+        "pin_func"   : "PA7_SPI0_CS"
+    },
+    {
+        "pin_num"    : "36",
+        "pin_name"   : "PA7",
+        "pin_select" : "PWM.CH7",
+        "pin_func"   : "PA7_PWM_CH7"
+    },
+    {
+        "pin_num"    : "36",
+        "pin_name"   : "PA7",
+        "pin_select" : "I2C0.SDA",
+        "pin_func"   : "PA7_I2C0_SDA"
+    },
+    {
+        "pin_num"    : "36",
+        "pin_name"   : "PA7",
+        "pin_select" : "GPIOA7",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "38",
+        "pin_name"   : "PA5",
+        "pin_select" : "UART0.RTS",
+        "pin_func"   : "PA5_UART0_RTS"
+    },
+    {
+        "pin_num"    : "38",
+        "pin_name"   : "PA5",
+        "pin_select" : "PWM.CH1",
+        "pin_func"   : "PA5_PWM_CH1"
+    },
+    {
+        "pin_num"    : "38",
+        "pin_name"   : "PA5",
+        "pin_select" : "SPI0.CS",
+        "pin_func"   : "PA5_SPI0-CS"
+    },
+    {
+        "pin_num"    : "38",
+        "pin_name"   : "PA5",
+        "pin_select" : "ETB.TRIG1",
+        "pin_func"   : "PA5_ETB_TRIG1"
+    },
+    {
+        "pin_num"    : "38",
+        "pin_name"   : "PA5",
+        "pin_select" : "GPIOA5",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "39",
+        "pin_name"   : "PA2",
+        "pin_select" : "PUART0.TX",
+        "pin_func"   : "PA2_PUART0_TX"
+    },
+    {
+        "pin_num"    : "39",
+        "pin_name"   : "PA2",
+        "pin_select" : "SPI0.MISO",
+        "pin_func"   : "PA2_SPI0_MISO"
+    },
+    {
+        "pin_num"    : "39",
+        "pin_name"   : "PA2",
+        "pin_select" : "UART0.SIRIN",
+        "pin_func"   : "PA2_UART0_SIRIN"
+    },
+    {
+        "pin_num"    : "39",
+        "pin_name"   : "PA2",
+        "pin_select" : "GPIOA2",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "41",
+        "pin_name"   : "PA4",
+        "pin_select" : "UART0.CTS",
+        "pin_func"   : "PA4_UART0_CTS"
+    },
+    {
+        "pin_num"    : "41",
+        "pin_name"   : "PA4",
+        "pin_select" : "PWM.CH0",
+        "pin_func"   : "PA4_PWM_CH0"
+    },
+    {
+        "pin_num"    : "41",
+        "pin_name"   : "PA4",
+        "pin_select" : "SPI0.SCK",
+        "pin_func"   : "PA4_SPI0_SCK"
+    },
+    {
+        "pin_num"    : "41",
+        "pin_name"   : "PA4",
+        "pin_select" : "ETB.TRIG0",
+        "pin_func"   : "PA4_ETB_TRIG0"
+    },
+    {
+        "pin_num"    : "41",
+        "pin_name"   : "PA4",
+        "pin_select" : "GPIOA4",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "42",
+        "pin_name"   : "PA3",
+        "pin_select" : "UART0.RX",
+        "pin_func"   : "PA3_UART0_RX"
+    },
+    {
+        "pin_num"    : "42",
+        "pin_name"   : "PA3",
+        "pin_select" : "SPI0.MOSI",
+        "pin_func"   : "PA3_SPI0_MOSI"
+    },
+    {
+        "pin_num"    : "42",
+        "pin_name"   : "PA3",
+        "pin_select" : "UART0.SIRIN",
+        "pin_func"   : "PA3_UART0_SIRIN"
+    },
+    {
+        "pin_num"    : "42",
+        "pin_name"   : "PA3",
+        "pin_select" : "GPIOA3",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "44",
+        "pin_name"   : "PA25",
+        "pin_select" : "UART2.RX",
+        "pin_func"   : "PA25_UART2_RX"
+    },
+    {
+        "pin_num"    : "44",
+        "pin_name"   : "PA25",
+        "pin_select" : "I2S.SCLK",
+        "pin_func"   : "PA25_I2S_SCLK"
+    },
+    {
+        "pin_num"    : "44",
+        "pin_name"   : "PA25",
+        "pin_select" : "SPI1.CS1",
+        "pin_func"   : "PA25_SPI1_CS1"
+    },
+    {
+        "pin_num"    : "44",
+        "pin_name"   : "PA25",
+        "pin_select" : "UART2.SIRIN",
+        "pin_func"   : "PA25_UART2_SIRIN"
+    },
+    {
+        "pin_num"    : "44",
+        "pin_name"   : "PA25",
+        "pin_select" : "GPIOA25",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "45",
+        "pin_name"   : "PA24",
+        "pin_select" : "UART2.TX",
+        "pin_func"   : "PA24_UART2_TX"
+    },
+    {
+        "pin_num"    : "45",
+        "pin_name"   : "PA24",
+        "pin_select" : "I2S.SCLK",
+        "pin_func"   : "PA24_I2S_SCLK"
+    },
+    {
+        "pin_num"    : "45",
+        "pin_name"   : "PA24",
+        "pin_select" : "SPI1.CS1",
+        "pin_func"   : "PA24_SPI1_CS1"
+    },
+    {
+        "pin_num"    : "45",
+        "pin_name"   : "PA24",
+        "pin_select" : "UART2.SIROUT",
+        "pin_func"   : "PA24_UART2_SIROUT"
+    },
+    {
+        "pin_num"    : "45",
+        "pin_name"   : "PA24",
+        "pin_select" : "GPIOA24",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "47",
+        "pin_name"   : "PA17",
+        "pin_select" : "UART1.TX",
+        "pin_func"   : "PA17_UART1_TX"
+    },
+    {
+        "pin_num"    : "47",
+        "pin_name"   : "PA17",
+        "pin_select" : "ADC.A9",
+        "pin_func"   : "PA17_ADC_A9"
+    },
+    {
+        "pin_num"    : "47",
+        "pin_name"   : "PA17",
+        "pin_select" : "UART1.SIROUT",
+        "pin_func"   : "PA17_UART1_SIROUT"
+    },
+    {
+        "pin_num"    : "47",
+        "pin_name"   : "PA17",
+        "pin_select" : "GPIOA17",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "48",
+        "pin_name"   : "PA16",
+        "pin_select" : "UART1.RX",
+        "pin_func"   : "PA16_UART1_RX"
+    },
+    {
+        "pin_num"    : "48",
+        "pin_name"   : "PA16",
+        "pin_select" : "ADC.A8",
+        "pin_func"   : "PA16_ADC_A8"
+    },
+    {
+        "pin_num"    : "48",
+        "pin_name"   : "PA16",
+        "pin_select" : "UART1.SIRIN",
+        "pin_func"   : "PA16_UART1_SIRIN"
+    },
+    {
+        "pin_num"    : "48",
+        "pin_name"   : "PA16",
+        "pin_select" : "GPIOA16",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "55",
+        "pin_name"   : "PA21",
+        "pin_select" : "SPI1.SCK",
+        "pin_func"   : "PA21_SPI1_SCK"
+    },
+    {
+        "pin_num"    : "55",
+        "pin_name"   : "PA21",
+        "pin_select" : "ETB.TRIG1",
+        "pin_func"   : "PA21_ETB_TRIG1"
+    },
+    {
+        "pin_num"    : "55",
+        "pin_name"   : "PA21",
+        "pin_select" : "UART1.RX",
+        "pin_func"   : "PA21_UART1_TX"
+    },
+    {
+        "pin_num"    : "55",
+        "pin_name"   : "PA21",
+        "pin_select" : "UART1.SIROUT",
+        "pin_func"   : "PA21_UART1_SIROUT"
+    },
+    {
+        "pin_num"    : "55",
+        "pin_name"   : "PA21",
+        "pin_select" : "GPIOA21",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "56",
+        "pin_name"   : "PA20",
+        "pin_select" : "SPI1.CS2",
+        "pin_func"   : "PA20_SPI1_CS2"
+    },
+    {
+        "pin_num"    : "56",
+        "pin_name"   : "PA20",
+        "pin_select" : "ETB.TRIG0",
+        "pin_func"   : "PA20_ETB_TRIG0"
+    },
+    {
+        "pin_num"    : "56",
+        "pin_name"   : "PA20",
+        "pin_select" : "UART1.RX",
+        "pin_func"   : "PA20_UART1_RX"
+    },
+    {
+        "pin_num"    : "56",
+        "pin_name"   : "PA20",
+        "pin_select" : "UART1.SIROUT",
+        "pin_func"   : "PA20_UART1_SIROUT"
+    },
+    {
+        "pin_num"    : "56",
+        "pin_name"   : "PA20",
+        "pin_select" : "GPIOA20",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "57",
+        "pin_name"   : "PA19",
+        "pin_select" : "SPI1.CS1",
+        "pin_func"   : "PA19_SPI1_CS1"
+    },
+    {
+        "pin_num"    : "57",
+        "pin_name"   : "PA19",
+        "pin_select" : "GPIOA19",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "58",
+        "pin_name"   : "PA18",
+        "pin_select" : "SPI1.CS0",
+        "pin_func"   : "PA18_SPI1_CS0"
+    },
+    {
+        "pin_num"    : "58",
+        "pin_name"   : "PA18",
+        "pin_select" : "ACMP.O0",
+        "pin_func"   : "PA18_ACMP_O0"
+    },
+    {
+        "pin_num"    : "58",
+        "pin_name"   : "PA18",
+        "pin_select" : "GPIOA18",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "61",
+        "pin_name"   : "PB3",
+        "pin_select" : "SPI0.MISO",
+        "pin_func"   : "PB3_SPI0_MISO"
+    },
+    {
+        "pin_num"    : "61",
+        "pin_name"   : "PB3",
+        "pin_select" : "PWM.CH5",
+        "pin_func"   : "PB3_PWM_CH5"
+    },
+    {
+        "pin_num"    : "61",
+        "pin_name"   : "PB3",
+        "pin_select" : "I2S.SDA",
+        "pin_func"   : "PB3_I2S_SDA"
+    },
+    {
+        "pin_num"    : "61",
+        "pin_name"   : "PB3",
+        "pin_select" : "GPIOB3",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "62",
+        "pin_name"   : "PB2",
+        "pin_select" : "SPI0.SCK",
+        "pin_func"   : "PB2_SPI0_SCK"
+    },
+    {
+        "pin_num"    : "62",
+        "pin_name"   : "PB2",
+        "pin_select" : "PWM.CH4",
+        "pin_func"   : "PB2_PWM_CH4"
+    },
+    {
+        "pin_num"    : "62",
+        "pin_name"   : "PB2",
+        "pin_select" : "I2S.SDA",
+        "pin_func"   : "PB2_I2S_SDA"
+    },
+    {
+        "pin_num"    : "62",
+        "pin_name"   : "PB2",
+        "pin_select" : "GPIOB2",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "63",
+        "pin_name"   : "PB1",
+        "pin_select" : "I2C0.SDA",
+        "pin_func"   : "PB1_I2C0_SDA"
+    },
+    {
+        "pin_num"    : "63",
+        "pin_name"   : "PB1",
+        "pin_select" : "PWM.CH3",
+        "pin_func"   : "PB1_PWM_CH3"
+    },
+    {
+        "pin_num"    : "63",
+        "pin_name"   : "PB1",
+        "pin_select" : "I2S.SCLK",
+        "pin_func"   : "PB1_I2S_SCLK"
+    },
+    {
+        "pin_num"    : "63",
+        "pin_name"   : "PB1",
+        "pin_select" : "GPIOB1",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    },
+    {
+        "pin_num"    : "64",
+        "pin_name"   : "PB0",
+        "pin_select" : "I2C0.SCL",
+        "pin_func"   : "PB0_I2C0_SCL"
+    },
+    {
+        "pin_num"    : "64",
+        "pin_name"   : "PB0",
+        "pin_select" : "PWM.CH2",
+        "pin_func"   : "PB0_PWM_CH2"
+    },
+    {
+        "pin_num"    : "64",
+        "pin_name"   : "PB0",
+        "pin_select" : "I2S.MCLK",
+        "pin_func"   : "PB0_I2S_MCLK"
+    },
+    {
+        "pin_num"    : "64",
+        "pin_name"   : "PB0",
+        "pin_select" : "GPIOB0",
+        "pin_func"   : "PIN_FUNC_GPIO"
+    }
+]

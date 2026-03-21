@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project Name="CB2201-BareMetal" Version="v1.6" Language="C">
+  <Description>CPU: ck802
+Chip: ch2201
+Board: cb2201
+BareMetal: Without RTOS
+  </Description>
+  <Dependencies Name="Debug"/>
+  <DebugSessions>
+    <watchExpressions/>
+    <memoryExpressions>;;;</memoryExpressions>
+    <statistics>;;MHZ</statistics>
+  </DebugSessions>
+  <VirtualDirectory Name="include">
+    <File Name="include/csi_config.h">
+      <FileOption/>
+    </File>
+  </VirtualDirectory>
+  <VirtualDirectory Name="main">
+    <File Name="main/main.c">
+      <FileOption/>
+    </File>
+  </VirtualDirectory>
+  <VirtualDirectory Name="csi_core">
+    <VirtualDirectory Name="include">
+      <File Name="csi_core/include/csi_gcc.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_core/include/csi_core.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_core/include/core_802.h">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="board">
+    <VirtualDirectory Name="cb2201">
+      <File Name="board/cb2201/board_init.c">
+        <FileOption/>
+      </File>
+      <VirtualDirectory Name="include">
+        <File Name="board/cb2201/include/pin.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <File Name="board/cb2201/gcc_csky.ld">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="csi_driver">
+    <VirtualDirectory Name="include">
+      <File Name="csi_driver/include/drv_common.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_iic.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_wdt.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_rtc.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_intc.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_timer.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_gpio.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_trng.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_crc.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_pwm.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_errno.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_pmu.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_sha.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_spi.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_eflash.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_usart.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_aes.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_dmac.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_rsa.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_spiflash.h">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/include/drv_i2s.h">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+    <VirtualDirectory Name="ch2201">
+      <VirtualDirectory Name="include">
+        <File Name="csi_driver/ch2201/include/ck_sha_v1.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/pin_name.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/soc.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/ck_i2s.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/drv_eth_phy.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/ck_adc.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/drv_adc.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/ck_trng.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/power_manager.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/dw_dmac.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/ck_crc_v1.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/drv_wifi_wps.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/dw_timer.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/drv_wifi.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/dw_iic.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/sys_freq.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/ck_eflash.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/dw_usart.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/ck_rsa.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/drv_eth_mac.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/io.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/pinmux.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/ck_pmu.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/ck_pwm.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/ck_acmp.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/dw_gpio.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/ck_aes.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/drv_acmp.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/ck_rtc.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/dw_spi.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/drv_eth.h">
+          <FileOption/>
+        </File>
+        <File Name="csi_driver/ch2201/include/dw_wdt.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <File Name="csi_driver/ch2201/ck_adc.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/dw_wdt.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/dw_spi.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/vectors.S">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/power_manager.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/dw_gpio.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/lib.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/dw_usart.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_rtc.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/isr.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_trng.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/devices.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_aes.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_acmp.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/dw_dmac.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_crc_v1.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/dw_timer.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/startup.S">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/pinmux.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_pmu.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_pwm.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_sha_v1.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_rsa.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_eflash.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/trap_c.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_i2s.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/novic_irq_tbl.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/sys_freq.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/lpm_arch_reg_save.S">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/system.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/dw_iic.c">
+        <FileOption/>
+      </File>
+      <File Name="csi_driver/ch2201/ck_irq.c"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="libs">
+    <VirtualDirectory Name="include">
+      <File Name="libs/include/umm_heap.h">
+        <FileOption/>
+      </File>
+      <File Name="libs/include/errno.h">
+        <FileOption/>
+      </File>
+      <File Name="libs/include/mm.h">
+        <FileOption/>
+      </File>
+      <File Name="libs/include/mm_queue.h">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+    <VirtualDirectory Name="libc">
+      <File Name="libs/libc/minilibc_port.c">
+        <FileOption/>
+      </File>
+      <File Name="libs/libc/malloc.c">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+    <VirtualDirectory Name="mm">
+      <File Name="libs/mm/mm_addfreechunk.c">
+        <FileOption/>
+      </File>
+      <File Name="libs/mm/lib_mallinfo.c">
+        <FileOption/>
+      </File>
+      <File Name="libs/mm/dq_addlast.c">
+        <FileOption/>
+      </File>
+      <File Name="libs/mm/mm_mallinfo.c">
+        <FileOption/>
+      </File>
+      <File Name="libs/mm/dq_rem.c">
+        <FileOption/>
+      </File>
+      <File Name="libs/mm/mm_free.c">
+        <FileOption/>
+      </File>
+      <File Name="libs/mm/mm_malloc.c">
+        <FileOption/>
+      </File>
+      <File Name="libs/mm/mm_leak.c">
+        <FileOption/>
+      </File>
+      <File Name="libs/mm/mm_size2ndx.c">
+        <FileOption/>
+      </File>
+      <File Name="libs/mm/mm_initialize.c">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="utilities">
+    <File Name="utilities/aft_build.sh"/>
+    <File Name="utilities/chip_config.svc"/>
+    <File Name="utilities/flash.init"/>
+    <File Name="utilities/gdb.init"/>
+  </VirtualDirectory>
+  <BuildConfigs>
+    <BuildConfig Name="BuildSet">
+      <Target>
+        <ROMBank Selected="1">
+          <ROM1>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM1>
+          <ROM2>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM2>
+          <ROM3>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM3>
+          <ROM4>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM4>
+          <ROM5>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM5>
+        </ROMBank>
+        <RAMBank>
+          <RAM1>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM1>
+          <RAM2>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM2>
+          <RAM3>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM3>
+          <RAM4>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM4>
+          <RAM5>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM5>
+        </RAMBank>
+        <CPU>ck802</CPU>
+        <UseMiniLib>yes</UseMiniLib>
+        <Endian>little</Endian>
+        <UseHardFloat>no</UseHardFloat>
+        <UseEnhancedLRW>no</UseEnhancedLRW>
+      </Target>
+      <Output>
+        <OutputName>$(ProjectName)</OutputName>
+        <Type>Executable</Type>
+        <CreateHexFile>no</CreateHexFile>
+        <Preprocessor>no</Preprocessor>
+        <Disasm>no</Disasm>
+        <CallGraph>no</CallGraph>
+        <Map>no</Map>
+      </Output>
+      <User>
+        <BeforeCompile>
+          <RunUserProg>no</RunUserProg>
+          <UserProgName/>
+        </BeforeCompile>
+        <BeforeMake>
+          <RunUserProg>no</RunUserProg>
+          <UserProgName/>
+        </BeforeMake>
+        <AfterMake>
+          <RunUserProg>no</RunUserProg>
+          <UserProgName/>
+        </AfterMake>
+      </User>
+      <Compiler>
+        <Define/>
+        <Undefine/>
+        <Optim>Optimize size (-Os)</Optim>
+        <DebugLevel>Maximum (-g3)</DebugLevel>
+        <IncludePath>$(ProjectPath);$(ProjectPath)/csi_core/include;$(ProjectPath)/csi_driver/include;$(ProjectPath)/libs/include;$(ProjectPath)/csi_driver/ch2201/include;$(ProjectPath)/board/cb2201/include;$(ProjectPath)/include</IncludePath>
+        <OtherFlags>-ffunction-sections -fdata-sections</OtherFlags>
+        <Verbose>no</Verbose>
+        <Ansi>no</Ansi>
+        <Syntax>no</Syntax>
+        <Pedantic>no</Pedantic>
+        <PedanticErr>no</PedanticErr>
+        <InhibitWarn>no</InhibitWarn>
+        <AllWarn>yes</AllWarn>
+        <WarnErr>no</WarnErr>
+        <OneElfS>no</OneElfS>
+        <Fstrict>no</Fstrict>
+      </Compiler>
+      <Asm>
+        <Define/>
+        <Undefine/>
+        <IncludePath>$(ProjectPath);$(ProjectPath)/include</IncludePath>
+        <OtherFlags/>
+        <DebugLevel>gdwarf2</DebugLevel>
+      </Asm>
+      <Linker>
+        <Garbage>yes</Garbage>
+        <LDFile>$(ProjectPath)/board/cb2201/gcc_csky.ld</LDFile>
+        <LibName>m</LibName>
+        <LibPath/>
+        <OtherFlags>-Wl,-zmax-page-size=1024</OtherFlags>
+        <AutoLDFile>no</AutoLDFile>
+      </Linker>
+      <Debug>
+        <LoadApplicationAtStartup>yes</LoadApplicationAtStartup>
+        <Connector>ICE</Connector>
+        <StopAt>yes</StopAt>
+        <StopAtText>main</StopAtText>
+        <InitFile>$(ProjectPath)/utilities/gdb.init</InitFile>
+        <AutoRun>yes</AutoRun>
+        <ResetType>Hard Reset</ResetType>
+        <SoftResetVal>0</SoftResetVal>
+        <ResetAfterLoad>no</ResetAfterLoad>
+        <ConfigICE>
+          <IP>localhost</IP>
+          <PORT>1025</PORT>
+          <Clock>12000</Clock>
+          <Delay>10</Delay>
+          <DDC>yes</DDC>
+          <TRST>no</TRST>
+          <Connect>Normal</Connect>
+          <ResetType>soft</ResetType>
+          <SoftResetVal>0</SoftResetVal>
+          <RTOSType>None</RTOSType>
+          <DownloadToFlash>yes</DownloadToFlash>
+          <ResetAfterConnect>yes</ResetAfterConnect>
+        </ConfigICE>
+        <ConfigSIM>
+          <SIMTarget/>
+          <OtherFlags/>
+          <NoGraphic>yes</NoGraphic>
+          <Log>no</Log>
+        </ConfigSIM>
+      </Debug>
+      <Flash>
+        <InitFile>$(ProjectPath)/utilities/flash.init</InitFile>
+        <Erase>Erase Sectors</Erase>
+        <Algorithms Path="">CH2201_eFlash_CDK_V6.elf</Algorithms>
+        <Program>yes</Program>
+        <Verify>yes</Verify>
+        <ResetAndRun>no</ResetAndRun>
+      </Flash>
+    </BuildConfig>
+  </BuildConfigs>
+  <VendorInfo>
+    <VendorName>new_psf_project_CB2201-SDK(V1.0.0)_CB2201-BareMetal</VendorName>
+  </VendorInfo>
+</Project>

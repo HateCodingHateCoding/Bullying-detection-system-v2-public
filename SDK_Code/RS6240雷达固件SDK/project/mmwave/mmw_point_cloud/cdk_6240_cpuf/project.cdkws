@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CDK_Workspace Name="project" Database="LanguageSever" DoubleClick="Yes">
+  <DefaultPackPath>$(CDKWS)\__workspace_pack__</DefaultPackPath>
+  <Project Name="mmw_point_cloud_MRS6240_P2512" Path="project.cdkproj" RootPath="" Active="Yes"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Environment/>
+      <Project Name="mmw_point_cloud_MRS6240_P2512" ConfigName="psdf"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CDK_Workspace>

@@ -1,0 +1,97 @@
+/**
+ * @file shell_cmd_group.c
+ * @author Letter(nevermindzzt@gmail.com)
+ * @brief shell command group support
+ * @version 0.1
+ * @date 2020-10-18
+ *
+ * @copyright (c) 2020 Letter
+ *
+ */
+#include "shell.h"
+#include "string.h"
+#include "stdio.h"
+
+#if (CONFIG_SHELL == 1)
+
+
+unsigned int shellRunCommand(Shell *shell, ShellCommand *command);
+
+static void shellCmdGroupHelp(Shell *shell, char *name, ShellCommand *group);
+
+/**
+ * @brief shell命令组运行
+ *
+ * @param group 命令数组
+ * @param argc 参数数量
+ * @param argv 参数
+ *
+ * @return int 执行命令返回值
+ */
+int shellCmdGroupRun(ShellCommand *group, int argc, char *argv[])
+{
+    ShellCommand *item = group;
+    Shell *shell = shellGetCurrent();
+
+    SHELL_ASSERT(shell, return -1);
+
+    if (argc == 1 || strcmp("-h", argv[1]) == 0)
+    {
+        shellCmdGroupHelp(shell, argv[0], group);
+        return 0;
+    }
+    while (item->data.cmd.name)
+    {
+        if (strcmp(item->data.cmd.name, argv[1]) == 0)
+        {
+            for (short i = 0; i < argc - 1; i++)
+            {
+                argv[i] = argv[i + 1];
+            }
+            shell->parser.paramCount--;
+            return shellRunCommand(shell, item);
+        }
+        item++;
+    }
+    shellWriteString(shell, "sub command not found\r\n");
+    return -1;
+}
+
+/**
+ * @brief shell 命令组帮助
+ *
+ * @param shell shell对象
+ * @param name 命令组名
+ * @param group 命令数组
+ */
+static void shellCmdGroupHelp(Shell *shell, char *name, ShellCommand *group)
+{
+    ShellCommand *item = group;
+    short spaceLength;
+
+    shellWriteString(shell, "command group help of ");
+    shellWriteString(shell, name);
+    shellWriteString(shell, "\r\n");
+
+    while (item->data.cmd.name)
+    {
+
+        shellWriteString(shell, "    ");
+        spaceLength = shellWriteString(shell, item->data.cmd.name);
+        spaceLength = 16 - spaceLength;
+        spaceLength = (spaceLength > 0) ? spaceLength : 4;
+        do {
+            shellWriteString(shell, " ");
+        } while (--spaceLength);
+
+        shellWriteString(shell, ": ");
+        if (item->data.cmd.desc) {
+            shellWriteString(shell, item->data.cmd.desc);
+        }
+//        shellWriteString(shell, "\r\n\r\n");
+        shellWriteString(shell, "\r\n");
+        item++;
+    }
+}
+
+#endif /* CONFIG_SHELL */

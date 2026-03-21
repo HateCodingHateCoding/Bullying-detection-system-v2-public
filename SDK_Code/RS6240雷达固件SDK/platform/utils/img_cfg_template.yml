@@ -1,0 +1,182 @@
+base-conf:
+  head-size: 32
+  bootloader-section-size: 0x4000
+  app-section-max-size: 0x80000
+  data-storage-size: 0x2000
+
+  sram-base-addr: 0x00400400
+  sram-max-size: 294k
+  flash-max-size: 0K
+
+  fix-sram-map: false
+
+sub-imgs:
+  - name: sys0
+    cpu-id: cpus
+    img-id: 2
+    version: 0.0.0+0     
+    start-run: true
+    enter-point: 0x00500000
+    move-address:
+      -
+        subimg-offset: 0
+        run-address: 0x00500000
+        size: 0
+    remap-address:
+      -
+        type: sram-ibus-cpus
+        offset: 0
+        run-address: 0x00500000
+        size: 0
+
+    in-file: sys0.bin
+    out-file: sys0.img
+    store-dir : sys
+    pack: false
+    merge: false
+    
+  - name: sys1
+    cpu-id: cpuf
+    img-id: 3
+    version: 0.0.0+0    
+    start-run: true
+    enter-point: 0x00500000
+    move-address:
+      -
+        subimg-offset: 0
+        run-address: 0x00500000
+        size: 0
+    remap-address:
+      -
+        type: sram-ibus-cpus
+        offset: 0
+        run-address: 0x00500000
+        size: 0
+
+    in-file: sys1.bin
+    out-file: sys1.img
+    store-dir : sys
+    pack: false
+    merge: false
+
+  - name: mmw  
+    cpu-id: cpusf
+    img-id: 0x5
+    version: 0.0.0+0
+    start-run: false
+    enter-point: 0
+    move-address:
+    -   run-address: 0x580000
+        size: 0
+        subimg-offset: 0
+    remap-address:
+    -   offset: 0
+        run-address: 0x009C0000
+        size: 0
+        type: xip
+
+    in-file: mmw.bin
+    out-file: mmw.img
+    store-dir : mmw
+    pack: false
+    merge: false
+
+  - name: mmwalg
+    cpu-id: cpusf
+    img-id: 0x6
+    version: 0.0.0+0
+    start-run: false
+    enter-point: 0
+    move-address:
+    -   run-address: 0x540000
+        size: 0
+        subimg-offset: 0
+    remap-address:
+    -   offset: 0
+        run-address: 0x00980000
+        size: 0
+        type: xip
+
+    in-file: mmwalg.bin
+    out-file: mmwalg.img
+    store-dir : mmwalg
+    pack: false
+    merge: false
+
+  - name: mpw  
+    cpu-id: cpus
+    img-id: 0x8
+    version: 0.0.0+0
+    start-run: false
+    enter-point: 0
+    move-address:
+    -   run-address: 0x540000
+        size: 0
+        subimg-offset: 0
+    remap-address:
+    -   offset: 0
+        run-address: 0x009C0000
+        size: 0
+        type: xip
+        
+    in-file: mpw.bin
+    out-file: mpw.img
+    store-dir : mpw
+    pack: false
+    merge: false
+    
+# merge-img 信息不需要用户填写，工具自动填写    
+merge-img:
+  name: psic_merge
+  version: 0.0.0+0
+  r_version: 0.0
+  m_version: 0.0
+  subimg-load:
+    -
+      offset: 0
+  
+  #merge-img remap address 这段不需用户填写，工具根据subimg计算得到并填写
+  remap-address:
+    - type: xip
+      offset: 0
+      run-address: 0
+      size: 0
+
+  in-file: merge.bin
+  out-file: merge.img
+
+boot-img:
+  name: minboot #不可修改
+  img-id: 0
+  load-ram-address: 0
+  enter-point: 0
+  version: 0.0.0
+  in-file: boot_iram.bin
+  out-file: psdfboot.img
+  store-dir : bootloader
+  pack: false
+  merge: true
+
+flash-list-img:
+  name: spiflash_list
+  cpu-id: cpusf
+  img-id: 15
+  version: 1.0.0
+  in-file: spiflash_list.bin
+  out-file: spiflash_list.img
+  pack: false
+  merge: false
+
+mmw-customer-cfg-img:
+  name: customer-cfg
+  cpu-id: cpusf
+  img-id: 13
+  version: 1.0.0
+  in-file: customer_cfg.bin
+  out-file: customer_cfg.img
+  pack: false
+  merge: false
+
+z-dbg-info:
+  -
+    key: value

@@ -1,0 +1,10 @@
+#ifndef _CSI_CONFIG_H_
+#define _CSI_CONFIG_H_
+
+#define CONFIG_CHIP_CH2201 1
+#define CONFIG_KERNEL_NONE 1
+#define CONFIG_LPM 1
+#define CONFIG_SYSTEM_SECURE 1
+#define CONFIG_ARCH_INTERRUPTSTACK 4096
+
+#endif

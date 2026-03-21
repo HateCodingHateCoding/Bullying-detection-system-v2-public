@@ -1,0 +1,1117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.csky.cds.peripheral>
+  <config Version="0.0.1"/>
+  <ChipConfig>
+    <CodeGenerateConfig>
+      <OutputFileName>$(ProjectPath)/chip_config.c</OutputFileName>
+      <IncludeFile>stdio.h</IncludeFile>
+      <IncludeFile>stdint.h</IncludeFile>
+      <IncludeFile>drv_gpio.h</IncludeFile>
+      <IncludeFile>sys_freq.h</IncludeFile>
+      <IncludeFile>pin_name.h</IncludeFile>
+      <IncludeFile>pinmux.h</IncludeFile>
+      <DLLConfig>
+        <DLLFile>$(ProjectPath)/utilities/chip_config.dll</DLLFile>
+        <InitFunc>OnInit</InitFunc>
+        <UninitFunc>OnUninit</UninitFunc>
+        <GetErrorFunc>GetErrorMsg</GetErrorFunc>
+      </DLLConfig>
+    </CodeGenerateConfig>
+    <ChipView>
+      <ChipName>CH2201</ChipName>
+      <ChipShape>CVS_LOOK_SQUARE</ChipShape>
+      <PinCount>64</PinCount>
+      <GenCodeFuncName>pin_init_code_gen</GenCodeFuncName>
+      <Pins>
+        <Pin pinNum="1" canModify="false">
+          <PinFunctions select="PI_IO_JTAG_MODE">
+            <Func>PI_IO_JTAG_MODE</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="2" canModify="false">
+          <PinFunctions select="PI_IO_JTAG_TSM">
+            <Func>PI_IO_JTAG_TSM</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="3" group="PA">
+          <PinFunctions select="SYS.WKUP">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN8">GPIOA8</Func>
+            <Func deviceId="SYS">SYS.WKUP</Func>
+            <Func deviceId="ADC">ADC.A0</Func>
+            <Func deviceId="ACMP">ACMP.P0</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">output</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="4" group="PA">
+          <PinFunctions select="GPIOA9">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN9">GPIOA9</Func>
+            <Func deviceId="SYS">BOOT</Func>
+            <Func deviceId="ADC">ADC.A1</Func>
+            <Func deviceId="PWM">PWM.FAULT</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="5" group="PA">
+          <PinFunctions select="UART0.TX">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN10">GPIOA10</Func>
+            <Func deviceId="ADC">ADC.A2</Func>
+            <Func deviceId="UART0">UART0.TX</Func>
+            <Func deviceId="UART0">UART0.SIROUT</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="6" group="PA">
+          <PinFunctions select="UART0.RX">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN11">GPIOA11</Func>
+            <Func deviceId="ACMP">ACMP.N0</Func>
+            <Func deviceId="ADC">ADC.A3</Func>
+            <Func deviceId="UART0">UART0.RX</Func>
+            <Func deviceId="UART0">UART0.SIRIN</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="7" group="PA">
+          <PinFunctions select="GPIOA12">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN12">GPIOA12</Func>
+            <Func deviceId="PWM">PWM.CH8</Func>
+            <Func deviceId="JTAG">JTAG.TCK</Func>
+            <Func deviceId="ADC">ADC.A4</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="8" group="PA">
+          <PinFunctions select="GPIOA13">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN13">GPIOA13</Func>
+            <Func deviceId="PWM">PWM.CH9</Func>
+            <Func deviceId="JTAG">JTAG.TMS</Func>
+            <Func deviceId="ADC">ADC.A5</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="9" group="PA">
+          <PinFunctions select="GPIOA14">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN14">GPIOA14</Func>
+            <Func deviceId="PWM">PWM.CH10</Func>
+            <Func deviceId="ADC">ADC.A6</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="10" group="PA">
+          <PinFunctions select="GPIOA15">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN15">GPIOA15</Func>
+            <Func deviceId="PWM">PWM.CH11</Func>
+            <Func deviceId="ADC">ADC.A7</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="11" group="PA">
+          <PinFunctions select="SPI1.MISO">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN22">GPIOA22</Func>
+            <Func deviceId="SPI1">SPI1.MISO</Func>
+            <Func deviceId="PWM">PWM.CH0</Func>
+            <Func deviceId="ADC">ADC.A10</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="12" group="PA">
+          <PinFunctions select="SPI1.MOSI">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN23">GPIOA23</Func>
+            <Func deviceId="SPI1">SPI1.MOSI</Func>
+            <Func deviceId="PWM">PWM.CH1</Func>
+            <Func deviceId="ADC">ADC.A11</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="13" group="PA">
+          <PinFunctions select="GPIOA26">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN26">GPIOA26</Func>
+            <Func deviceId="UART2">UART2.CTS</Func>
+            <Func deviceId="I2S">I2S.WSCLK</Func>
+            <Func deviceId="ADC">ADC.A12</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="14" group="PA">
+          <PinFunctions select="GPIOA27">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN27">GPIOA27</Func>
+            <Func deviceId="UART2">UART2.RTS</Func>
+            <Func deviceId="I2S">I2S.SDA</Func>
+            <Func deviceId="ADC">ADC.A13</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="15" group="PC">
+          <PinFunctions select="I2C1.SCL">
+            <Func deviceId="GPIOC" csi_pin_name="PORTC_PIN0">GPIOC0</Func>
+            <Func deviceId="I2C1">I2C1.SCL</Func>
+            <Func deviceId="UART1">UART1.CTS</Func>
+            <Func deviceId="PWM">PWM.CH10</Func>
+            <Func deviceId="ADC">ADC.A14</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="16" group="PC">
+          <PinFunctions select="I2C1.SDA">
+            <Func deviceId="GPIOC" csi_pin_name="PORTC_PIN1">GPIOC1</Func>
+            <Func deviceId="I2C1">I2C1.SDA</Func>
+            <Func deviceId="UART1">UART1.RTS</Func>
+            <Func deviceId="PWM">PWM.CH11</Func>
+            <Func deviceId="ADC">ADC.A15</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="17" type="VDD">
+          <PinFunctions>
+            <Func>VDDHD</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="18" type="VDD">
+          <PinFunctions>
+            <Func>VSSH</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="19" type="VDD">
+          <PinFunctions>
+            <Func>ADC Power</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="20" type="GND">
+          <PinFunctions>
+            <Func>ADC Ground</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="21" canModify="false">
+          <PinFunctions select="PIN_ELS">
+            <Func>PIN_ELS</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="22" canModify="false">
+          <PinFunctions select="POUT_ELS">
+            <Func>POUT_ELS</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="23" type="VDD">
+          <PinFunctions>
+            <Func>AVDD33</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="24" canModify="false">
+          <PinFunctions select="ADC_VREFN">
+            <Func>ADC_VREFN</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="25" canModify="false">
+          <PinFunctions select="ADC_VREFP">
+            <Func>ADC_VREFP</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="26" type="GND">
+          <PinFunctions>
+            <Func>AVSS33</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="27" type="VDD">
+          <PinFunctions>
+            <Func>OSC Power</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="28" type="GND">
+          <PinFunctions>
+            <Func>OSC Ground</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="29" canModify="false">
+          <PinFunctions select="PI_TEST_MODE">
+            <Func>PI_TEST_MODE</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="30" canModify="false">
+          <PinFunctions select="PI_MCURST">
+            <Func>PI_MCURST</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="31" canModify="false">
+          <PinFunctions select="PIN_EHS">
+            <Func>PIN_EHS</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="32" canModify="false">
+          <PinFunctions select="POUT_EHS">
+            <Func>POUT_EHS</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="33" group="PA">
+          <PinFunctions select="JTAG.TCK">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN0">GPIOA0</Func>
+            <Func deviceId="ETB">ETB_TRIG0</Func>
+            <Func deviceId="JTAG">JTAG.TCK</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="34" group="PA">
+          <PinFunctions select="JTAG.TMS">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN1">GPIOA1</Func>
+            <Func deviceId="ETB">ETB.TRIG1</Func>
+            <Func deviceId="JTAG">JTAG.TMS</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="35" group="PA">
+          <PinFunctions select="SPI0.MOSI">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN6">GPIOA6</Func>
+            <Func deviceId="SPI0">SPI0.MOSI</Func>
+            <Func deviceId="PWM">PWM.CH6</Func>
+            <Func deviceId="I2C0">I2C0.SCL</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="36" group="PA">
+          <PinFunctions select="SPI0.CS">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN7">GPIOA7</Func>
+            <Func deviceId="SPI0">SPI0.CS</Func>
+            <Func deviceId="PWM">PWM.CH7</Func>
+            <Func deviceId="I2C0">I2C0.SDA</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="37" type="GND">
+          <PinFunctions>
+            <Func>VSS</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="38" group="PA">
+          <PinFunctions select="PWM.CH1">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN5">GPIOA5</Func>
+            <Func deviceId="UART0">UART0.RTS</Func>
+            <Func deviceId="PWM">PWM.CH1</Func>
+            <Func deviceId="SPI0">SPI0.CS</Func>
+            <Func deviceId="ETB">ETB.TRIG1</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="39" group="PA">
+          <PinFunctions select="GPIOA2">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN2">GPIOA2</Func>
+            <Func deviceId="UART0">UART0.TX</Func>
+            <Func deviceId="SPI0">SPI0.MISO</Func>
+            <Func deviceId="UART0">UART0.SIRIN</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="40" type="GND">
+          <PinFunctions>
+            <Func>VSSH</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="41" group="PA">
+          <PinFunctions select="PWM.CH0">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN4">GPIOA4</Func>
+            <Func deviceId="UART0">UART0.CTS</Func>
+            <Func deviceId="PWM">PWM.CH0</Func>
+            <Func deviceId="SPI0">SPI0.SCK</Func>
+            <Func deviceId="ETB">ETB.TRIG0</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="42" group="PA">
+          <PinFunctions select="GPIOA3">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN3">GPIOA3</Func>
+            <Func deviceId="UART0">UART0.RX</Func>
+            <Func deviceId="SPI0">SPI0.MOSI</Func>
+            <Func deviceId="UART0">UART0.SIRIN</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="43" type="GND">
+          <PinFunctions>
+            <Func>VSS</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="44" group="PA">
+          <PinFunctions select="UART2.RX">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN25">GPIOA25</Func>
+            <Func deviceId="UART2">UART2.RX</Func>
+            <Func deviceId="I2S">I2S.SCLK</Func>
+            <Func deviceId="SPI1">SPI1.CS1</Func>
+            <Func deviceId="UART2">UART2.SIRIN</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="45" group="PA">
+          <PinFunctions select="UART2.TX">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN24">GPIOA24</Func>
+            <Func deviceId="UART2">UART2.TX</Func>
+            <Func deviceId="I2S">I2S.SCLK</Func>
+            <Func deviceId="SPI1">SPI1.CS1</Func>
+            <Func deviceId="UART2">UART2.SIROUT</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="46" type="VDD">
+          <PinFunctions>
+            <Func>VDDHD</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="47" group="PA">
+          <PinFunctions select="UART1.TX">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN17">GPIOA17</Func>
+            <Func deviceId="UART1">UART1.TX</Func>
+            <Func deviceId="ADC">ADC.A9</Func>
+            <Func deviceId="UART1">UART1.SIROUT</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="48" group="PA">
+          <PinFunctions select="UART1.RX">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN16">GPIOA16</Func>
+            <Func deviceId="UART1">UART1.RX</Func>
+            <Func deviceId="ADC">ADC.A8</Func>
+            <Func deviceId="UART1">UART1.SIRIN</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="49" type="VDD">
+          <PinFunctions>
+            <Func>VDD_SMDU_15</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="50" type="VDD">
+          <PinFunctions>
+            <Func>VDD_AOU_15</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="51" type="VDD">
+          <PinFunctions>
+            <Func>VDD_ANADU_15</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="52" type="VDD">
+          <PinFunctions>
+            <Func>VDD_PDU_15</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="53" type="VDD">
+          <PinFunctions>
+            <Func>RCMCU_PLVDDH_T1(VDDHD)</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="54" type="GND">
+          <PinFunctions>
+            <Func>RCMCU_PLVSSH_T1(VSS)</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="55" group="PA">
+          <PinFunctions select="SPI1.SCK">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN21">GPIOA21</Func>
+            <Func deviceId="SPI1">SPI1.SCK</Func>
+            <Func deviceId="ETB">ETB.TRIG1</Func>
+            <Func deviceId="UART1">UART1.TX</Func>
+            <Func deviceId="UART1">UART1.SIROUT</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="56" group="PA">
+          <PinFunctions select="SPI1.CS2">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN20">GPIOA20</Func>
+            <Func deviceId="SPI1">SPI1.CS2</Func>
+            <Func deviceId="ETB">ETB.TRIG0</Func>
+            <Func deviceId="UART1">UART1.RX</Func>
+            <Func deviceId="UART1">UART1.SIROUT</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="57" group="PA">
+          <PinFunctions select="GPIOA19">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN19">GPIOA19</Func>
+            <Func deviceId="SPI1">SPI1.CS1</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="58" group="PA">
+          <PinFunctions select="SPI1.CS0">
+            <Func deviceId="GPIOA" csi_pin_name="PORTA_PIN18">GPIOA18</Func>
+            <Func deviceId="SPI1">SPI1.CS0</Func>
+            <Func deviceId="ACMP">ACMP.O0</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="59" type="VDD">
+          <PinFunctions>
+            <Func>RCMCU_PLVDD_T1(VDD_AOU_15)</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="60" type="VDD">
+          <PinFunctions>
+            <Func>PLVDDI_PDU_T2(VDD_AOU_15)</Func>
+          </PinFunctions>
+        </Pin>
+        <Pin pinNum="61" group="PB">
+          <PinFunctions select="GPIOB3">
+            <Func deviceId="GPIOB" csi_pin_name="PORTB_PIN3">GPIOB3</Func>
+            <Func deviceId="SPI0">SPI0.MISO</Func>
+            <Func deviceId="PWM">PWM.CH5</Func>
+            <Func deviceId="I2S">I2S.SDA</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="62" group="PB">
+          <PinFunctions select="GPIOB2">
+            <Func deviceId="GPIOB" csi_pin_name="PORTB_PIN2">GPIOB2</Func>
+            <Func deviceId="SPI0">SPI0.SCK</Func>
+            <Func deviceId="PWM">PWM.CH4</Func>
+            <Func deviceId="I2S">I2S.SDA</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">output</Direction>
+          <Pullup Comment="" displayName="Pullup">pulldown</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="63" group="PB">
+          <PinFunctions select="PWM.CH3">
+            <Func deviceId="GPIOB" csi_pin_name="PORTB_PIN1">GPIOB1</Func>
+            <Func deviceId="I2C0">I2C0.SDA</Func>
+            <Func deviceId="PWM">PWM.CH3</Func>
+            <Func deviceId="I2S">I2S.SCLK</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+        <Pin pinNum="64" group="PB">
+          <PinFunctions select="PWM.CH2">
+            <Func deviceId="GPIOB" csi_pin_name="PORTB_PIN0">GPIOB0</Func>
+            <Func deviceId="I2C0">I2C0.SCL</Func>
+            <Func deviceId="PWM">PWM.CH2</Func>
+            <Func deviceId="I2S">I2S.MCLK</Func>
+          </PinFunctions>
+          <Direction Comment="" displayName="Direction">input</Direction>
+          <Pullup Comment="" displayName="Pullup">pull none</Pullup>
+          <Comment/>
+        </Pin>
+      </Pins>
+    </ChipView>
+    <ChipPropertiesView>
+      <ChipPins>
+        <label>I/O ports</label>
+      </ChipPins>
+      <Category>
+        <label>System clock</label>
+        <Device deviceId="System clock">
+          <GenCodeFuncName>system_clock_code_gen</GenCodeFuncName>
+          <UseOrNot>1</UseOrNot>
+          <Property class="Choice">
+            <label>Clock source</label>
+            <value>External RC</value>
+            <Selections>
+              <sel>Internal RC</sel>
+              <sel>External RC</sel>
+            </Selections>
+          </Property>
+          <Property class="Choice">
+            <label>Freq (MHz)</label>
+            <value>48</value>
+            <Selections>
+              <sel>8</sel>
+              <sel>16</sel>
+              <sel>24</sel>
+              <sel>32</sel>
+              <sel>40</sel>
+              <sel>48</sel>
+            </Selections>
+          </Property>
+        </Device>
+      </Category>
+      <Category>
+        <label>IIC</label>
+        <Device deviceId="I2C0" usedPins="63,64" csi_device_name="CSI_IIC">
+          <UseOrNot>0</UseOrNot>
+          <label>I2C0</label>
+          <Property class="Choice" csi_dev_property_id="csi_iic_mode">
+            <label>mode</label>
+            <value>IIC_MODE_MASTER</value>
+            <Selections>
+              <sel>IIC_MODE_MASTER</sel>
+              <sel>IIC_MODE_SLAVE</sel>
+            </Selections>
+            <Comment>iic mode</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_iic_speed">
+            <label>speed</label>
+            <value>I2C_BUS_SPEED_STANDARD</value>
+            <Selections>
+              <sel>I2C_BUS_SPEED_STANDARD</sel>
+              <sel>I2C_BUS_SPEED_FAST</sel>
+              <sel>I2C_BUS_SPEED_FAST_PLUS</sel>
+              <sel>I2C_BUS_SPEED_HIGH</sel>
+            </Selections>
+            <Comment>iic speed</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_iic_addr_mode">
+            <label>address mode</label>
+            <value>I2C_ADDRESS_7BIT</value>
+            <Selections>
+              <sel>I2C_ADDRESS_7BIT</sel>
+              <sel>I2C_ADDRESS_10BIT</sel>
+            </Selections>
+            <Comment>iic address mode</Comment>
+          </Property>
+          <Property class="Text" csi_dev_property_id="csi_iic_slave_addr">
+            <label>slave address mode</label>
+            <value>0x0</value>
+            <validReg>^0[xX][0-9a-fA-F]{1,8}$</validReg>
+            <Comment>iic address of slave. if negative, then this attribute not changed. valid regular expression："^0[xX][0-9a-fA-F]{1,8}$"</Comment>
+          </Property>
+        </Device>
+        <Device deviceId="I2C1" usedPins="15,16" csi_device_name="CSI_IIC">
+          <UseOrNot>0</UseOrNot>
+          <label>I2C1</label>
+          <Property class="Choice" csi_dev_property_id="csi_iic_mode">
+            <label>mode</label>
+            <value>IIC_MODE_SLAVE</value>
+            <Selections>
+              <sel>IIC_MODE_MASTER</sel>
+              <sel>IIC_MODE_SLAVE</sel>
+            </Selections>
+            <Comment>iic mode</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_iic_speed">
+            <label>speed</label>
+            <value>I2C_BUS_SPEED_STANDARD</value>
+            <Selections>
+              <sel>I2C_BUS_SPEED_STANDARD</sel>
+              <sel>I2C_BUS_SPEED_FAST</sel>
+              <sel>I2C_BUS_SPEED_FAST_PLUS</sel>
+              <sel>I2C_BUS_SPEED_HIGH</sel>
+            </Selections>
+            <Comment>iic speed</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_iic_addr_mode">
+            <label>address mode</label>
+            <value>I2C_ADDRESS_7BIT</value>
+            <Selections>
+              <sel>I2C_ADDRESS_7BIT</sel>
+              <sel>I2C_ADDRESS_10BIT</sel>
+            </Selections>
+            <Comment>iic address mode</Comment>
+          </Property>
+          <Property class="Text" csi_dev_property_id="csi_iic_slave_addr">
+            <label>slave address mode</label>
+            <value>0x0</value>
+            <validReg>^0[xX][0-9a-fA-F]{1,8}$</validReg>
+            <Comment>iic address of slave. if negative, then this attribute not changed. valid regular expression："^0[xX][0-9a-fA-F]{1,8}$"</Comment>
+          </Property>
+        </Device>
+      </Category>
+      <Category>
+        <label>SPI</label>
+        <Device deviceId="SPI0" usedPins="35,38,39,42,62" csi_device_name="CSI_SPI">
+          <UseOrNot>0</UseOrNot>
+          <label>SPI0</label>
+          <Property class="Text" csi_dev_property_id="csi_spi_baud">
+            <label>baud</label>
+            <value>115200</value>
+            <validReg>^[0-9]*$</validReg>
+            <Comment>spi baud rate. if negative, then this attribute not changed. valid regular expression："^[0-9]*$"</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_spi_mode">
+            <label>spi mode</label>
+            <value>SPI_MODE_INACTIVE</value>
+            <Selections>
+              <sel>SPI_MODE_INACTIVE</sel>
+              <sel>SPI_MODE_MASTER</sel>
+              <sel>SPI_MODE_SLAVE</sel>
+              <sel>SPI_MODE_MASTER_SIMPLEX</sel>
+              <sel>SPI_MODE_SLAVE_SIMPLEX</sel>
+            </Selections>
+            <Comment>spi address mode.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_spi_format">
+            <label>spi format</label>
+            <value>SPI_FORMAT_CPOL0_CPHA0</value>
+            <Selections>
+              <sel>SPI_FORMAT_CPOL0_CPHA0</sel>
+              <sel>SPI_FORMAT_CPOL0_CPHA1</sel>
+              <sel>SPI_FORMAT_CPOL1_CPHA0</sel>
+              <sel>SPI_FORMAT_CPOL1_CPHA1</sel>
+            </Selections>
+            <Comment>spi format.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_spi_order">
+            <label>spi order</label>
+            <value>SPI_ORDER_MSB2LSB</value>
+            <Selections>
+              <sel>SPI_ORDER_MSB2LSB</sel>
+              <sel>SPI_ORDER_LSB2MSB</sel>
+            </Selections>
+            <Comment>spi order.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_spi_ss_mode">
+            <label>spi ss mode</label>
+            <value>SPI_SS_MASTER_UNUSED</value>
+            <Selections>
+              <sel>SPI_SS_MASTER_UNUSED</sel>
+              <sel>SPI_SS_MASTER_SW</sel>
+              <sel>SPI_SS_MASTER_HW_OUTPUT</sel>
+              <sel>SPI_SS_MASTER_HW_INPUT</sel>
+              <sel>SPI_SS_SLAVE_HW</sel>
+              <sel>SPI_SS_SLAVE_SW</sel>
+            </Selections>
+            <Comment>spi ss mode.</Comment>
+          </Property>
+          <Property class="Text" csi_dev_property_id="csi_spi_bit_width">
+            <label>bit width</label>
+            <value>1</value>
+            <validReg>^[1-3]$</validReg>
+            <Comment>spi data bitwidth: (1 ~ SPI_DATAWIDTH_MAX) . if negative, then this attribute not changed.valid regular expression:"^[1-3]$"</Comment>
+          </Property>
+        </Device>
+        <Device deviceId="SPI1" usedPins="11,12,45,55,56,57,58" csi_device_name="CSI_SPI">
+          <UseOrNot>0</UseOrNot>
+          <label>SPI1</label>
+          <Property class="Text" csi_dev_property_id="csi_spi_baud">
+            <label>baud</label>
+            <value>115200</value>
+            <validReg>^[0-9]*$</validReg>
+            <Comment>spi baud rate. if negative, then this attribute not changed. valid regular expression:"^[0-9]*$"</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_spi_mode">
+            <label>spi mode</label>
+            <value>SPI_MODE_INACTIVE</value>
+            <Selections>
+              <sel>SPI_MODE_INACTIVE</sel>
+              <sel>SPI_MODE_MASTER</sel>
+              <sel>SPI_MODE_SLAVE</sel>
+              <sel>SPI_MODE_MASTER_SIMPLEX</sel>
+              <sel>SPI_MODE_SLAVE_SIMPLEX</sel>
+            </Selections>
+            <Comment>spi address mode.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_spi_format">
+            <label>spi format</label>
+            <value>SPI_FORMAT_CPOL0_CPHA0</value>
+            <Selections>
+              <sel>SPI_FORMAT_CPOL0_CPHA0</sel>
+              <sel>SPI_FORMAT_CPOL0_CPHA1</sel>
+              <sel>SPI_FORMAT_CPOL1_CPHA0</sel>
+              <sel>SPI_FORMAT_CPOL1_CPHA1</sel>
+            </Selections>
+            <Comment>spi format.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_spi_order">
+            <label>spi order</label>
+            <value>SPI_ORDER_MSB2LSB</value>
+            <Selections>
+              <sel>SPI_ORDER_MSB2LSB</sel>
+              <sel>SPI_ORDER_LSB2MSB</sel>
+            </Selections>
+            <Comment>spi order.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_spi_ss_mode">
+            <label>spi ss mode</label>
+            <value>SPI_SS_MASTER_UNUSED</value>
+            <Selections>
+              <sel>SPI_SS_MASTER_UNUSED</sel>
+              <sel>SPI_SS_MASTER_SW</sel>
+              <sel>SPI_SS_MASTER_HW_OUTPUT</sel>
+              <sel>SPI_SS_MASTER_HW_INPUT</sel>
+              <sel>SPI_SS_SLAVE_HW</sel>
+              <sel>SPI_SS_SLAVE_SW</sel>
+            </Selections>
+            <Comment>spi ss mode.</Comment>
+          </Property>
+          <Property class="Text" csi_dev_property_id="csi_spi_bit_width">
+            <label>bit width</label>
+            <value>1</value>
+            <validReg>^[1-3]$</validReg>
+            <Comment>spi data bitwidth: (1 ~ SPI_DATAWIDTH_MAX) . if negative, then this attribute not changed.valid regular expression："^[1-3]$"</Comment>
+          </Property>
+        </Device>
+      </Category>
+      <Category>
+        <label>UART</label>
+        <Device deviceId="UART0" usedPins="5,6,38,41" csi_device_name="CSI_UART">
+          <UseOrNot>0</UseOrNot>
+          <label>UART0</label>
+          <Property class="Text" csi_dev_property_id="csi_uart_baud">
+            <label>baud</label>
+            <value>12000</value>
+            <validReg>^[0-9]*$</validReg>
+            <Comment>uart baud rate.valid regular expression："^[0-9]*$"</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_mode">
+            <label>uart mode</label>
+            <value>USART_MODE_ASYNCHRONOUS</value>
+            <Selections>
+              <sel>USART_MODE_ASYNCHRONOUS</sel>
+              <sel>USART_MODE_SYNCHRONOUS_MASTER</sel>
+              <sel>USART_MODE_SYNCHRONOUS_SLAVE</sel>
+              <sel>USART_MODE_SINGLE_WIRE</sel>
+              <sel>USART_MODE_SINGLE_IRDA</sel>
+              <sel>USART_MODE_SINGLE_SMART_CARD</sel>
+            </Selections>
+            <Comment>uart mode.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_parity">
+            <label>parity</label>
+            <value>USART_PARITY_NONE</value>
+            <Selections>
+              <sel>USART_PARITY_NONE</sel>
+              <sel>USART_PARITY_EVEN</sel>
+              <sel>USART_PARITY_ODD</sel>
+              <sel>USART_PARITY_1</sel>
+              <sel>USART_PARITY_0</sel>
+            </Selections>
+            <Comment>uart parity.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_stopbits">
+            <label>stop bits</label>
+            <value>USART_STOP_BITS_1</value>
+            <Selections>
+              <sel>USART_STOP_BITS_1</sel>
+              <sel>USART_STOP_BITS_2</sel>
+              <sel>USART_STOP_BITS_0_5</sel>
+              <sel>USART_STOP_BITS_1_5</sel>
+            </Selections>
+            <Comment>uart stop bits.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_bits">
+            <label>uart bits</label>
+            <value>USART_DATA_BITS_8</value>
+            <Selections>
+              <sel>USART_DATA_BITS_5</sel>
+              <sel>USART_DATA_BITS_6</sel>
+              <sel>USART_DATA_BITS_7</sel>
+              <sel>USART_DATA_BITS_8</sel>
+              <sel>USART_DATA_BITS_9</sel>
+            </Selections>
+            <Comment>uart bits.</Comment>
+          </Property>
+        </Device>
+        <Device deviceId="UART1" usedPins="15,16,47,48" csi_device_name="CSI_UART">
+          <UseOrNot>0</UseOrNot>
+          <label>UART1</label>
+          <Property class="Text" csi_dev_property_id="csi_uart_baud">
+            <label>baud</label>
+            <value>19200</value>
+            <validReg>^[0-9]*$</validReg>
+            <Comment>uart baud rate. valid regular expression："^[0-9]*$"</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_mode">
+            <label>uart mode</label>
+            <value>USART_MODE_ASYNCHRONOUS</value>
+            <Selections>
+              <sel>USART_MODE_ASYNCHRONOUS</sel>
+              <sel>USART_MODE_SYNCHRONOUS_MASTER</sel>
+              <sel>USART_MODE_SYNCHRONOUS_SLAVE</sel>
+              <sel>USART_MODE_SINGLE_WIRE</sel>
+              <sel>USART_MODE_SINGLE_IRDA</sel>
+              <sel>USART_MODE_SINGLE_SMART_CARD</sel>
+            </Selections>
+            <Comment>uart mode.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_parity">
+            <label>parity</label>
+            <value>USART_PARITY_NONE</value>
+            <Selections>
+              <sel>USART_PARITY_NONE</sel>
+              <sel>USART_PARITY_EVEN</sel>
+              <sel>USART_PARITY_ODD</sel>
+              <sel>USART_PARITY_1</sel>
+              <sel>USART_PARITY_0</sel>
+            </Selections>
+            <Comment>uart parity.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_stopbits">
+            <label>stop bits</label>
+            <value>USART_STOP_BITS_1</value>
+            <Selections>
+              <sel>USART_STOP_BITS_1</sel>
+              <sel>USART_STOP_BITS_2</sel>
+              <sel>USART_STOP_BITS_0_5</sel>
+              <sel>USART_STOP_BITS_1_5</sel>
+            </Selections>
+            <Comment>uart stop bits.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_bits">
+            <label>uart bits</label>
+            <value>USART_DATA_BITS_8</value>
+            <Selections>
+              <sel>USART_DATA_BITS_5</sel>
+              <sel>USART_DATA_BITS_6</sel>
+              <sel>USART_DATA_BITS_7</sel>
+              <sel>USART_DATA_BITS_8</sel>
+              <sel>USART_DATA_BITS_9</sel>
+            </Selections>
+            <Comment>uart bits.</Comment>
+          </Property>
+        </Device>
+        <Device deviceId="UART2" usedPins="13,14,44,45" csi_device_name="CSI_UART">
+          <UseOrNot>0</UseOrNot>
+          <label>UART2</label>
+          <Property class="Text" csi_dev_property_id="csi_uart_baud">
+            <label>baud</label>
+            <value>19200</value>
+            <validReg>^[0-9]*$</validReg>
+            <Comment>uart baud rate. valid regular expression："^[0-9]*$"</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_mode">
+            <label>uart mode</label>
+            <value>USART_MODE_ASYNCHRONOUS</value>
+            <Selections>
+              <sel>USART_MODE_ASYNCHRONOUS</sel>
+              <sel>USART_MODE_SYNCHRONOUS_MASTER</sel>
+              <sel>USART_MODE_SYNCHRONOUS_SLAVE</sel>
+              <sel>USART_MODE_SINGLE_WIRE</sel>
+              <sel>USART_MODE_SINGLE_IRDA</sel>
+              <sel>USART_MODE_SINGLE_SMART_CARD</sel>
+            </Selections>
+            <Comment>uart mode.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_parity">
+            <label>parity</label>
+            <value>USART_PARITY_NONE</value>
+            <Selections>
+              <sel>USART_PARITY_NONE</sel>
+              <sel>USART_PARITY_EVEN</sel>
+              <sel>USART_PARITY_ODD</sel>
+              <sel>USART_PARITY_1</sel>
+              <sel>USART_PARITY_0</sel>
+            </Selections>
+            <Comment>uart parity.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_stopbits">
+            <label>stop bits</label>
+            <value>USART_STOP_BITS_1</value>
+            <Selections>
+              <sel>USART_STOP_BITS_1</sel>
+              <sel>USART_STOP_BITS_2</sel>
+              <sel>USART_STOP_BITS_0_5</sel>
+              <sel>USART_STOP_BITS_1_5</sel>
+            </Selections>
+            <Comment>uart stop bits.</Comment>
+          </Property>
+          <Property class="Choice" csi_dev_property_id="csi_uart_bits">
+            <label>uart bits</label>
+            <value>USART_DATA_BITS_8</value>
+            <Selections>
+              <sel>USART_DATA_BITS_5</sel>
+              <sel>USART_DATA_BITS_6</sel>
+              <sel>USART_DATA_BITS_7</sel>
+              <sel>USART_DATA_BITS_8</sel>
+              <sel>USART_DATA_BITS_9</sel>
+            </Selections>
+            <Comment>uart bits.</Comment>
+          </Property>
+        </Device>
+      </Category>
+      <Category>
+        <label>Timer</label>
+        <Device deviceId="TIM0" csi_device_name="CSI_TIMER">
+          <label>Timer0</label>
+          <UseOrNot>0</UseOrNot>
+          <Property class="Choice" csi_dev_property_id="csi_timer_mode">
+            <label>timer mode</label>
+            <value>TIMER_MODE_FREE_RUNNING</value>
+            <Selections>
+              <sel>TIMER_MODE_FREE_RUNNING</sel>
+              <sel>TIMER_MODE_RELOAD</sel>
+            </Selections>
+            <Comment>timer mode.</Comment>
+          </Property>
+        </Device>
+        <Device deviceId="TIM1" csi_device_name="CSI_TIMER">
+          <label>Timer1</label>
+          <UseOrNot>0</UseOrNot>
+          <Property class="Choice" csi_dev_property_id="csi_timer_mode">
+            <label>timer mode</label>
+            <value>TIMER_MODE_FREE_RUNNING</value>
+            <Selections>
+              <sel>TIMER_MODE_FREE_RUNNING</sel>
+              <sel>TIMER_MODE_RELOAD</sel>
+            </Selections>
+            <Comment>timer mode.</Comment>
+          </Property>
+        </Device>
+      </Category>
+      <Device deviceId="SHA" csi_device_name="CSI_SHA">
+        <label>SHA</label>
+        <UseOrNot>0</UseOrNot>
+        <Property class="Choice" csi_dev_property_id="csi_sha_mode">
+          <label>SHA mode</label>
+          <value>SHA_MODE_256</value>
+          <Selections>
+            <sel>SHA_MODE_1</sel>
+            <sel>SHA_MODE_224</sel>
+            <sel>SHA_MODE_256</sel>
+            <sel>SHA_MODE_384</sel>
+            <sel>SHA_MODE_512</sel>
+            <sel>SHA_MODE_512_224</sel>
+            <sel>SHA_MODE_512_256</sel>
+          </Selections>
+          <Comment>sha mode.</Comment>
+        </Property>
+        <Property class="Choice" csi_dev_property_id="csi_sha_endian">
+          <label>SHA endian</label>
+          <value>SHA_ENDIAN_MODE_LITTLE</value>
+          <Selections>
+            <sel>SHA_ENDIAN_MODE_BIG</sel>
+            <sel>SHA_ENDIAN_MODE_LITTLE</sel>
+          </Selections>
+          <Comment>sha endian.</Comment>
+        </Property>
+      </Device>
+      <Device deviceId="RSA" csi_device_name="CSI_RSA">
+        <label>RSA</label>
+        <UseOrNot>0</UseOrNot>
+        <Property class="Choice" csi_dev_property_id="csi_rsa_data_bits">
+          <label>RSA data bits</label>
+          <value>RSA_DATA_BITS_1024</value>
+          <Selections>
+            <sel>RSA_DATA_BITS_192</sel>
+            <sel>RSA_DATA_BITS_256</sel>
+            <sel>RSA_DATA_BITS_512</sel>
+            <sel>RSA_DATA_BITS_1024</sel>
+            <sel>RSA_DATA_BITS_2048</sel>
+            <sel>RSA_DATA_BITS_3072</sel>
+          </Selections>
+          <Comment>RSA data bits.</Comment>
+        </Property>
+        <Property class="Choice" csi_dev_property_id="csi_rsa_endian">
+          <label>RSA endian</label>
+          <value>RSA_ENDIAN_MODE_LITTLE</value>
+          <Selections>
+            <sel>RSA_ENDIAN_MODE_LITTLE</sel>
+            <sel>RSA_ENDIAN_MODE_BIG</sel>
+          </Selections>
+          <Comment>rsa endian.</Comment>
+        </Property>
+      </Device>
+      <Device deviceId="CRC" csi_device_name="CSI_CRC">
+        <label>CRC</label>
+        <UseOrNot>0</UseOrNot>
+        <Property class="Choice" csi_dev_property_id="csi_crc_mode">
+          <label>CRC mode</label>
+          <value>CRC_MODE_CRC8</value>
+          <Selections>
+            <sel>CRC_MODE_CRC8</sel>
+            <sel>CRC_MODE_CRC16</sel>
+            <sel>CRC_MODE_CRC32</sel>
+          </Selections>
+          <Comment>CRC mode.</Comment>
+        </Property>
+        <Property class="Choice" csi_dev_property_id="csi_crc_standard">
+          <label>CRC Standard</label>
+          <value>CRC_STANDARD_CRC_ROHC</value>
+          <Selections>
+            <sel>CRC_STANDARD_CRC_ROHC</sel>
+            <sel>CRC_STANDARD_CRC_MAXIM</sel>
+            <sel>CRC_STANDARD_CRC_X25</sel>
+            <sel>CRC_STANDARD_CRC_CCITT</sel>
+            <sel>CRC_STANDARD_CRC_USB</sel>
+            <sel>CRC_STANDARD_CRC_IBM</sel>
+            <sel>CRC_STANDARD_CRC_MODBUS</sel>
+          </Selections>
+          <Comment>CRC Standard.</Comment>
+        </Property>
+      </Device>
+      <Device deviceId="AES" csi_device_name="CSI_AES">
+        <label>AES</label>
+        <UseOrNot>0</UseOrNot>
+        <Property class="Choice" csi_dev_property_id="csi_aes_mode">
+          <label>AES mode</label>
+          <value>AES_MODE_ECB</value>
+          <Selections>
+            <sel>AES_MODE_ECB</sel>
+            <sel>AES_MODE_CBC</sel>
+            <sel>AES_MODE_CFB1</sel>
+            <sel>AES_MODE_CFB8</sel>
+            <sel>AES_MODE_CFB128</sel>
+            <sel>AES_MODE_OFB</sel>
+            <sel>AES_MODE_CTR</sel>
+          </Selections>
+          <Comment>AES mode.</Comment>
+        </Property>
+        <Property class="Choice" csi_dev_property_id="csi_aes_keylen_bits">
+          <label>keylen bits</label>
+          <value>AES_KEY_LEN_BITS_128</value>
+          <Selections>
+            <sel>AES_KEY_LEN_BITS_128</sel>
+            <sel>AES_KEY_LEN_BITS_192</sel>
+            <sel>AES_KEY_LEN_BITS_256</sel>
+          </Selections>
+          <Comment>keylen bits.</Comment>
+        </Property>
+        <Property class="Choice" csi_dev_property_id="csi_aes_endian">
+          <label>AES endian</label>
+          <value>AES_ENDIAN_LITTLE</value>
+          <Selections>
+            <sel>AES_ENDIAN_LITTLE</sel>
+            <sel>AES_ENDIAN_BIG</sel>
+          </Selections>
+          <Comment>aes endian.</Comment>
+        </Property>
+      </Device>
+    </ChipPropertiesView>
+  </ChipConfig>
+</com.csky.cds.peripheral>

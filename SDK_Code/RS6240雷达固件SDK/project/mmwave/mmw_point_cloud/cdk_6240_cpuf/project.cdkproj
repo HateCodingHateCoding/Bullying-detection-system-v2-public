@@ -1,0 +1,1543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project Name="mmw_point_cloud_MRS6240_P2512" Version="1" Language="C">
+  <Description>mmw point cloud samples</Description>
+  <Dependencies Name="Debug"/>
+  <VendorInfo>
+    <VendorName>import_sdk_project</VendorName>
+  </VendorInfo>
+  <ToolsConfig>
+    <Compiler>
+      <Name>XTGccElfNewlib</Name>
+      <Version>latest</Version>
+    </Compiler>
+  </ToolsConfig>
+  <VirtualDirectory Name="kernel">
+    <VirtualDirectory Name="freeRTOS">
+      <VirtualDirectory Name="inc">
+        <File Name="../../../../kernel/freeRTOS/inc/atomic.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/croutine.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/deprecated_definitions.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/event_groups.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/FreeRTOS.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/list.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/message_buffer.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/mpu_prototypes.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/mpu_wrappers.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/portable.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/projdefs.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/queue.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/semphr.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/StackMacros.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/stack_macros.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/stdint.readme">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/stream_buffer.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/task.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/inc/timers.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="portable">
+        <File Name="../../../../kernel/freeRTOS/portable/FreeRTOSConfig.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/portable/heap_4.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/portable/port.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/portable/portmacro.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/portable/port_riscv.S">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="../../../../kernel/freeRTOS/src/croutine.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/src/event_groups.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/src/LICENSE.md">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/src/license.txt">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/src/list.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/src/queue.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/src/stream_buffer.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/src/tasks.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/freeRTOS/src/timers.c">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="inc">
+      <File Name="../../../../kernel/inc/kernel_config.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../kernel/inc/osi.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../kernel/inc/osi_common.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../kernel/inc/osi_memory.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../kernel/inc/osi_mutex.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../kernel/inc/osi_port.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../kernel/inc/osi_queue.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../kernel/inc/osi_semaphore.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../kernel/inc/osi_thread.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../kernel/inc/osi_timer.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../kernel/inc/osi_util.h">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+    <VirtualDirectory Name="src">
+      <VirtualDirectory Name="freeRTOS">
+        <File Name="../../../../kernel/src/freeRTOS/osi_memory.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/src/freeRTOS/osi_mutex.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/src/freeRTOS/osi_port.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/src/freeRTOS/osi_queue.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/src/freeRTOS/osi_semaphore.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/src/freeRTOS/osi_thread.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../kernel/src/freeRTOS/osi_timer.c">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="platform">
+    <VirtualDirectory Name="arch">
+      <VirtualDirectory Name="riscv">
+        <VirtualDirectory Name="inc">
+          <File Name="../../../../platform/arch/riscv/inc/arch_riscv_config.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/arch/riscv/inc/core_rv32.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/arch/riscv/inc/csi_common.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/arch/riscv/inc/csi_core.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/arch/riscv/inc/csi_rv32_gcc.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/arch/riscv/inc/riscv_asm_macro.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/arch/riscv/inc/riscv_csr.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+        <VirtualDirectory Name="src">
+          <File Name="../../../../platform/arch/riscv/src/sleep.S">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/arch/riscv/src/startup.S">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/arch/riscv/src/startup_c.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/arch/riscv/src/trap.S">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/arch/riscv/src/trap_c.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/arch/riscv/src/vectors.S">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="boards">
+      <File Name="../../../../platform/boards/board.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/boards/board.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/boards/board_config.h">
+        <FileOption/>
+      </File>
+      <VirtualDirectory Name="mrs6130_p1806">
+        <File Name="../../../../platform/boards/mrs6130_p1806/mrs6130_p1806.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/boards/mrs6130_p1806/mrs6130_p1806_config.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="mrs6130_p1812">
+        <File Name="../../../../platform/boards/mrs6130_p1812/mrs6130_p1812.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/boards/mrs6130_p1812/mrs6130_p1812_config.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="mrs6240_p2512">
+        <File Name="../../../../platform/boards/mrs6240_p2512/mrs6240_p2512.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/boards/mrs6240_p2512/mrs6240_p2512_config.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="drivers">
+      <VirtualDirectory Name="inc">
+        <File Name="../../../../platform/drivers/inc/driver_config.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_board.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_clock.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_clock_calib.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_common.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_config.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_dev.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_dma.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_efuse.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_flash.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_flash_chip.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_flash_jesd216.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_gpio.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_i2c.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_os.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_power.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_spi.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_types.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_uart.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_wdg.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/inc/hal_wkio.h">
+          <FileOption/>
+        </File>
+        <VirtualDirectory Name="hw">
+          <File Name="../../../../platform/drivers/inc/hw/hw_can.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_ccmu1.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_ccmu2.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_dma.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_efuse.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_fsmc.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_gpadc.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_gpio.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_iic.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_mbx.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_misc.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_misc2.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_pmu.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_pmu2.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_pwm.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_qspi.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_rcc.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_rtc.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_splk.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_swcfg.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_syscfg.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_tim.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_uart.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/hw/hw_wdg.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+        <VirtualDirectory Name="ll">
+          <File Name="../../../../platform/drivers/inc/ll/ll_can.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_clock_calib.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_dma.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_efuse.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_fsmc.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_gpadc.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_gpio.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_i2c.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_lpio.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_mbx.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_pmu.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_pwm.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_rcc_bus.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_rcc_dev.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_rtc.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_rtctick.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_spi.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_splk.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_timer.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_uart.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_utils.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/drivers/inc/ll/ll_wdg.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="../../../../platform/drivers/src/hal_board.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_clock.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_clock_calib.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_dev.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_dma.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_efuse.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_flash.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_flash_chip.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_flash_jesd216.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_gpio.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_i2c.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_power.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_spi.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_uart.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_wdg.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../platform/drivers/src/hal_wkio.c">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="soc">
+      <VirtualDirectory Name="common">
+        <VirtualDirectory Name="inc">
+          <File Name="../../../../platform/soc/common/inc/irq.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/common/inc/pmu_tmr.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/common/inc/soc.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/common/inc/soc_config.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+        <VirtualDirectory Name="src">
+          <File Name="../../../../platform/soc/common/src/irq.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/common/src/pmu_tmr.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/common/src/soc.c">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="rs613x">
+        <VirtualDirectory Name="inc">
+          <File Name="../../../../platform/soc/rs613x/inc/rs6130_config.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs613x/inc/rs613x.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs613x/inc/rs613x_config_cpus_112mhz.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs613x/inc/rs613x_config_cpus_128mhz.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs613x/inc/rs613x_config_cpus_32mhz.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs613x/inc/rs613x_config_cpus_96mhz.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+        <VirtualDirectory Name="src">
+          <File Name="../../../../platform/soc/rs613x/src/rs613x.c">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="rs624x">
+        <VirtualDirectory Name="inc">
+          <File Name="../../../../platform/soc/rs624x/inc/rs6240_config.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs624x/inc/rs6242_config.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs624x/inc/rs624x.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs624x/inc/rs624x_config_cpuf_112mhz.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs624x/inc/rs624x_config_cpuf_160mhz.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs624x/inc/rs624x_config_cpuf_192mhz.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs624x/inc/rs624x_config_cpuf_224mhz.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs624x/inc/rs624x_config_cpuf_240mhz.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs624x/inc/rs624x_config_cpuf_256mhz.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs624x/inc/rs624x_config_cpuf_32mhz.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../platform/soc/rs624x/inc/rs624x_config_cpuf_96mhz.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+        <VirtualDirectory Name="src">
+          <File Name="../../../../platform/soc/rs624x/src/rs624x.c">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="utils">
+      <File Name="../../../../platform/utils/assert.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/common.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/compiler.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/config.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/cs.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/image_packet.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/img_cfg_template.yml">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/linker_cpuf.ld">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/linker_cpus.ld">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/linker_sram_cpuf.ld">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/linker_sram_cpus.ld">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/types.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/version.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../platform/utils/version.h">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="project">
+    <VirtualDirectory Name="app">
+      <VirtualDirectory Name="inc">
+        <File Name="../app/inc/prj_config.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="../app/src/main.c">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="subsys">
+    <VirtualDirectory Name="cmd">
+      <File Name="../../../../subsys/cmd/cmd_clk.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_config.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_dma.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_efuse.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_flash.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_gpio.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_heap.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_i2c.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_kernel.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_kvf.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_mem.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_pm.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_spi.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_uart.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_version.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_wdg.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/cmd/cmd_wkio.c">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+    <VirtualDirectory Name="dsp">
+      <VirtualDirectory Name="inc">
+        <File Name="../../../../subsys/dsp/inc/csi_common_tables.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/dsp/inc/csi_const_structs.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/dsp/inc/csi_instance.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/dsp/inc/csi_math.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="ft">
+      <VirtualDirectory Name="inc">
+        <File Name="../../../../subsys/ft/inc/factory_test.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/ft/inc/mp_ctrl.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="../../../../subsys/ft/src/factory_test.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/ft/src/mp_ctrl.c">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="hif">
+      <VirtualDirectory Name="inc">
+        <File Name="../../../../subsys/hif/inc/hif.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_checksum.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_com.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_com_dma.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_com_iic.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_com_spi.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_com_uart.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_config.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_io.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_log.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_mem.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_msg.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_pm.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/inc/hif_types.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="../../../../subsys/hif/src/hif.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/src/hif_checksum.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/src/hif_com.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/src/hif_com_dma.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/src/hif_com_iic.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/src/hif_com_spi.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/src/hif_com_uart.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/src/hif_io.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/src/hif_mem.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/src/hif_msg.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/hif/src/hif_pm.c">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="kv">
+      <VirtualDirectory Name="kvf">
+        <VirtualDirectory Name="inc">
+          <File Name="../../../../subsys/kv/kvf/inc/kvf.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/kv/kvf/inc/nvs.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+        <VirtualDirectory Name="src">
+          <File Name="../../../../subsys/kv/kvf/src/kvf.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/kv/kvf/src/nvs.c">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="kvr">
+        <VirtualDirectory Name="inc">
+          <File Name="../../../../subsys/kv/kvr/inc/kvr.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+        <VirtualDirectory Name="src">
+          <File Name="../../../../subsys/kv/kvr/src/kvr.c">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="libc">
+      <VirtualDirectory Name="compilers">
+        <VirtualDirectory Name="gcc">
+          <VirtualDirectory Name="sys">
+            <File Name="../../../../subsys/libc/compilers/gcc/sys/ioctl.h">
+              <FileOption/>
+            </File>
+            <File Name="../../../../subsys/libc/compilers/gcc/sys/termios.h">
+              <FileOption/>
+            </File>
+          </VirtualDirectory>
+          <File Name="../../../../subsys/libc/compilers/gcc/time.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="include">
+        <File Name="../../../../subsys/libc/include/errno.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/libc/include/inttypes.h">
+          <FileOption/>
+        </File>
+        <VirtualDirectory Name="serf">
+          <File Name="../../../../subsys/libc/include/serf/minilibc_stdio.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+        <VirtualDirectory Name="sys">
+          <File Name="../../../../subsys/libc/include/sys/list.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/libc/include/sys/random.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/libc/include/sys/select.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/libc/include/sys/time.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/libc/include/sys/_stdint.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <File Name="../../../../subsys/libc/lib_msleep.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/libc/lib_sleep.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/libc/lib_usleep.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/libc/newlib_stub.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/libc/printf.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/libc/random.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/libc/settimeofday.c">
+        <FileOption/>
+      </File>
+      <VirtualDirectory Name="string">
+        <File Name="../../../../subsys/libc/string/strext.c">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="sys">
+        <File Name="../../../../subsys/libc/sys/fcntl.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/libc/sys/list.c">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="log">
+      <VirtualDirectory Name="inc">
+        <File Name="../../../../subsys/log/inc/log.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/log/inc/log_config.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/log/inc/log_port.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="../../../../subsys/log/src/log_io.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/log/src/printf_early_port.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/log/src/printf_port.c">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="mmw">
+      <VirtualDirectory Name="mmw_algorithm">
+        <File Name="../../../../subsys/mmw/mmw_algorithm/cfar_casogo.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/cfar_casogo.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_alg_ant_calibration.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_alg_ant_calibration.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_alg_debug.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_alg_debug.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_alg_doa.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_alg_doa.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_alg_micro_cube.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_alg_micro_cube.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_alg_pointcloud.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_alg_pointcloud.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_alg_pointcloud_typedef.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_algorithm/mmw_point_cloud_psic_lib.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="mmw_application">
+        <File Name="../../../../subsys/mmw/mmw_application/mmw_app_micro_pointcloud.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_application/mmw_app_micro_pointcloud.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_application/mmw_app_pointcloud.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_application/mmw_app_pointcloud.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_application/mmw_app_pointcloud_config.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_application/mmw_app_pointcloud_config.h">
+          <FileOption/>
+        </File>
+        <VirtualDirectory Name="test">
+          <File Name="../../../../subsys/mmw/mmw_application/test/mmw_point_cloud_ut.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_application/test/mmw_point_cloud_ut.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_application/test/mmw_point_cloud_vv.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_application/test/mmw_point_cloud_vv.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="mmw_cmd">
+        <VirtualDirectory Name="inc">
+          <File Name="../../../../subsys/mmw/mmw_cmd/inc/mmw_hif.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_cmd/inc/mmw_report.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+        <VirtualDirectory Name="src">
+          <File Name="../../../../subsys/mmw/mmw_cmd/src/mmw_hif.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_cmd/src/mmw_report.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_cmd/src/mmw_shell.c">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="mmw_ctrl">
+        <VirtualDirectory Name="inc">
+          <File Name="../../../../subsys/mmw/mmw_ctrl/inc/mmw.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/inc/mmw_ctrl.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/inc/mmw_ctrl_os_api.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/inc/mmw_low_power.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/inc/mmw_math.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/inc/mmw_temp_mgmt_api.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/inc/mmw_type.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/inc/motion_sensor_api.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/inc/motion_sensor_manage.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+        <VirtualDirectory Name="src">
+          <File Name="../../../../subsys/mmw/mmw_ctrl/src/mmw_ctrl.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/src/mmw_dev.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/src/mmw_dev_shell.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/src/mmw_low_power.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/src/mmw_pal.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/mmw/mmw_ctrl/src/mmw_temp_mgmt.c">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+      <VirtualDirectory Name="mmw_mdsp">
+        <File Name="../../../../subsys/mmw/mmw_mdsp/complex_int.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_mdsp/fast_func.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_mdsp/fft_func.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_mdsp/fft_func.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_mdsp/HwAux.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_mdsp/HwAux.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_mdsp/Luts.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_mdsp/Luts.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_mdsp/mdsp_driver.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/mmw/mmw_mdsp/mmw_mdsp.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <File Name="../../../../subsys/mmw/mmw_config.h">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+    <VirtualDirectory Name="pm">
+      <File Name="../../../../subsys/pm/device.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/pm/device_runtime.c">
+        <FileOption/>
+      </File>
+      <VirtualDirectory Name="include">
+        <File Name="../../../../subsys/pm/include/device.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/pm/include/device_runtime.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/pm/include/pm.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/pm/include/pm_config.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/pm/include/policy.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <File Name="../../../../subsys/pm/pm.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/pm/pm_shell.c">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/pm/policy.c">
+        <FileOption/>
+      </File>
+      <VirtualDirectory Name="port">
+        <File Name="../../../../subsys/pm/port/port.c">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/pm/port/port.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="sys">
+        <File Name="../../../../subsys/pm/sys/list_gen.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/pm/sys/slist.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/pm/sys/util.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <File Name="../../../../subsys/pm/test.c">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+    <VirtualDirectory Name="shell">
+      <VirtualDirectory Name="letter_shell">
+        <VirtualDirectory Name="inc">
+          <File Name="../../../../subsys/shell/letter_shell/inc/shell.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/shell/letter_shell/inc/shell_cmd_group.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/shell/letter_shell/inc/shell_config.h">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/shell/letter_shell/inc/shell_ext.h">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+        <VirtualDirectory Name="src">
+          <File Name="../../../../subsys/shell/letter_shell/src/shell.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/shell/letter_shell/src/shell_cmd_group.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/shell/letter_shell/src/shell_cmd_list.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/shell/letter_shell/src/shell_companion.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/shell/letter_shell/src/shell_ext.c">
+            <FileOption/>
+          </File>
+          <File Name="../../../../subsys/shell/letter_shell/src/shell_port.c">
+            <FileOption/>
+          </File>
+        </VirtualDirectory>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="test">
+      <File Name="../../../../subsys/test/test_config.h">
+        <FileOption/>
+      </File>
+      <File Name="../../../../subsys/test/test_kvf.c">
+        <FileOption/>
+      </File>
+    </VirtualDirectory>
+    <VirtualDirectory Name="testsuite">
+      <VirtualDirectory Name="inc">
+        <File Name="../../../../subsys/testsuite/inc/mtest_assert.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/testsuite/inc/mtest_config.h">
+          <FileOption/>
+        </File>
+        <File Name="../../../../subsys/testsuite/inc/mtest_test.h">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+      <VirtualDirectory Name="src">
+        <File Name="../../../../subsys/testsuite/src/mtest.c">
+          <FileOption/>
+        </File>
+      </VirtualDirectory>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <BuildConfigs>
+    <BuildConfig Name="psdf">
+      <Target>
+        <ROMBank Selected="1">
+          <ROM1>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM1>
+          <ROM2>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM2>
+          <ROM3>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM3>
+          <ROM4>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM4>
+          <ROM5>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+          </ROM5>
+        </ROMBank>
+        <RAMBank>
+          <RAM1>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM1>
+          <RAM2>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM2>
+          <RAM3>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM3>
+          <RAM4>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM4>
+          <RAM5>
+            <InUse>no</InUse>
+            <Start/>
+            <Size/>
+            <Init>yes</Init>
+          </RAM5>
+        </RAMBank>
+        <CPU>e906fp</CPU>
+        <UseMiniLib>yes</UseMiniLib>
+        <Endian>little</Endian>
+        <UseHardFloat>no</UseHardFloat>
+        <UseEnhancedLRW>no</UseEnhancedLRW>
+        <UseContinueBuild>no</UseContinueBuild>
+        <ToolchainID/>
+        <ToolchainVersion/>
+        <UseSemiHost>no</UseSemiHost>
+      </Target>
+      <Output>
+        <OutputName>psdf</OutputName>
+        <Type>Executable</Type>
+        <CreateHexFile>no</CreateHexFile>
+        <CreateBinFile>no</CreateBinFile>
+        <Preprocessor>no</Preprocessor>
+        <Disassmeble>yes</Disassmeble>
+        <CallGraph>no</CallGraph>
+        <Map>yes</Map>
+      </Output>
+      <User>
+        <BeforeCompile>
+          <RunUserProg>no</RunUserProg>
+          <UserProgName/>
+          <IsBatchScript>no</IsBatchScript>
+        </BeforeCompile>
+        <BeforeMake>
+          <RunUserProg>no</RunUserProg>
+          <UserProgName/>
+          <IsBatchScript>no</IsBatchScript>
+        </BeforeMake>
+        <AfterMake>
+          <RunUserProg>yes</RunUserProg>
+          <UserProgName>$(ProjectPath)/after_build.sh</UserProgName>
+          <IsBatchScript>no</IsBatchScript>
+        </AfterMake>
+        <Tools/>
+      </User>
+      <Compiler>
+        <Define>CONFIG_BOARD_MRS6240_P2512_CPUF=1</Define>
+        <Undefine/>
+        <Optim>Optimize size (-Os)</Optim>
+        <DebugLevel>None</DebugLevel>
+        <IncludePath>$(ProjectPath);$(ProjectPath)/../../../../kernel/freeRTOS/inc;$(ProjectPath)/../../../../kernel/freeRTOS/portable;$(ProjectPath)/../../../../kernel/inc;$(ProjectPath)/../../../../platform/arch/riscv/inc;$(ProjectPath)/../../../../platform/boards;$(ProjectPath)/../../../../platform/boards/mrs6130_p1806;$(ProjectPath)/../../../../platform/boards/mrs6130_p1812;$(ProjectPath)/../../../../platform/boards/mrs6240_p2512;$(ProjectPath)/../../../../platform/boards/mrs6242_p2512;$(ProjectPath)/../../../../platform/drivers/inc;$(ProjectPath)/../../../../platform/drivers/inc/hw;$(ProjectPath)/../../../../platform/drivers/inc/ll;$(ProjectPath)/../../../../platform/soc/common/inc;$(ProjectPath)/../../../../platform/soc/rs613x/inc;$(ProjectPath)/../../../../platform/soc/rs624x/inc;$(ProjectPath)/../../../../platform/utils;$(ProjectPath)/../../../../subsys/cmd;$(ProjectPath)/../../../../subsys/dsp/inc;$(ProjectPath)/../../../../subsys/ft/inc;$(ProjectPath)/../../../../subsys/hif/inc;$(ProjectPath)/../../../../subsys/kv/kvf/inc;$(ProjectPath)/../../../../subsys/kv/kvr/inc;$(ProjectPath)/../../../../subsys/libc/compilers/gcc;$(ProjectPath)/../../../../subsys/libc/compilers/gcc/sys;$(ProjectPath)/../../../../subsys/libc/include;$(ProjectPath)/../../../../subsys/libc/include/serf;$(ProjectPath)/../../../../subsys/libc/include/sys;$(ProjectPath)/../../../../subsys/log/inc;$(ProjectPath)/../../../../subsys/mmw;$(ProjectPath)/../../../../subsys/mmw/mmw_algorithm;$(ProjectPath)/../../../../subsys/mmw/mmw_application;$(ProjectPath)/../../../../subsys/mmw/mmw_application/test;$(ProjectPath)/../../../../subsys/mmw/mmw_cmd/inc;$(ProjectPath)/../../../../subsys/mmw/mmw_ctrl/inc;$(ProjectPath)/../../../../subsys/mmw/mmw_mdsp;$(ProjectPath)/../../../../subsys/mmw/mmw_psic_lib;$(ProjectPath)/../../../../subsys/ota/inc;$(ProjectPath)/../../../../subsys/pm/include;$(ProjectPath)/../../../../subsys/pm/port;$(ProjectPath)/../../../../subsys/pm/sys;$(ProjectPath)/../../../../subsys/shell/letter_shell/inc;$(ProjectPath)/../../../../subsys/test;$(ProjectPath)/../../../../subsys/testsuite/inc;$(ProjectPath)/../app/inc</IncludePath>
+        <OtherFlags>-MP -MMD -Os -Wno-main -mcmodel=medlow -Wno-unused-function -Wpointer-arith -Wno-undef -Wall -ffunction-sections -fdata-sections -fno-inline-functions -fno-builtin -fno-strict-aliasing</OtherFlags>
+        <Verbose>no</Verbose>
+        <Ansi>no</Ansi>
+        <Syntax>no</Syntax>
+        <Pedantic>no</Pedantic>
+        <PedanticErr>no</PedanticErr>
+        <InhibitWarn>no</InhibitWarn>
+        <AllWarn>yes</AllWarn>
+        <WarnErr>no</WarnErr>
+        <OneElfS>no</OneElfS>
+        <OneElfSPerData>no</OneElfSPerData>
+        <Fstrict>no</Fstrict>
+      </Compiler>
+      <Asm>
+        <Define>CONFIG_BOARD_MRS6240_P2512_CPUF=1</Define>
+        <Undefine/>
+        <IncludePath>$(ProjectPath);$(ProjectPath)/../../../../kernel/freeRTOS/inc;$(ProjectPath)/../../../../kernel/freeRTOS/portable;$(ProjectPath)/../../../../kernel/inc;$(ProjectPath)/../../../../platform/arch/riscv/inc;$(ProjectPath)/../../../../platform/boards;$(ProjectPath)/../../../../platform/boards/mrs6130_p1806;$(ProjectPath)/../../../../platform/boards/mrs6130_p1812;$(ProjectPath)/../../../../platform/boards/mrs6240_p2512;$(ProjectPath)/../../../../platform/boards/mrs6242_p2512;$(ProjectPath)/../../../../platform/drivers/inc;$(ProjectPath)/../../../../platform/drivers/inc/hw;$(ProjectPath)/../../../../platform/drivers/inc/ll;$(ProjectPath)/../../../../platform/soc/common/inc;$(ProjectPath)/../../../../platform/soc/rs613x/inc;$(ProjectPath)/../../../../platform/soc/rs624x/inc;$(ProjectPath)/../../../../platform/utils;$(ProjectPath)/../../../../subsys/cmd;$(ProjectPath)/../../../../subsys/dsp/inc;$(ProjectPath)/../../../../subsys/ft/inc;$(ProjectPath)/../../../../subsys/hif/inc;$(ProjectPath)/../../../../subsys/kv/kvf/inc;$(ProjectPath)/../../../../subsys/kv/kvr/inc;$(ProjectPath)/../../../../subsys/libc/compilers/gcc;$(ProjectPath)/../../../../subsys/libc/compilers/gcc/sys;$(ProjectPath)/../../../../subsys/libc/include;$(ProjectPath)/../../../../subsys/libc/include/serf;$(ProjectPath)/../../../../subsys/libc/include/sys;$(ProjectPath)/../../../../subsys/log/inc;$(ProjectPath)/../../../../subsys/mmw;$(ProjectPath)/../../../../subsys/mmw/mmw_algorithm;$(ProjectPath)/../../../../subsys/mmw/mmw_application;$(ProjectPath)/../../../../subsys/mmw/mmw_application/test;$(ProjectPath)/../../../../subsys/mmw/mmw_cmd/inc;$(ProjectPath)/../../../../subsys/mmw/mmw_ctrl/inc;$(ProjectPath)/../../../../subsys/mmw/mmw_mdsp;$(ProjectPath)/../../../../subsys/mmw/mmw_psic_lib;$(ProjectPath)/../../../../subsys/ota/inc;$(ProjectPath)/../../../../subsys/pm/include;$(ProjectPath)/../../../../subsys/pm/port;$(ProjectPath)/../../../../subsys/pm/sys;$(ProjectPath)/../../../../subsys/shell/letter_shell/inc;$(ProjectPath)/../../../../subsys/test;$(ProjectPath)/../../../../subsys/testsuite/inc;$(ProjectPath)/../app/inc</IncludePath>
+        <OtherFlags>-MP -MMD -Os -Wno-main -mcmodel=medlow</OtherFlags>
+        <DebugLevel>none</DebugLevel>
+      </Asm>
+      <Linker>
+        <Garbage>yes</Garbage>
+        <Garbage2>yes</Garbage2>
+        <LDFile>$(ProjectPath)/../../../../platform/utils/linker_cpuf.ld</LDFile>
+        <LibName>m;dsp;point_cloud</LibName>
+        <LibPath>../../../../libs/dsp/;../../../../libs/mmw/mmw_alg/point_cloud/rs6240/</LibPath>
+        <OtherFlags>-MP -MMD -Os -Wno-main -mcmodel=medlow  $(ProjectPath)../../../../libs/mmw/mmw_ctrl/rs6240/mmw_ctrl.sym $(ProjectPath)../../../../libs/bootloader/psdfboot.sym</OtherFlags>
+        <AutoLDFile>no</AutoLDFile>
+        <LinkType>whole-archive</LinkType>
+        <IncludeAllLibs>yes</IncludeAllLibs>
+        <LinkSpecsType>none</LinkSpecsType>
+        <LinkUseNewlibNano>no</LinkUseNewlibNano>
+        <LinkUseMinilibc>no</LinkUseMinilibc>
+      </Linker>
+      <Debug>
+        <LoadApplicationAtStartup>yes</LoadApplicationAtStartup>
+        <Connector>SIM</Connector>
+        <StopAt>yes</StopAt>
+        <StopAtText>main</StopAtText>
+        <InitFile>$(ProjectPath)/gdbinit.remote</InitFile>
+        <PreInit/>
+        <AfterLoadFile/>
+        <AutoRun>yes</AutoRun>
+        <ResetType>Hard Reset</ResetType>
+        <SoftResetVal>0</SoftResetVal>
+        <ResetAfterLoad>no</ResetAfterLoad>
+        <AfterResetFile/>
+        <Dumpcore>no</Dumpcore>
+        <DumpcoreText/>
+        <SVCFile/>
+        <ConfigICE>
+          <IP>localhost</IP>
+          <PORT>1025</PORT>
+          <CPUNumber>0</CPUNumber>
+          <Clock>12000</Clock>
+          <Delay>10</Delay>
+          <NResetDelay>100</NResetDelay>
+          <WaitReset>50</WaitReset>
+          <DDC>yes</DDC>
+          <TRST>no</TRST>
+          <PreReset>no</PreReset>
+          <DebugPrint>no</DebugPrint>
+          <Connect>Normal</Connect>
+          <ResetType>soft</ResetType>
+          <SoftResetVal>0</SoftResetVal>
+          <RTOSType>None</RTOSType>
+          <DownloadToFlash>no</DownloadToFlash>
+          <ResetAfterConnect>yes</ResetAfterConnect>
+          <GDBName/>
+          <GDBServerType>Local</GDBServerType>
+          <OtherFlags/>
+          <ICEEnablePCSampling>no</ICEEnablePCSampling>
+          <ICESamplingFreq>1000</ICESamplingFreq>
+          <RemoteICEEnablePCSampling>no</RemoteICEEnablePCSampling>
+          <RemoteICESamplingPort>1026</RemoteICESamplingPort>
+          <Version>latest</Version>
+          <SupportRemoteICEAsyncDebug>no</SupportRemoteICEAsyncDebug>
+        </ConfigICE>
+        <ConfigSIM>
+          <SIMTarget>soccfg/riscv32/smartl_e906_cfg.xml</SIMTarget>
+          <OtherFlags/>
+          <NoGraphic>yes</NoGraphic>
+          <Log>no</Log>
+          <SimTrace>no</SimTrace>
+          <Version>latest</Version>
+        </ConfigSIM>
+        <ConfigOpenOCD>
+          <OpenOCDExecutablePath/>
+          <OpenOCDLocally>yes</OpenOCDLocally>
+          <OpenOCDTelnetPortEnable>no</OpenOCDTelnetPortEnable>
+          <OpenOCDTelnetPort>4444</OpenOCDTelnetPort>
+          <OpenOCDTclPortEnable>no</OpenOCDTclPortEnable>
+          <OpenOCDTclPort>6666</OpenOCDTclPort>
+          <OpenOCDConfigOptions/>
+          <OpenOCDTimeout>5000</OpenOCDTimeout>
+          <OpenOCDRemoteIP>localhost</OpenOCDRemoteIP>
+          <OpenOCDRemotePort>3333</OpenOCDRemotePort>
+          <PluginID>openocd-sifive</PluginID>
+          <Version>latest</Version>
+        </ConfigOpenOCD>
+      </Debug>
+      <Flash>
+        <InitFile/>
+        <PreInit/>
+        <Erase>Erase Sectors</Erase>
+        <Algorithms Path=""/>
+        <Program>no</Program>
+        <Verify>no</Verify>
+        <ResetAndRun>no</ResetAndRun>
+        <ResetType>Soft Reset</ResetType>
+        <SoftResetVal/>
+        <FlashIndex>no</FlashIndex>
+        <FlashIndexVal>0</FlashIndexVal>
+        <External>no</External>
+        <Command/>
+        <Arguments/>
+      </Flash>
+    </BuildConfig>
+  </BuildConfigs>
+  <DebugSessions>
+    <watchExpressions/>
+    <memoryExpressions>;;;</memoryExpressions>
+    <statistics>;;MHZ</statistics>
+    <peripheralTabs/>
+    <WatchDisplayFormat/>
+    <LocalDisplayFormat/>
+    <debugLayout/>
+    <memoryTabColSizeExpressions/>
+    <QuickWatchDisplayFormat/>
+  </DebugSessions>
+  <DebugSessions>
+    <watchExpressions/>
+    <memoryExpressions>;;;</memoryExpressions>
+    <statistics>;;MHZ</statistics>
+    <peripheralTabs/>
+    <WatchDisplayFormat/>
+    <LocalDisplayFormat/>
+    <debugLayout/>
+    <memoryTabColSizeExpressions/>
+    <QuickWatchDisplayFormat/>
+  </DebugSessions>
+</Project>

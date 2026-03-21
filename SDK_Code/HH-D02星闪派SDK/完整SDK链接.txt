@@ -1,0 +1,6 @@
+OpenHarmony：
+http://webapp.hoperun.com:48082/ui/repos/tree/General/hihope-sparklink-artifactory
+用户名：developer，密码：Nearlink-123
+
+LiteOS：
+https://gitee.com/HiSpark/fbb_ws63/tree/master/src

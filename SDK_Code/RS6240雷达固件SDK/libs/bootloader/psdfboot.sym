@@ -1,0 +1,21 @@
+/*
+ * boot
+ */
+/* T */ 
+EFUSE_HwInit = 0x08000d3c;
+EFUSE_GetDeviceSize = 0x08000f30;
+EFUSE_EnableWrite = 0x08000f36;
+EFUSE_DisableWrite = 0x08000f70;
+EFUSE_GetChipId = 0x08000fb4;
+EFUSE_GetLsiTrim = 0x0800100e;
+EFUSE_GetMsiTrim = 0x080010a6;
+EFUSE_GetPwrTrim = 0x080010e0;
+EFUSE_GetGpadcTrim = 0x08001184;
+EFUSE_GetDCXOFreqOffset = 0x08001224;
+EFUSE_GetMAC = 0x08001238;
+EFUSE_GetMmwTrim = 0x0800127c;
+EFUSE_GetM50Trim = 0x0800133a;
+EFUSE_WriteUserArea = 0x080013f6;
+EFUSE_ReadUseArea = 0x0800143c;
+EFUSE_AddCorrect = 0x080014b6;
+EFUSE_SetMAC = 0x08001694;

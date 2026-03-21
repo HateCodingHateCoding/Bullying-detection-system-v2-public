@@ -1,0 +1,1695 @@
+/**
+ **************************************************************************************************
+ * @file    psic_ll_pmu.h
+ * @brief   power manage unit hadware define.
+ * @attention
+ *          Copyright (c) 2024 Possumic Technology. all rights reserved.
+ **************************************************************************************************
+ */
+
+/* Define to prevent recursive inclusion.
+ * ------------------------------------------------------------------------------------------------
+ */
+#ifndef _PSIC_LL_PMU_H
+#define _PSIC_LL_PMU_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Includes.
+ * ------------------------------------------------------------------------------------------------
+ */
+#include "soc.h"
+#include "types.h"
+#include "hw_pmu.h"
+#include "hw_misc2.h"
+
+/** @addtogroup PSIC_LL_Driver
+  * @{
+  */
+
+/** @defgroup psic_ll_pwr
+  * @{
+  */
+
+/* Exported constants.
+ * ------------------------------------------------------------------------------------------------
+ */
+/** @defgroup XXXX
+  * @{
+  */
+
+#define LL_PWR_MODE_STOP0                       0
+#define LL_PWR_MODE_STOP1                       1
+#define LL_PWR_MODE_STOP2                       2
+#define LL_PWR_MODE_STANDBY0                    3
+#define LL_PWR_MODE_STANDBY1                    4
+#define LL_PWR_MODE_SHUTDOWN                    5
+
+/**
+  * @}
+  */
+
+
+/* Exported functions.
+ * ------------------------------------------------------------------------------------------------
+ */
+
+
+/** @defgroup LMPS
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_LPMS_Lock(void)
+{
+	HW_SET_VAL(PMU_DEV->PMU_BYPASS_LPMS_LOCK, 0);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_LPMS_Unlock(void)
+{
+	HW_SET_VAL(PMU_DEV->PMU_BYPASS_LPMS_LOCK, 0x25232523);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_LPMS_SetSys0State(uint32_t state)
+{
+	HW_SET_VAL(PMU_DEV->PMU_SYS0_LPMS, state);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_LPMS_GetSys0State(void)
+{
+	return HW_GET_VAL(PMU_DEV->PMU_SYS0_LPMS);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_LPMS_SetSys1State(uint32_t state)
+{
+	HW_SET_VAL(PMU_DEV->PMU_SYS1_LPMS, state);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_LPMS_GetSys1State(void)
+{
+	return HW_GET_VAL(PMU_DEV->PMU_SYS1_LPMS);
+}
+/**
+  * @}
+  */
+
+
+
+
+/** @defgroup EXT LDO
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_EXTINTLDO_SetPwrUpGuardTime(uint32_t val)
+{
+	HW_SET_VAL(PMU_DEV->PMU_EXTLDO_UP_SETTINGS, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EXTINTLDO_GetPwrUpGuardTime(void)
+{
+	return HW_GET_VAL(PMU_DEV->PMU_EXTLDO_UP_SETTINGS);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_SetActStateVoltage(uint32_t val)
+{
+	if (val) {
+		HW_SET_BIT(PMU_DEV->PMU_HBACK, 7);
+	} else {
+		HW_CLR_BIT(PMU_DEV->PMU_HBACK, 7);
+	}
+	HW_SET_MSK_VAL(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_VSEL_Msk, EXTLDO_VSEL_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EXTLDO_GetActStateVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_VSEL_Msk, EXTLDO_VSEL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_SetSlpStateVoltage(uint32_t val)
+{
+	if (val) {
+		HW_SET_BIT(PMU_DEV->PMU_HBACK, 7);
+	} else {
+		HW_CLR_BIT(PMU_DEV->PMU_HBACK, 7);
+	}
+	HW_SET_MSK_VAL(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_LP_VSEL_Msk, EXTLDO_LP_VSEL_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EXTLDO_GetSlpStateVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_LP_VSEL_Msk, EXTLDO_LP_VSEL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_EnableSlpStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SLP_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_DisableSlpStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SLP_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EXTLDO_IsEnabledSlpStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SLP_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_Sys0EnableActStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SYS0_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_Sys0DisableActStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SYS0_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EXTLDO_Sys0IsEnabledActStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SYS0_ACTIVE_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_Sys1EnableActStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SYS1_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_Sys1DisableActStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SYS1_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EXTLDO_Sys1IsEnabledActStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SYS1_ACTIVE_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_MmwEnableActStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_MMW_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_MmwDisableActStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_MMW_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EXTLDO_MmwIsEnabledActStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_MMW_ACTIVE_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_EnableSlpStateSWSubMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SW_MODE_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_DisableSlpStateSWSubMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SW_MODE_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EXTLDO_IsEnabledSlpStateSWSubMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_SW_MODE_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_EnableBypass(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_BYPASS_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_DisableBypass(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_BYPASS_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EXTLDO_IsEnabledBypass(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_BYPASS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_EnableShutdownState(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EXTLDO_DisableShutdownState(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EXTLDO_IsEnabledShutdownState(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_EXTLDO_CTRL, EXTLDO_OFF_Pos);
+}
+/**
+  * @}
+  */
+
+
+
+
+/** @defgroup INT LDO
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_SetActStateVoltage(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_VSEL_Msk, INTLDO_VSEL_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_INTLDO_GetActStateVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_VSEL_Msk, INTLDO_VSEL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_SetSlpStateVoltage(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_SLP_VSEL_Msk, INTLDO_SLP_VSEL_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_INTLDO_GetSlpStateVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_SLP_VSEL_Msk, INTLDO_SLP_VSEL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_EnableSlpStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_SLP_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_DisableSlpStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_SLP_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_INTLDO_IsEnabledSlpStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_SLP_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_Sys0EnableActStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_INTLDO_CTRL, SYS0_INTLDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_Sys0DisableActStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_INTLDO_CTRL, SYS0_INTLDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_INTLDO_Sys0IsEnabledActStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_INTLDO_CTRL, SYS0_INTLDO_ACTIVE_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_Sys1EnableActStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_INTLDO_CTRL, SYS1_INTLDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_Sys1DisableActStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_INTLDO_CTRL, SYS1_INTLDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_INTLDO_Sys1IsEnabledActStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_INTLDO_CTRL, SYS1_INTLDO_ACTIVE_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_MmwEnableActStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_INTLDO_CTRL, MMW_INTLDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_MmwDisableActStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_INTLDO_CTRL, MMW_INTLDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_INTLDO_MmwIsEnabledActStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_INTLDO_CTRL, MMW_INTLDO_ACTIVE_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_EnableSlpStateSWSubMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_SW_MODE_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_DisableSlpStateSWSubMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_SW_MODE_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_INTLDO_IsEnabledSlpStateSWSubMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_SW_MODE_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_EnableBypass(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_BYPASS_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_DisableBypass(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_BYPASS_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_INTLDO_IsEnabledBypass(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_BYPASS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_EnableShutdownState(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_INTLDO_DisableShutdownState(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_INTLDO_IsEnabledShutdownState(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_INTLDO_CTRL, INTLDO_OFF_Pos);
+}
+/**
+  * @}
+  */
+
+
+
+
+/** @defgroup SOC LDO
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_SetPwrUpGuardTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_SOCLDO_UP_SETTINGS, SOCLDO_UP_SETTINGS_Msk, SOCLDO_UP_SETTINGS_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SOCLDO_GetPwrUpGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_SOCLDO_UP_SETTINGS, SOCLDO_UP_SETTINGS_Msk, SOCLDO_UP_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_SetTimingGuardTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_SOCLDO_UP_SETTINGS, SOCLDO_TIMING_SETTINGS_Msk, SOCLDO_TIMING_SETTINGS_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SOCLDO_GetTimingGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_SOCLDO_UP_SETTINGS, SOCLDO_TIMING_SETTINGS_Msk, SOCLDO_TIMING_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_SetActStateVoltage(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_VSEL_Msk, SOCLDO_VSEL_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SOCLDO_GetActStateVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_VSEL_Msk, SOCLDO_VSEL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_SetSlpStateVoltage(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_SOCLDO_CTRL, EXTLDO_LP_VSEL_Msk, EXTLDO_LP_VSEL_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SOCLDO_GetSlpStateVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_SOCLDO_CTRL, EXTLDO_LP_VSEL_Msk, EXTLDO_LP_VSEL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_EnableSlpStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_SLP_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_DisableSlpStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_SLP_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SOCLDO_IsEnabledSlpStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_SLP_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_Sys0EnableActStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SYS0_SOCDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_Sys0DisableActStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SYS0_SOCDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SOCLDO_Sys0IsEnabledActStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_SOCLDO_CTRL, SYS0_SOCDO_ACTIVE_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_Sys1EnableActStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SYS1_SOCDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_Sys1DisableActStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SYS1_SOCDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SOCLDO_Sys1IsEnabledActStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_SOCLDO_CTRL, SYS1_SOCDO_ACTIVE_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_MmwEnableActStateLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_SOCLDO_CTRL, MMW_SOCDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_MmwDisableActStateLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_SOCLDO_CTRL, MMW_SOCDO_ACTIVE_HP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SOCLDO_MMwIsEnabledActStateLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_SOCLDO_CTRL, MMW_SOCDO_ACTIVE_HP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_EnableShutdownState(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_DisableShutdownState(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SOCLDO_IsEnabledShutdownState(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_OFF_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_EnableFastUp(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_ACTIVE_FASTUP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_DisableFastUp(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_ACTIVE_FASTUP_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SOCLDO_IsEnabledFastUp(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_ACTIVE_FASTUP_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_EnableBypassUpTiming(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_BYPASS_UP_TIMING_PROC_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SOCLDO_DisableBypassUpTiming(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_BYPASS_UP_TIMING_PROC_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SOCLDO_IsEnabledBypassUpTiming(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_SOCLDO_CTRL, SOCLDO_BYPASS_UP_TIMING_PROC_EN_Pos);
+}
+
+
+/**
+  * @}
+  */
+
+
+
+
+/** @defgroup RTC LDO
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_RTCLDO_SetActStateVoltage(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_RTCLDO_CTRL, RTCLDO_ACTIVE_VSEL_Msk, RTCLDO_ACTIVE_VSEL_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_RTCLDO_GetActStateVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_RTCLDO_CTRL, RTCLDO_ACTIVE_VSEL_Msk, RTCLDO_ACTIVE_VSEL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_RTCLDO_SetSlpStateVoltage(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_RTCLDO_CTRL, RTCLDO_LP_VSEL_Msk, RTCLDO_LP_VSEL_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_RTCLDO_GetSlpStateVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_RTCLDO_CTRL, RTCLDO_LP_VSEL_Msk, RTCLDO_LP_VSEL_Pos);
+}
+/**
+  * @}
+  */
+
+
+
+/** @defgroup SMPS
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_SMPS_SetPwrUpGuardTime(uint32_t time_val)
+{
+	HW_SET_VAL(PMU_DEV->PMU_SMPS_UP_SETTINGS, time_val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SMPS_GetPwrUpGuardTime(void)
+{
+	return HW_GET_VAL(PMU_DEV->PMU_SMPS_UP_SETTINGS);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SMPS_SetPwrDwnGuardTime(uint32_t time_val)
+{
+	HW_SET_VAL(PMU_DEV->PMU_SMPS_DWN_SETTINGS, time_val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SMPS_GetPwrDwnGuardTime(void)
+{
+	return HW_GET_VAL(PMU_DEV->PMU_SMPS_DWN_SETTINGS);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SMPS_SetActStateVoltage(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_SMPS_CTRL, SMPS_VSEL_Msk, SMPS_VSEL_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SMPS_GetActStateVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_SMPS_CTRL, SMPS_VSEL_Msk, SMPS_VSEL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SMPS_SetSlpStateVoltage(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_SMPS_CTRL, SMPS_LP_VSEL_Msk, SMPS_LP_VSEL_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SMPS_GetSlpStateVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_SMPS_CTRL, SMPS_LP_VSEL_Msk, SMPS_LP_VSEL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SMPS_EnablePFMMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_SMPS_CTRL, SMPS_PFM_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SMPS_DisablePFMMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_SMPS_CTRL, SMPS_PFM_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SMPS_IsEnabledPFMMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_SMPS_CTRL, SMPS_LP_VSEL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SMPS_EnableShutdownState(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_SMPS_CTRL, SMPS_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SMPS_DisableShutdownState(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_SMPS_CTRL, SMPS_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SMPS_IsEnabledShutdownState(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_SMPS_CTRL, SMPS_OFF_Pos);
+}
+
+/**
+  * @}
+  */
+
+
+
+
+/** @defgroup EFUSE
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_EFUSE_SetPwrUpGuardTime(uint32_t time_val)
+{
+	HW_SET_VAL(PMU_DEV->PMU_EFUSE_UP_SETTINGS, time_val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EFUSE_GetPwrUpGuardTime(void)
+{
+	return HW_GET_VAL(PMU_DEV->PMU_EFUSE_UP_SETTINGS);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EFUSE_EnableSys0AutoRead(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_EFUSE_CTRL, SYS0_UP_RD_EFUSE_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EFUSE_DisableSys0AutoRead(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_EFUSE_CTRL, SYS0_UP_RD_EFUSE_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EFUSE_IsEnabledSys0AutoRead(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_EFUSE_CTRL, SYS0_UP_RD_EFUSE_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EFUSE_EnableSys1AutoRead(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_EFUSE_CTRL, SYS1_UP_RD_EFUSE_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EFUSE_DisableSys1AutoRead(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_EFUSE_CTRL, SYS1_UP_RD_EFUSE_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EFUSE_IsEnabledSys1AutoRead(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_EFUSE_CTRL, SYS1_UP_RD_EFUSE_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EFUSE_EnableMmwAutoRead(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_EFUSE_CTRL, MMW_UP_RD_EFUSE_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_EFUSE_DisableMmwAutoRead(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_EFUSE_CTRL, MMW_UP_RD_EFUSE_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_EFUSE_IsEnabledMmwAutoRead(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_EFUSE_CTRL, MMW_UP_RD_EFUSE_EN_Msk);
+}
+
+/**
+  * @}
+  */
+
+
+
+
+/** @defgroup BG
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_BGLDO_SetPwrUpGuardTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_ANA_BG_CTRL, BGUP_SETTINGS_Msk, BGUP_SETTINGS_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_BGLDO_GetPwrUpGuarTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_ANA_BG_CTRL, BGUP_SETTINGS_Msk, BGUP_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_BGLDO_SetTrim(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_BGLDO_CTRL, BGLDO_TRIM_Msk, BGLDO_TRIM_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_BGLDO_GetTrim(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_BGLDO_CTRL, BGLDO_TRIM_Msk, BGLDO_TRIM_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_BGLDO_EnableFastOn(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_BGLDO_CTRL, BGLDO_FASTON_N_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_BGLDO_DisableFastOn(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_BGLDO_CTRL, BGLDO_FASTON_N_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_BGLDO_IsEnabledFastOn(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_BGLDO_CTRL, BGLDO_FASTON_N_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_BGLDO_SetRefITrim(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_ANA_BG_CTRL, V2I_IREF_ITRIM_Msk, V2I_IREF_ITRIM_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_BGLDO_GetRefITrim(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_ANA_BG_CTRL, V2I_IREF_ITRIM_Msk, V2I_IREF_ITRIM_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_BGLDO_SetFsPd(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_ANA_BG_CTRL, BG_FS_PD_Msk, BG_FS_PD_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_BGLDO_GetFsPd(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_ANA_BG_CTRL, BG_FS_PD_Msk, BG_FS_PD_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_BGLDO_SetIRefFsPd(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_ANA_BG_CTRL, V2I_IREF_FS_PD_Msk, V2I_IREF_FS_PD_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_BGLDO_GetIRefFsPd(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_ANA_BG_CTRL, V2I_IREF_FS_PD_Msk, V2I_IREF_FS_PD_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_BGLDO_ForceEnable(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_ANA_BG_CTRL, FORCE_BG_ON_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_BGLDO_ForceDisable(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_ANA_BG_CTRL, FORCE_BG_ON_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_BGLDO_IsForceEnabled(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_ANA_BG_CTRL, FORCE_BG_ON_Pos);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_BGLDO_IsReady(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_ANA_BG_CTRL, BG_STATUS_Pos);
+}
+/**
+  * @}
+  */
+
+
+
+
+/** @defgroup DCXO and DCXO LDO
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_DCXOLDO_SetPwrUpGuardTime(uint32_t time_val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_SETTINGS1, DCXOLDO_UP_SETTINGS_Msk, DCXOLDO_UP_SETTINGS_Pos, time_val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXOLDO_GetPwrUpGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_DCXO_SETTINGS1, DCXOLDO_UP_SETTINGS_Msk, DCXOLDO_UP_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXOLDO_SoftEnable(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_ANA_EN, DCXOLDO_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXOLDO_SoftDisable(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_ANA_EN, DCXOLDO_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXOLDO_IsReady(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_STATUS, DCXOLDO_READY_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXOLDO_SetVoltage(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL, DCXO_LDO_TRIM_Msk, DCXO_LDO_TRIM_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXOLDO_GetVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL, DCXO_LDO_TRIM_Msk, DCXO_LDO_TRIM_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXOLDO_EnableBypass(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_DCXO_CTRL, DCXO_LDO_BYPASS_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXOLDO_DisableBypass(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_DCXO_CTRL, DCXO_LDO_BYPASS_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXOLDO_IsEnabledBypass(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_DCXO_CTRL, DCXO_LDO_BYPASS_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXOLDO_EnableLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_DCXO_CTRL, DCXO_LDO_LQ_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXOLDO_DisableLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_DCXO_CTRL, DCXO_LDO_LQ_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXOLDO_IsEnabledLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_DCXO_CTRL, DCXO_LDO_LQ_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SetPwrUpGuardTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_SETTINGS1, DCXO_UP_SETTINGS_Msk, DCXO_UP_SETTINGS_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetPwrUpGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_DCXO_SETTINGS1, DCXO_UP_SETTINGS_Msk, DCXO_UP_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SetPwrDwnGuardTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->DCXO_PLL_DOWN_SETTINGS, DCXO_DWN_SETTINGS_Msk, DCXO_DWN_SETTINGS_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetPwrDwnGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->DCXO_PLL_DOWN_SETTINGS, DCXO_DWN_SETTINGS_Msk, DCXO_DWN_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SetStableTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_SETTINGS2, DCXO_OUT_STABLE_SETTINGS_Msk, DCXO_OUT_STABLE_SETTINGS_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetStableTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_DCXO_SETTINGS2, DCXO_OUT_STABLE_SETTINGS_Msk, DCXO_OUT_STABLE_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SetDetectTime(uint32_t time_val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_SETTINGS2, XTAL_DECTECT_SETTINGS_Msk, XTAL_DECTECT_SETTINGS_Pos, time_val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetDetectTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_DCXO_SETTINGS2, XTAL_DECTECT_SETTINGS_Msk, XTAL_DECTECT_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SetStartupTime(uint32_t time_val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_SETTINGS2, DCXO_STARTUP_SETTINGS_Msk, DCXO_STARTUP_SETTINGS_Pos, time_val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetStartupTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_DCXO_SETTINGS2, DCXO_STARTUP_SETTINGS_Msk, DCXO_STARTUP_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SoftEnable(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_ANA_EN, DCXO_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_IsEnabled(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_ANA_EN, DCXO_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SoftDisable(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_ANA_EN, DCXO_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_EnableShutdownState(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_ANA_EN, SLP_DCXO_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_DisableShutdownState(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_ANA_EN, SLP_DCXO_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_IsEnabledShutdownState(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_ANA_EN, SLP_DCXO_OFF_Pos);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_IsReady(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_STATUS, DCXO_READY_Msk, DCXO_READY_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_EnableToM50XO(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_M50_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_DisableToM50XO(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_M50_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_EnableToPll(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_SPLL_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_DisableToPll(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_SPLL_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_IsEnabledToPll(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_DCXO_CTRL, CK_XO_SPLL_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_EnableToSoc(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_SOC_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_DisableToSoc(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_SOC_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_IsEnabledToSoc(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_DCXO_CTRL, CK_XO_SPLL_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_EnableToFanout(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_IO_FANOUT_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_DisableToFanout(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_IO_FANOUT_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_IsEnabledToFanout(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_DCXO_CTRL, CK_XO_IO_FANOUT_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_EnableToPllEmi(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_SPLL_ANTI_EMI_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_DisableToPllEmi(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_SPLL_ANTI_EMI_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_EnableToSocEmi(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_SPLL_ANTI_EMI_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_DisableToSocEmi(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_DCXO_CTRL, CK_XO_SPLL_ANTI_EMI_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SetFreqSel(uint32_t freq)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL, XO_FREQ_SEL_Msk, XO_FREQ_SEL_Pos, freq);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetFreqSel(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL, XO_FREQ_SEL_Msk, XO_FREQ_SEL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_EnableAMC(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_DCXO_CTRL3, DCXO_AMC_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_DisableAMC(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_DCXO_CTRL3, DCXO_AMC_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_IsReadyAMC(void)
+{
+	return HW_GET_MSK(PMU_DEV->PMU_STATUS, XO_AMC_LOCK_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SetAMCITrim(uint32_t itrim)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL3, DCXO_AMC_VTRIM_Msk, DCXO_AMC_VTRIM_Pos, itrim);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetAMCITrim(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL3, DCXO_AMC_VTRIM_Msk, DCXO_AMC_VTRIM_Pos);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetAMCCalcITrim(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_STATUS, XO_AMC_ITRIM_CAL_Msk, XO_AMC_ITRIM_CAL_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SetAMCTim(uint32_t tim)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL3, DCXO_AMC_ST_Msk, DCXO_AMC_ST_Pos, tim);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetAMCTim(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL3, DCXO_AMC_ST_Msk, DCXO_AMC_ST_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SetAITrim(uint32_t itrim)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL3, DCXO_AMC_VTRIM_Msk, DCXO_AMC_VTRIM_Pos, itrim);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetAITrim(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL3, DCXO_AMC_VTRIM_Msk, DCXO_AMC_VTRIM_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SetCapTrim(uint32_t trim)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL3, DCXO_CAP_TRIM_Msk, DCXO_CAP_TRIM_Pos, trim);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetCapTrim(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL3, DCXO_CAP_TRIM_Msk, DCXO_CAP_TRIM_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_SetType(uint32_t xo_type)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_DCXO_CTRL3, XTAL_TYPE_OVR_Msk, XTAL_TYPE_OVR_Pos, xo_type);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_DCXO_GetDetechType(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_STATUS, XTAL_TYPE_DETECT_Msk, XTAL_TYPE_DETECT_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_EnableTypeAutoDetech(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_DCXO_CTRL3, XTAL_TYPE_DETECT_EN_Msk | XTAL_TYPE_OVR_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_DisableTypeAutoDetech(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_DCXO_CTRL3, XTAL_TYPE_DETECT_EN_Msk | XTAL_TYPE_OVR_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_EnableITrimBypass(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_DCXO_CTRL3, DCXO_ITRIM_BYPASS_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_DisableITrimBypass(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_DCXO_CTRL3, DCXO_ITRIM_BYPASS_Msk);
+}
+/**
+  * @}
+  */
+
+
+
+
+/** @defgroup PLL and PLL LDO
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_SPLLLDO_SetPwrUpGuardTime(uint32_t time_val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_SPLLLDO_UP_SETTINGS, SPLLLDO_UP_SETTINGS_Msk, SPLLLDO_UP_SETTINGS_Pos, time_val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SPLLLDO_GetPwrUpGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_SPLLLDO_UP_SETTINGS, SPLLLDO_UP_SETTINGS_Msk, SPLLLDO_UP_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SPLLLDO_SoftEnable(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_ANA_EN, SPLLLDO_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SPLLLDO_SoftDisable(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_ANA_EN, SPLLLDO_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SPLLLDO_IsReady(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_STATUS, SPLLLDO_READY_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SPLLLDO_EnableLQMode(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_ANA_EN, SPLL_LDO_LQ_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SPLLLDO_DisableLQMode(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_ANA_EN, SPLL_LDO_LQ_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SPLLLDO_IsEnabledLQMode(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_ANA_EN, SPLL_LDO_LQ_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SPLLLDO_SetVoltage(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_SPLL_CTRL, SPLL_LDO_TRIM_Msk, SPLL_LDO_TRIM_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SPLLLDO_GetVoltage(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_SPLL_CTRL, SPLL_LDO_TRIM_Msk, SPLL_LDO_TRIM_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SPLL_SetPwrUpGuardTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_SPLLLDO_UP_SETTINGS, SPLL_UP_SETTINGS_Msk, SPLL_UP_SETTINGS_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SPLL_GetPwrUpGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_SPLLLDO_UP_SETTINGS, SPLL_UP_SETTINGS_Msk, SPLL_UP_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SPLL_SetPwrDwnGuardTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->DCXO_PLL_DOWN_SETTINGS, PLL_DWN_SETTINGS_Msk, PLL_DWN_SETTINGS_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SPLL_GetPwrDwnGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->DCXO_PLL_DOWN_SETTINGS, PLL_DWN_SETTINGS_Msk, PLL_DWN_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SPLL_SoftEnable(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_ANA_EN, SPLL_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SPLL_SoftDisable(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_ANA_EN, SPLL_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SPLL_IsEnabled(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_ANA_EN, SPLL_EN_Pos);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SPLL_IsReady(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_STATUS, SPLL_LOCKED_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SPLL_EnableShutdownState(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_ANA_EN, SLP_SPLL_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SPLL_DisableShutdownState(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_ANA_EN, SLP_SPLL_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SW_FastUpEnable(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_HBACK, PMU_HBACK_SW_FAST_UP_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SW_FastUpDisable(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_HBACK, PMU_HBACK_SW_FAST_UP_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_FastDwnEnable(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_HBACK, PMU_HBACK_DCXO_FAST_DWN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_DCXO_FastDwnDisable(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_HBACK, PMU_HBACK_DCXO_FAST_DWN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_PLL_FastDwnEnable(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_HBACK, PMU_HBACK_PLL_FAST_DWN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_PLL_FastDwnDisable(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_HBACK, PMU_HBACK_PLL_FAST_DWN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SetRtcWioDisableMask(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_HBACK, PMU_HBACK_RTC_IO_ENABLE_Msk, PMU_HBACK_RTC_IO_ENABLE_Pos, val);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SW_UpProcTime(uint32_t val)
+{
+	MISCREG2_DEV->MISCREG2_SW_UP_PROC_SETTINGS = val;
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SPLL_IsEnabledShutdownState(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_ANA_EN, SLP_SPLL_OFF_Pos);
+}
+
+/**
+  * @}
+  */
+
+
+
+
+/** @defgroup SW
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_SW_SetPwrUpGuardTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_SW_SETTINGS, SW_UP_SETTINGS_Msk, SW_UP_SETTINGS_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SW_GetPwrUpGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_SW_SETTINGS, SW_UP_SETTINGS_Msk, SW_UP_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SW_SetTimingGuardTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->PMU_SW_SETTINGS, SW_SETTINGS_Msk, SW_UP_SETTINGS_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SW_GetTimingGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->PMU_SW_SETTINGS, SW_SETTINGS_Msk, SW_SETTINGS_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SW_RTC1SetPwrUpGuardTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->RTC_SW_UP_SETTINGS, RTC_SW1_UP_SETTING_Msk, RTC_SW1_UP_SETTING_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SW_RTC1GetPwrUpGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->RTC_SW_UP_SETTINGS, RTC_SW1_UP_SETTING_Msk, RTC_SW1_UP_SETTING_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SW_RTC2SetPwrUpGuardTime(uint32_t val)
+{
+	HW_SET_MSK_VAL(PMU_DEV->RTC_SW_UP_SETTINGS, RTC_SW2_UP_SETTING_Msk, RTC_SW2_UP_SETTING_Pos, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SW_RTC2GetPwrUpGuardTime(void)
+{
+	return HW_GET_MSK_VAL(PMU_DEV->RTC_SW_UP_SETTINGS, RTC_SW2_UP_SETTING_Msk, RTC_SW2_UP_SETTING_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SW_RTC1SoftEnable(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_ANA_EN, RTCSW1_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SW_RTC1SoftDisable(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_ANA_EN, RTCSW1_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SW_RTC2SoftEnable(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_ANA_EN, RTCSW2_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_SW_RTC2SoftDisable(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_ANA_EN, RTCSW2_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SW_RTC1IsReady(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_STATUS, RTCSW1_READY_Pos);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_SW_RTC2IsReady(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_STATUS, RTCSW2_READY_Pos);
+}
+/**
+  * @}
+  */
+
+
+
+
+
+/** @defgroup MSI
+  * @{
+  */
+__HW_STATIC_INLINE
+void LL_PMU_MSI_SetPwrUpGuardTime(uint32_t val)
+{
+	HW_SET_VAL(PMU_DEV->MSI_UP_SETTINGS, val);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_MSI_GetPwrUpGuardTime(void)
+{
+	return HW_GET_VAL(PMU_DEV->MSI_UP_SETTINGS);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_MSI_Enable(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_RC_CTRL, RCMSI_EN_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_MSI_IsReady(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_RC_CTRL, RCMSI_READY_Pos);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_MSI_EnableShutdownState(void)
+{
+	HW_SET_MSK(PMU_DEV->PMU_RC_CTRL, SLP_RCMSI_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+void LL_PMU_MSI_DisableShutdownState(void)
+{
+	HW_CLR_MSK(PMU_DEV->PMU_RC_CTRL, SLP_RCMSI_OFF_Msk);
+}
+
+__HW_STATIC_INLINE
+uint32_t LL_PMU_MSI_IsEnabledShutdownState(void)
+{
+	return HW_TEST_BIT(PMU_DEV->PMU_RC_CTRL, SLP_RCMSI_OFF_Pos);
+}
+
+/**
+  * @}
+  */
+
+__HW_STATIC_INLINE
+void LL_PMU_DPLL_Disable(void)
+{
+	HW_SET_MSK(MISCREG2_DEV->MISCREG2_MMW_POWERCTRL, ((1 << 11) | (1 << 19)));
+}
+
+
+/** psic_ll_pmu
+  * @}
+  */
+
+
+/** PSIC_LL_Driver
+  * @}
+  */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _PSIC_LL_PMU_H */
+
+/*
+ **************************************************************************************************
+ * (C) COPYRIGHT POSSUMIC Technology
+ * END OF FILE
+ */
