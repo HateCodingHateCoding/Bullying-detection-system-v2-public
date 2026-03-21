@@ -1,4 +1,4 @@
-# 昇腾哨兵 —— 多模态校园霸凌检测系统
+# Ascend Sentinel —— 基于多模态感知的校园暴力智能干预系统
 
 基于华为昇腾 AIpro（香橙派）的端侧实时检测系统，融合 60GHz 毫米波雷达点云与麦克风音频两路模态，通过 MindSpore 推理引擎判断是否发生霸凌行为，并在检测到后同步触发声光报警、OBS 证据存储与 IoTDA 云端告警上报，最终推送至鸿蒙 App。
 
@@ -74,6 +74,9 @@ Bullying/
 │   └── anq-server/              # Spring Boot 后端（WebSocket + REST）
 ├── frontend/
 │   └── AnQ/                     # 鸿蒙端 App（ArkTS）
+├── SDK_Code/
+│   ├──HH-D02星闪派SDK
+|   └──RS6240雷达固件SDK
 └── .gitignore
 ```
 
@@ -189,7 +192,7 @@ cp config/device_key.json.template config/device_key.json
 | 设备 | 接口 | 香橙派设备节点 |
 |---|---|---|
 | RS6240 雷达 | SPI 接 D02——SLE——D02 接 TTL 转 USB | /dev/ttyUSB0 |
-| INMP441 音频模块 | I2S 接 D02——SLE——D02 接 TTL 转 USB | /dev/ttyUSB1 |
+| INMP441 全向麦克风 | I2S 接 D02——SLE——D02 接 TTL 转 USB | /dev/ttyUSB1 |
 | 声光报警模块 | GPIO UART 接 D02——SLE——D02 接 UART | /dev/ttyAMA0 |
 
 ### 4. 启动主流水线
