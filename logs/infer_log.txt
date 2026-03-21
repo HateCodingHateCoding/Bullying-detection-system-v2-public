@@ -1,0 +1,19 @@
+[main] 启动欺凌检测流水线
+[main] 雷达: /dev/ttyUSB0  音频: /dev/ttyUSB1  报警: /dev/ttyAMA0
+[main] 阈值: 0.8  报警冷却: 10.0s
+[model] 已加载权重: ../models/sentinel_model.ckpt
+[model] 预热完成
+[radar] 串口已打开: /dev/ttyUSB0 @ 921600 bps
+[audio] 串口已打开: /dev/ttyUSB1 @ 921600 bps
+[main] 接收线程已启动，等待数据...
+[infer] #1 class=0 conf=0.923 pts_in_window=312 (18.3ms)
+[infer] #2 class=0 conf=0.887 pts_in_window=298 (17.1ms)
+[infer] #3 class=0 conf=0.901 pts_in_window=334 (16.8ms)
+[infer] #4 class=1 conf=0.823 pts_in_window=289 (17.5ms)
+[main] *** 检测到欺凌！置信度=0.823 → 触发报警 ***
+[alarm] 已发送报警指令 → /dev/ttyAMA0: aa 55 01 1e
+[http] 告警已推送至服务器: 200
+[infer] #5 class=1 conf=0.791 pts_in_window=301 (16.9ms)
+[main] 欺凌检测（置信度=0.791），报警冷却中（剩余 9.1s）
+[infer] #6 class=0 conf=0.912 pts_in_window=315 (17.2ms)
+[infer] #7 class=0 conf=0.934 pts_in_window=328 (16.7ms)

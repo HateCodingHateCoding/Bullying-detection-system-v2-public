@@ -1,0 +1,14 @@
+{
+  "device_id": "YOUR_DEVICE_ID",
+  "client_id": "YOUR_CLIENT_ID",
+  "username": "YOUR_USERNAME",
+  "secret": "YOUR_DEVICE_SECRET",
+  "hostname": "YOUR_IOTDA_ENDPOINT",
+  "port": 8883,
+  "auth_mode": "plain",
+  "obs_ak": "YOUR_OBS_AK",
+  "obs_sk": "YOUR_OBS_SK",
+  "obs_endpoint": "obs.cn-east-4.myhuaweicloud.com",
+  "obs_bucket": "YOUR_BUCKET_NAME",
+  "location": "校园监控点-01"
+}
