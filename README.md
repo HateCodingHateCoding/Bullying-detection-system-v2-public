@@ -1,4 +1,4 @@
-# Ascend Sentinel —— 基于多模态感知的校园暴力智能干预系统
+# 昇腾哨兵 —— 多模态校园霸凌检测系统
 
 基于华为昇腾 AIpro（香橙派）的端侧实时检测系统，融合 60GHz 毫米波雷达点云与麦克风音频两路模态，通过 MindSpore 推理引擎判断是否发生霸凌行为，并在检测到后同步触发声光报警、OBS 证据存储与 IoTDA 云端告警上报，最终推送至鸿蒙 App。
 
@@ -8,7 +8,7 @@
 
 ```
 硬件层
-  RS6240 毫米波雷达 (60GHz)          INMP441全向麦克风
+  RS6240 毫米波雷达 (60GHz)          INMP441音频模块
         │ SPI->D02->SLE->D02->UART        │ UART->D02->SLE->D02->UART
         ▼                                 ▼
   radar_receiver.py                audio_receiver.py
@@ -23,7 +23,7 @@
           音频帧为主节拍（1s一次）
                        │
                        ▼
-             AscendSentinelNet
+             AscendSentinel2
           (MindSpore 2.7.0, Ascend NPU)
                        │
           ┌────────────┴────────────┐
@@ -87,20 +87,24 @@ Bullying/
 | 指标 | 值 |
 |---|---|
 | 训练轮数 | 15 epoch |
-| 最终 loss | < 1e-5 |
+| batch_size | 32 |
+| 学习率 | 0.001（Adam + weight_decay=1e-4）|
+| 最终 loss | < 1e-5（SoftmaxCrossEntropy）|
 | 推理速度 | ~17ms/次（Ascend NPU）|
 
 ---
 
 ## 模型说明
 
-### 网络结构：AscendSentinelNet
+### 网络结构：AscendSentinel2（含 MindCMA 跨模态注意力融合）
 
-双分支 CNN + 全连接分类器：
+四路特征拼接 + 深层分类器：
 
-- **雷达分支**：`Conv1d(5→32) → BN → ReLU → MaxPool → Conv1d(32→64) → ReLU → GlobalAvgPool → Flatten`，输入 `[B,5,64]`
-- **音频分支**：`Conv1d(1→16,stride=16) → BN → ReLU → MaxPool → Conv1d(16→32) → ReLU → GlobalAvgPool → Flatten`，输入 `[B,1,16000]`
-- **分类器**：`Dense(96→64) → ReLU → Dense(64→2)`，输出 2 类（0=正常，1=霸凌）
+- **雷达分支**（RadarPointNetBranch）：`PointNetSetAbstraction(5→[32,64]) → PointNetSetAbstraction(64→[64,128]) → GlobalAvgPool → Flatten`，输入 `[B,5,64]`，输出 128维
+- **音频分支**（AudioCNNBranch）：`Conv1d(1→32,stride=16) → BN → ReLU → MaxPool(4) → Conv1d(32→64) → BN → ReLU → MaxPool(4) → Conv1d(64→128) → ... → GlobalAvgPool → Flatten`，输入 `[B,1,16000]`，输出 256维
+- **MindCMA 融合**：将音频(256维)与雷达(128维)各自投影到128维语义空间，经轻量MLP计算可学习权重 α，动态融合输出 128维
+- **时序上下文**（TemporalContextModule）：对融合特征做时序卷积，输出 64维
+- **分类器**：拼接四路特征（128+64+256+128=576维）→ `Dense(576→256) → BN → ReLU → Dropout(0.5) → Dense(256→128) → BN → ReLU → Dropout(0.3) → Dense(128→64) → ReLU → Dense(64→2)`，输出 2 类（0=正常，1=霸凌）
 
 ### 训练数据
 
@@ -185,7 +189,7 @@ cp config/device_key.json.template config/device_key.json
 | 设备 | 接口 | 香橙派设备节点 |
 |---|---|---|
 | RS6240 雷达 | SPI 接 D02——SLE——D02 接 TTL 转 USB | /dev/ttyUSB0 |
-| INMP441 全向麦克风 | I2S 接 D02——SLE——D02 接 TTL 转 USB | /dev/ttyUSB1 |
+| INMP441 音频模块 | I2S 接 D02——SLE——D02 接 TTL 转 USB | /dev/ttyUSB1 |
 | 声光报警模块 | GPIO UART 接 D02——SLE——D02 接 UART | /dev/ttyAMA0 |
 
 ### 4. 启动主流水线
