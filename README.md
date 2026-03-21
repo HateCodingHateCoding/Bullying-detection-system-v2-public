@@ -183,9 +183,9 @@ cp config/device_key.json.template config/device_key.json
 
 | 设备 | 接口 | 香橙派设备节点 |
 |---|---|---|
-| RS6240 雷达 (D02 UART1) | TTL 转 USB | /dev/ttyUSB0 |
-| WS63E 音频模块 | TTL 转 USB | /dev/ttyUSB1 |
-| 声光报警模块 | GPIO UART | /dev/ttyAMA0 |
+| RS6240 雷达 | SPI 接 D02——SLE——D02 TTL 转 USB | /dev/ttyUSB0 |
+| INMP441 音频模块 | I2S 接 D02——SLE——D02 TTL 转 USB | /dev/ttyUSB1 |
+| 声光报警模块 | GPIO UART 接 D02 | /dev/ttyAMA0 |
 
 ### 4. 启动主流水线
 
