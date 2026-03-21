@@ -54,7 +54,7 @@ Bullying/
 │   └── samples/MMFi/
 │       ├── DOWNLOAD.md          # 数据集下载说明
 │       ├── README.md            # MMFi 数据集说明
-│       └── MMFi_action_segments.csv
+│       └── MMFi_action_segments.csv  # MMFi 数据集的动作分段标注文件
 ├── logs/
 │   ├── train_log.txt            # 训练日志（从 ModelArts Notebook 提取）
 │   └── infer_log.txt            # 推理日志示例
