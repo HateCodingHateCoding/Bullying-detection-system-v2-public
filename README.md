@@ -120,7 +120,7 @@ Bullying/
 
 ## 实时推理链路详解
 
-### 雷达接收协议（RS6240 HIF）
+### 雷达接收协议（HIF）
 
 ```
 "motion_point_cloud\0" (19B)
@@ -130,7 +130,7 @@ N × [x, y, z, velocity, snr]  每字段 float32 LE
 
 `radar_receiver.py` 输出每帧原始点云 `(N, 5) float32`。
 
-### 音频接收协议（WS63E）
+### 音频接收协议
 
 ```
 AA 55 | uint16LE seq | uint16LE payload_len | PCM(int16 LE) | AA 55
