@@ -6,18 +6,18 @@
 
 ## 系统架构总览
 
-```
+​```text
 硬件层
-  RS6240 毫米波雷达 (60GHz)          INMP441音频模块
-        │ SPI->D02->SLE->D02->UART        │ UART->D02->SLE->D02->UART
+  RS6240 毫米波雷达 (60GHz)          INMP441全向麦克风
+        │ SPI->D02->SLE->D02->UART        │ I2S->D02->SLE->D02->UART
         ▼                                 ▼
-  radar_receiver.py                audio_receiver.py
-  解析 HIF 协议点云帧                解析 AA55 音频帧
+  radar_receiver.py                 audio_receiver.py
+  解析 HIF 协议点云帧               解析 AA55 音频帧
   输出原始 (N,5) float32            输出 [1,1,16000] float32
         │                                 │
         └──────────────┬──────────────────┘
                        ▼
-               main_pipeline.py
+                main_pipeline.py
           雷达滑动窗口（20帧≈1s）
           点云合并 → 随机采样64点 → [1,5,64]
           音频帧为主节拍（1s一次）
@@ -31,17 +31,21 @@
           │ confidence >= 0.8       │
           └────────────┬────────────┘
                        ▼
-    ┌──────────────────┼──────────────────┐
-    ▼                  ▼                  ▼
-声光报警            OBS 上传           HTTP POST
-alarm.py        音频证据 .wav        → anq-server
-/dev/ttyAMA0    bullying2 桶         → WebSocket
-                                     → 鸿蒙 App
+    ┌──────────────────┼──────────────────┬──────────────────┐
+    ▼                  ▼                  ▼                  ▼
+声光报警           OBS 上传           IoTDA 上报         HTTP POST
+alarm.py           音频证据 .wav      MQTT 推送          anq-server
+/dev/ttyAMA0       bullying2 桶       状态同步           → WebSocket
+                                                         → 鸿蒙 App
 ```
 
----
+------
 
 ## 目录结构
+
+Plaintext
+
+
 
 ```
 Bullying/
@@ -75,27 +79,28 @@ Bullying/
 ├── frontend/
 │   └── AnQ/                     # 鸿蒙端 App（ArkTS）
 ├── SDK_Code/
-│   ├──HH-D02星闪派SDK
-|   └──RS6240雷达固件SDK
+│   ├── HH-D02星闪派SDK
+│   └── RS6240雷达固件SDK
 └── .gitignore
 ```
 
----
+------
 
 ## 训练结果
 
 训练平台：华为 ModelArts（Ascend 910）
+
 训练数据：MMFi（雷达）+ MIVIA_DB4（音频）
 
-| 指标 | 值 |
-|---|---|
-| 训练轮数 | 15 epoch |
-| batch_size | 32 |
-| 学习率 | 0.001（Adam + weight_decay=1e-4）|
-| 最终 loss | < 1e-5（SoftmaxCrossEntropy）|
-| 推理速度 | ~17ms/次（Ascend NPU）|
+| **指标**   | **值**                            |
+| ---------- | --------------------------------- |
+| 训练轮数   | 15 epoch                          |
+| batch_size | 32                                |
+| 学习率     | 0.001（Adam + weight_decay=1e-4） |
+| 最终 loss  | < 1e-5（SoftmaxCrossEntropy）     |
+| 推理速度   | ~17ms/次（Ascend NPU）            |
 
----
+------
 
 ## 模型说明
 
@@ -123,11 +128,15 @@ Bullying/
 4. 训练完成后权重自动保存为 `sentinel_model.ckpt`，下载至 `models/` 目录
 5. 执行 Cell 6 查看验证集正反例分析
 
----
+------
 
 ## 实时推理链路详解
 
 ### 雷达接收协议（HIF）
+
+Plaintext
+
+
 
 ```
 "motion_point_cloud\0" (19B)
@@ -139,6 +148,10 @@ N × [x, y, z, velocity, snr]  每字段 float32 LE
 
 ### 音频接收协议
 
+Plaintext
+
+
+
 ```
 AA 55 | uint16LE seq | uint16LE payload_len | PCM(int16 LE) | AA 55
 ```
@@ -149,9 +162,13 @@ AA 55 | uint16LE seq | uint16LE payload_len | PCM(int16 LE) | AA 55
 
 雷达 20Hz（50ms/帧），音频 1秒一帧。滑动窗口 20 帧覆盖 1 秒，与音频时间窗对齐，与训练数据语义一致。
 
----
+------
 
 ## 闭环报警链路
+
+Plaintext
+
+
 
 ```
 pred_class==1  AND  confidence >= 0.8
@@ -160,44 +177,64 @@ pred_class==1  AND  confidence >= 0.8
               │
               ├─ 1. 串口 AA55011E → /dev/ttyAMA0（声光报警）
               ├─ 2. OBS 上传音频证据 .wav → bullying2
-              └─ 3. HTTP POST /alert/ → anq-server → WebSocket → 鸿蒙 App
+              ├─ 3. IoTDA 发布告警状态 → MQTT 云端
+              └─ 4. HTTP POST /alert/ → anq-server → WebSocket → 鸿蒙 App
 ```
 
----
+------
 
 ## 快速复现（香橙派 AIpro）
 
 ### 1. 环境准备
 
-烧录镜像选择：
+**系统镜像选择：** 强烈推荐使用官网 Ubuntu 22.04 最新镜像：
 
-通过网盘分享的文件：opiaipro_ubuntu22.04_desktop_aarch64_20250925.img.xz
-链接: https://pan.baidu.com/s/1mH_2tBV-EBvZ7cJxhSS6GA?pwd=k2zs 提取码: k2zs 复制这段内容后打开百度网盘手机App，操作更方便哦 
---来自百度网盘超级会员v6的分享
+- [百度网盘下载 (提取码: k2zs)](https://pan.baidu.com/s/1mH_2tBV-EBvZ7cJxhSS6GA?pwd=k2zs)
+- *(文件名为：opiaipro_ubuntu22.04_desktop_aarch64_20250925.img.xz)*
 
-此为官网最新版本ubantu镜像，最最推荐这个
+**依赖安装：**
 
-雷达固件与星闪派D02固件的二次开发SDK参考本仓库SDK文件夹，里面附有官方开源完整SDK的链接
+Bash
+
+
+
+```
+pip install mindspore==2.7.0rc1 pyserial requests esdk-obs-python paho-mqtt
+```
+
+> 雷达固件与星闪派D02固件的二次开发SDK参考本仓库 `SDK_Code` 文件夹，内附官方开源完整SDK链接。
+
 ### 2. 配置凭证
 
 复制模板并填入真实凭证：
 
-```bash
+Bash
+
+
+
+```
 cp config/device_key.json.template config/device_key.json
-# 编辑 config/device_key.json，填入 device_id/secret/hostname 和 OBS ak/sk/bucket
+# 编辑 config/device_key.json，填入：
+# 1. IoTDA: device_id / secret / mqtt_endpoint
+# 2. OBS: ak / sk / bucket / endpoint
+# 3. Server: hostname
 ```
 
 ### 3. 硬件接线
 
-| 设备 | 接口 | 香橙派设备节点 |
-|---|---|---|
-| RS6240 雷达 | SPI 接 D02——SLE——D02 接 TTL 转 USB | /dev/ttyUSB0 |
-| INMP441 全向麦克风 | I2S 接 D02——SLE——D02 接 TTL 转 USB | /dev/ttyUSB1 |
-| 声光报警模块 | GPIO UART 接 D02——SLE——D02 接 UART | /dev/ttyAMA0 |
+| **设备**           | **接口与传输路径**                 | **香橙派设备节点** |
+| ------------------ | ---------------------------------- | ------------------ |
+| RS6240 雷达        | SPI 接 D02——SLE——D02 接 TTL 转 USB | `/dev/ttyUSB0`     |
+| INMP441 全向麦克风 | I2S 接 D02——SLE——D02 接 TTL 转 USB | `/dev/ttyUSB1`     |
+| 声光报警模块       | GPIO UART 接 D02——SLE——D02 接 UART | `/dev/ttyAMA0`     |
 
 ### 4. 启动主流水线
 
-```bash
+Bash
+
+
+
+```
 cd scripts
 python main_pipeline.py \
     --radar-port /dev/ttyUSB0 \
@@ -205,7 +242,7 @@ python main_pipeline.py \
     --alarm-port /dev/ttyAMA0 \
     --model ../models/sentinel_model.ckpt \
     --config ../config/device_key.json \
-    --alert-server http://115.120.205.25:8080/alert/
+    --alert-server [http://115.120.205.25:8080/alert/](http://115.120.205.25:8080/alert/)
 ```
 
 ### 5. 后端服务
@@ -218,7 +255,11 @@ Spring Boot 后端已部署在 `115.120.205.25:8080`，关键端点：
 
 本地运行（需 Java 17+）：
 
-```bash
+Bash
+
+
+
+```
 cd backend/anq-server
 mvn spring-boot:run
 ```
@@ -226,13 +267,14 @@ mvn spring-boot:run
 ### 6. 前端 App
 
 用 DevEco Studio 打开 `frontend/AnQ/`，连接鸿蒙设备后编译运行。
+
 App 启动时自动连接 WebSocket，检测到欺凌时实时弹出警情通知并振动。
 
----
+------
 
 ## 注意事项
 
-- 雷达帧率约20Hz，滑动窗口 20 帧覆盖约 1 秒，与音频帧时间窗口对齐
-- 无 Ascend NPU 时自动降级为随机占位推理（仅用于链路调试）
-- MMFi 数据集需自行申请下载，见 data/samples/datasets/DOWNLOAD.md
-- serial_audio_capture.py 包尾应为 AA 55（与帧头相同）
+- 雷达帧率约20Hz，滑动窗口 20 帧覆盖约 1 秒，与音频帧时间窗口对齐。
+- 无 Ascend NPU 时自动降级为随机占位推理（仅用于通信链路调试）。
+- MMFi 数据集需自行申请下载，见 `data/samples/MMFi/DOWNLOAD.md`。
+- `serial_audio_capture.py` 包尾应为 `AA 55`（与帧头相同），解析时需注意校验。
