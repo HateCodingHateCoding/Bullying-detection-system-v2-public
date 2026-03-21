@@ -8,11 +8,11 @@
 
 ```
 硬件层
-  RS6240 毫米波雷达 (60GHz)          WS63E 音频模块
-        │ UART (921600bps)                 │ UART (921600bps)
+  RS6240 毫米波雷达 (60GHz)          INMP441音频模块
+        │ SPI->D02->SLE->D02->UART        │ UART->D02->SLE->D02->UART
         ▼                                 ▼
-  radar_receiver.py              audio_receiver.py
-  解析 HIF 协议点云帧               解析 AA55 音频帧
+  radar_receiver.py                audio_receiver.py
+  解析 HIF 协议点云帧                解析 AA55 音频帧
   输出原始 (N,5) float32            输出 [1,1,16000] float32
         │                                 │
         └──────────────┬──────────────────┘
@@ -24,7 +24,7 @@
                        │
                        ▼
              AscendSentinelNet
-          (MindSpore 2.4.10, Ascend NPU)
+          (MindSpore 2.7.0, Ascend NPU)
                        │
           ┌────────────┴────────────┐
           │ pred_class==1           │
@@ -74,8 +74,6 @@ Bullying/
 │   └── anq-server/              # Spring Boot 后端（WebSocket + REST）
 ├── frontend/
 │   └── AnQ/                     # 鸿蒙端 App（ArkTS）
-├── docs/
-│   └── README.md                # 本文档
 └── .gitignore
 ```
 
@@ -84,18 +82,13 @@ Bullying/
 ## 训练结果
 
 训练平台：华为 ModelArts（Ascend 910）
-训练数据：MMFi（雷达，2376样本）+ MIVIA_DB4（音频，700样本）
+训练数据：MMFi（雷达）+ MIVIA_DB4（音频）
 
 | 指标 | 值 |
 |---|---|
 | 训练轮数 | 15 epoch |
 | 最终 loss | < 1e-5 |
-| 验证集准确率 | 100% (476样本) |
-| 霸凌样本识别率 | 100% |
-| 正常样本识别率 | 100% |
 | 推理速度 | ~17ms/次（Ascend NPU）|
-
-完整训练日志见 [logs/train_log.txt](../logs/train_log.txt)。
 
 ---
 
@@ -118,7 +111,7 @@ Bullying/
 ### 训练步骤（ModelArts）
 
 1. 上传 MMFi + MIVIA_DB4 数据至 OBS `bullying2` 桶的 `raw_data/` 目录
-2. 在 ModelArts 创建 Notebook（MindSpore 2.4.10 + Ascend）
+2. 在 ModelArts 创建 Notebook（mindspore_2.7.0rc1-cann_8.2.rc1-py_3.11-euler_2.10.11-aarch64-snt9b）
 3. 打开 `scripts/bullying_analysis_v3_advanced.ipynb`，依次执行 Cell 1-5
 4. 训练完成后权重自动保存为 `sentinel_model.ckpt`，下载至 `models/` 目录
 5. 执行 Cell 6 查看验证集正反例分析
@@ -169,9 +162,13 @@ pred_class==1  AND  confidence >= 0.8
 
 ### 1. 环境准备
 
-```bash
-pip install mindspore==2.4.10 pyserial numpy paho-mqtt esdk-obs-python
-```
+烧录镜像选择：
+
+通过网盘分享的文件：opiaipro_ubuntu22.04_desktop_aarch64_20250925.img.xz
+链接: https://pan.baidu.com/s/1mH_2tBV-EBvZ7cJxhSS6GA?pwd=k2zs 提取码: k2zs 复制这段内容后打开百度网盘手机App，操作更方便哦 
+--来自百度网盘超级会员v6的分享
+
+此为官网最新版本ubantu镜像，最最推荐这个
 
 ### 2. 配置凭证
 
@@ -227,8 +224,7 @@ App 启动时自动连接 WebSocket，检测到欺凌时实时弹出警情通知
 
 ## 注意事项
 
-- config/device_key.json 含真实凭证，已加入 .gitignore，请勿提交
 - 雷达帧率约20Hz，滑动窗口 20 帧覆盖约 1 秒，与音频帧时间窗口对齐
 - 无 Ascend NPU 时自动降级为随机占位推理（仅用于链路调试）
-- MMFi 数据集需自行申请下载，见 data/samples/MMFi/DOWNLOAD.md
+- MMFi 数据集需自行申请下载，见 data/samples/datasets/DOWNLOAD.md
 - serial_audio_capture.py 包尾应为 AA 55（与帧头相同）
