@@ -1,0 +1,29 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+#===============================================================================
+config SAMPLE_SUPPORT_SLE_SERVER_SPEED_V2
+    bool
+    prompt "Support SLE_UART_SERVER Sample."
+    default n
+    depends on SAMPLE_SUPPORT_SLE_THROUGHPUT_V2
+    help
+        This option means support SLE_UART_SERVER Sample.
+
+config LARGE_THROUGHPUT_SERVER
+    bool "server large throughput."
+    default y
+    depends on SAMPLE_SUPPORT_SLE_SERVER_SPEED_V2
+
+config SAMPLE_SUPPORT_SLE_CLIENT_SPEED_V2
+    bool
+    prompt "Support SLE_UART_CLIENT Sample."
+    default n
+    depends on SAMPLE_SUPPORT_SLE_THROUGHPUT_V2
+    help
+        This option means support SLE_UART_CLIENT Sample.
+
+config LARGE_THROUGHPUT_CLIENT
+    bool "client large throughput."
+    default y
+    depends on SAMPLE_SUPPORT_SLE_CLIENT_SPEED_V2
