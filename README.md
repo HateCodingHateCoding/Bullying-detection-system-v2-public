@@ -286,7 +286,7 @@ IoTDA 上报 payload 示例（`AlarmService`）：
 
 - 雷达帧率约 20Hz，滑动窗口 20 帧覆盖约 1 秒，与音频帧时间窗口对齐
 - 无 Ascend NPU 时 `main_pipeline.py` 自动降级为随机占位推理（仅用于链路调试）
-- MMFi 数据集需自行申请下载，见 `data/samples/datasets/DOWNLOAD.md`
+- 数据集需自行申请下载，见 `data/samples/datasets/DOWNLOAD.md`
 - `serial_audio_capture.py` 音频帧尾应为 `AA 55`（与帧头相同）
 - `config/device_key.json` 含真实密钥，已加入 `.gitignore`，请勿提交
 - 增量微调后需重新执行 MindIR 导出 → ATC 转换 → 部署 `.om` 到香橙派
