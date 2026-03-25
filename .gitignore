@@ -63,7 +63,6 @@ fix_fuben.py
 replay_pid*.log
 
 # Old/unused
-backend/spring-boot/
 wheels/
 scripts/moke_infer_*.py
 scripts/test_minimal.py

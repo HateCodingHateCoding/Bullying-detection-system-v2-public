@@ -1,6 +1,6 @@
-# 数据集说明
+# MMFi 数据集说明
 
-## MMFI数据集
+## 数据集来源
 
 MMFi (Multi-Modal Human Activity Recognition) 数据集，包含27种人体动作的毫米波雷达点云数据。
 

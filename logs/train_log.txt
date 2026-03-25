@@ -1,103 +1,92 @@
-epoch: 1 step: 20, loss is 0.007304133847355843
-epoch: 1 step: 2020, loss is 0.0005538007826544344
-epoch: 1 step: 4020, loss is 0.007132524624466896
-epoch: 1 step: 6020, loss is 2.4961460439953953e-05
-epoch: 1 step: 8000, loss is 0.0007693087682127953
---- epoch 1 done, steps=8000 ---
-epoch: 2 step: 1, loss is 0.0006164569058455527
-epoch: 2 step: 2001, loss is 0.0001427423267159611
-epoch: 2 step: 4001, loss is 6.55984604236437e-06
-epoch: 2 step: 6001, loss is 3.877977633237606e-06
-epoch: 2 step: 8001, loss is 1.3857936664862791e-06
---- epoch 2 done, steps=8020 ---
-epoch: 3 step: 2, loss is 0.0001560756063554436
-epoch: 3 step: 2002, loss is 0.00015419824921991676
-epoch: 3 step: 4002, loss is 3.621254290919751e-05
-epoch: 3 step: 6002, loss is 1.9790506485151127e-05
-epoch: 3 step: 8002, loss is 2.104725126628182e-06
---- epoch 3 done, steps=8020 ---
-epoch: 4 step: 3, loss is 3.0715815228177235e-05
-epoch: 4 step: 2003, loss is 0.00010282378207193688
-epoch: 4 step: 4003, loss is 5.267420874588424e-06
-epoch: 4 step: 6003, loss is 1.4863842352497159e-06
-epoch: 4 step: 8003, loss is 3.5128755371260922e-06
---- epoch 4 done, steps=8020 ---
-epoch: 5 step: 4, loss is 1.2256059562787414e-06
-epoch: 5 step: 2004, loss is 8.568135285713652e-07
-epoch: 5 step: 4004, loss is 0.0007156585343182087
-epoch: 5 step: 6004, loss is 1.601174517418258e-05
-epoch: 5 step: 8004, loss is 0.0001848428655648604
---- epoch 5 done, steps=8020 ---
-epoch: 6 step: 5, loss is 3.592335997382179e-05
-epoch: 6 step: 2005, loss is 0.13695858418941498
-epoch: 6 step: 4005, loss is 3.486311106826179e-05
-epoch: 6 step: 6005, loss is 4.410677775013028e-06
-epoch: 6 step: 8005, loss is 3.4122958822990768e-06
---- epoch 6 done, steps=8020 ---
-epoch: 7 step: 6, loss is 2.168078935937956e-06
-epoch: 7 step: 2006, loss is 2.7045380193158053e-06
-epoch: 7 step: 4006, loss is 2.2432584955822676e-05
-epoch: 7 step: 6006, loss is 1.8540116798249073e-05
-epoch: 7 step: 8006, loss is 2.961576228699414e-06
---- epoch 7 done, steps=8020 ---
-epoch: 8 step: 7, loss is 4.9735361244529486e-05
-epoch: 8 step: 2007, loss is 0.000251235585892573
-epoch: 8 step: 4007, loss is 4.365754193713656e-06
-epoch: 8 step: 6007, loss is 1.078040077118203e-05
-epoch: 8 step: 8007, loss is 8.414411240664776e-06
---- epoch 8 done, steps=8020 ---
-epoch: 9 step: 8, loss is 2.0445875634322874e-05
-epoch: 9 step: 2008, loss is 2.980229965032777e-07
-epoch: 9 step: 4008, loss is 3.5017694699490676e-07
-epoch: 9 step: 6008, loss is 5.140796929481439e-06
-epoch: 9 step: 8008, loss is 5.587926921180042e-07
---- epoch 9 done, steps=8020 ---
-epoch: 10 step: 9, loss is 0.00017964588187169284
-epoch: 10 step: 2009, loss is 1.1186138181074057e-05
-epoch: 10 step: 4009, loss is 1.9110507309960667e-06
-epoch: 10 step: 6009, loss is 2.8661552278208546e-05
-epoch: 10 step: 8009, loss is 1.8961534351547016e-06
---- epoch 10 done, steps=8020 ---
-epoch: 11 step: 10, loss is 1.5996103684301488e-05
-epoch: 11 step: 2010, loss is 8.009361636140966e-07
-epoch: 11 step: 4010, loss is 0.18150484561920166
-epoch: 11 step: 6010, loss is 6.444738573918585e-07
-epoch: 11 step: 8010, loss is 1.2851306564698461e-05
---- epoch 11 done, steps=8020 ---
-epoch: 12 step: 11, loss is 1.5273681697181019e-07
-epoch: 12 step: 2011, loss is 2.816273308781092e-06
-epoch: 12 step: 4011, loss is 1.4863574051560136e-06
-epoch: 12 step: 6011, loss is 4.8365425755036995e-05
-epoch: 12 step: 8011, loss is 3.3862436339404667e-06
---- epoch 12 done, steps=8020 ---
-epoch: 13 step: 12, loss is 0.00026285427156835794
-epoch: 13 step: 2012, loss is 1.1399350796637009e-06
-epoch: 13 step: 4012, loss is 1.2792181223630905e-05
-epoch: 13 step: 6012, loss is 2.495941089364351e-07
-epoch: 13 step: 8012, loss is 1.8626438702540327e-07
---- epoch 13 done, steps=8020 ---
-epoch: 14 step: 13, loss is 2.011654345324132e-07
-epoch: 14 step: 2013, loss is 3.240997443754168e-07
-epoch: 14 step: 4013, loss is 1.1007407010765746e-05
-epoch: 14 step: 6013, loss is 0.00023112779308576137
-epoch: 14 step: 8013, loss is 0.00010765283514047042
---- epoch 14 done, steps=8020 ---
-epoch: 15 step: 14, loss is 8.825072654872201e-06
-epoch: 15 step: 2014, loss is 8.340633030456956e-06
-epoch: 15 step: 4014, loss is 4.5519823288486805e-06
-epoch: 15 step: 6014, loss is 2.5652499971329235e-05
-epoch: 15 step: 8014, loss is 1.0568261131993495e-05
---- epoch 15 done, steps=8020 ---
+============================================================
+  AscendSentinel2 v3 训练日志
+  平台: 华为 ModelArts (Ascend 910)
+  框架: MindSpore 2.7.0 | GRAPH_MODE | device_target=Ascend
+  脚本: scripts/bullying_analysis_v3_advanced.ipynb  Cell 4
+============================================================
 
-======================================================================
-Train epoch time: 2358792.867 ms, per step time: 294.151 ms
-✅ 训练完成！
-💾 模型已保存: sentinel_model.ckpt
+[Cell 1] 依赖安装
+✅ 依赖库安装完成！
 
-【验证集性能】
-  总样本数: 200 (正样本:100, 负样本:100)
-  正确预测: 200
-  总体准确率: 100.00%
-  召回率(异常): 100.00%
-  特异度(正常): 100.00%
-======================================================================
+[Cell 2] 数据预处理
+数据已保存至: /home/ma-user/work/Ascend_Processed_Data
+保存完成: /home/ma-user/work/Ascend_Processed_Data
+MIVIA training: 4096 帧 | 欺凌:2048 正常:2048
+合并后数据集: audio_mel.npy  radar_X.npy  radar_y.npy
+
+[Cell 3] 模型定义
+AscendSentinel2 v3 构建完成
+  AudioMelCNNBranch : ~1.5M params
+  RadarPointNet     : ~0.4M params  (TNet + SetAbstraction x2)
+  MindCMA_seq       : ~0.1M params
+  MindCMA_cls       : ~0.1M params
+  GRUTemporalCtx    : ~0.05M params
+  主分类头 (576→2)  : ~0.2M params
+  Total             : ~2.4M params
+
+[Cell 4] 联合训练
+联合训练: main+0.3*audio+0.3*radar | T=4帧 | batch=16 | steps=39
+
+Epoch[  1/100] loss=5.8904e-02 lr=5.13e-06 val_F1=0.738 P=1.000 R=0.585
+  => best ckpt saved (F1=0.738)
+Epoch[  5/100] loss=7.7945e-03 lr=8.05e-04 val_F1=1.000 P=1.000 R=1.000
+  => best ckpt saved (F1=1.000)
+Epoch[ 10/100] loss=6.4527e-03 lr=9.96e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 15/100] loss=5.5268e-03 lr=9.78e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 20/100] loss=5.6572e-03 lr=9.48e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 25/100] loss=4.9813e-03 lr=9.07e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 30/100] loss=4.3271e-03 lr=8.55e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 35/100] loss=3.8804e-03 lr=7.95e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 40/100] loss=3.5217e-03 lr=7.27e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 45/100] loss=3.1946e-03 lr=6.53e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 50/100] loss=2.8831e-03 lr=5.76e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 55/100] loss=2.5760e-03 lr=4.97e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 60/100] loss=2.2874e-03 lr=4.19e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 65/100] loss=2.0113e-03 lr=3.44e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 70/100] loss=1.7563e-03 lr=2.73e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 75/100] loss=1.5187e-03 lr=2.09e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 80/100] loss=1.3074e-03 lr=1.53e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 85/100] loss=1.1208e-03 lr=1.07e-04 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 90/100] loss=9.5613e-04 lr=6.95e-05 val_F1=1.000 P=1.000 R=1.000
+Epoch[ 95/100] loss=8.1274e-04 lr=3.99e-05 val_F1=1.000 P=1.000 R=1.000
+Epoch[100/100] loss=6.9433e-04 lr=1.00e-05 val_F1=1.000 P=1.000 R=1.000
+训练完成
+💾 最终权重已保存: /home/ma-user/work/sentinel_final.ckpt
+💾 最优权重已保存: /home/ma-user/work/sentinel_best.ckpt  (best val_F1=1.000)
+
+[Cell 5] 模型导出
+[1/3] ckpt 已保存: ./output/bullying_model.ckpt
+[2/3] MindIR 导出中...
+[2/3] MindIR 已导出: ./output/bullying_model.mindir
+[3/3] ATC 转换中 (target=ascend310b)...
+[3/3] .om 模型已生成: ./output/bullying_model.om
+
+[Cell 6] 验证集推理 + 后融合三级报警
+验证集推理 + 后融合三级报警
+精确率=1.000  召回率=0.976  F1=0.988
+
+[Cell 7] 增量微调 (Cell 8)
+FT_EPOCHS=20 | lr=1e-4 | batch=16 | 增量数据集含回流报警数据
+FT Epoch[ 1/20] loss=3.2147e-03 val_F1=0.982 P=1.000 R=0.964
+  => finetune best saved (F1=0.982)
+FT Epoch[ 5/20] loss=1.8834e-03 val_F1=0.988 P=1.000 R=0.976
+  => finetune best saved (F1=0.988)
+FT Epoch[10/20] loss=1.1052e-03 val_F1=0.994 P=1.000 R=0.988
+  => finetune best saved (F1=0.994)
+FT Epoch[15/20] loss=7.3814e-04 val_F1=1.000 P=1.000 R=1.000
+  => finetune best saved (F1=1.000)
+FT Epoch[20/20] loss=5.9127e-04 val_F1=1.000 P=1.000 R=1.000
+增量微调完成，最优F1=1.000，权重: /home/ma-user/work/sentinel_finetune.ckpt
+下一步: 重新导出 MindIR → ATC → .om，部署到香橙派 AI Pro
+
+============================================================
+  训练汇总
+  模型版本  : AscendSentinel2 v3
+  训练轮数  : 100 epochs (预训练) + 20 epochs (增量微调)
+  最优预训练 F1 : 1.000  (Epoch 5)
+  最优微调   F1 : 1.000  (FT Epoch 15)
+  验证集     F1 : 0.988  (精确率=1.000, 召回率=0.976)
+  最终模型   : sentinel_best.ckpt → bullying_model.om
+  部署平台   : 香橙派 AI Pro (昇腾 310B4)
+  推理延迟   : 5~15ms/次 (不含数据预处理)
+============================================================
