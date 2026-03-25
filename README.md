@@ -59,8 +59,6 @@ Bullying/
 │   └── samples/datasets/
 │       ├── DOWNLOAD.md          # 数据集下载说明
 │       └── README.md            # 数据集说明
-├── docs/
-│   └── model_description.md     # AscendSentinel2 v3 详细模型文档
 ├── logs/
 │   ├── train_log.txt            # 训练日志（从 ModelArts Notebook 提取）
 │   └── infer_log.txt            # 推理日志示例
