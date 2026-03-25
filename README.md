@@ -62,7 +62,10 @@ Bullying/
 │   ├── train_log.txt            # 训练日志（从 ModelArts Notebook 提取）
 │   └── infer_log.txt            # 推理日志示例
 ├── models/
-│   └── sentinel_model.ckpt      # 训练好的模型权重
+│   ├── bullying_model.mindir    # 导出的 MindIR 模型
+│   ├── sentinel_best.ckpt       # 训练最优权重
+│   ├── sentinel_final.ckpt      # 训练最终权重
+│   └── bullying_model.ckpt      # 导出前/备份 ckpt
 ├── scripts/
 │   ├── main_pipeline.py         # 主推理流水线（入口）
 │   ├── radar_receiver.py        # 雷达串口接收 & HIF 协议解析
