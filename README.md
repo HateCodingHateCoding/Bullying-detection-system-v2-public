@@ -57,8 +57,7 @@ Bullying/
 │       ├── DOWNLOAD.md          # 数据集下载说明
 │       └── README.md            # MMFi 数据集说明
 ├── docs/
-│   ├── model_description.md     # AscendSentinel2 v3 详细模型文档
-│   └── archive/                 # 历史文档与存档代码
+│   └── model_description.md     # AscendSentinel2 v3 详细模型文档
 ├── logs/
 │   ├── train_log.txt            # 训练日志（从 ModelArts Notebook 提取）
 │   └── infer_log.txt            # 推理日志示例
@@ -73,10 +72,6 @@ Bullying/
 │   ├── obs_uploader.py          # 华为 OBS 音频证据上传
 │   ├── serial_radar_capture.py  # 离线雷达数据采集工具
 │   ├── serial_audio_capture.py  # 离线音频数据采集工具
-│   ├── moke_infer_ckpt.py       # 仅 ckpt 模型推理 mock（链路调试）
-│   ├── moke_infer_iot.py        # 含 IoTDA 上报的推理 mock
-│   ├── moke_infer_simple.py     # 最简推理 mock
-│   ├── moke_infer_full.py       # 完整链路推理 mock（含 OBS + HTTP）
 │   └── bullying_analysis_v3_advanced.ipynb  # 模型训练 Notebook（Cell 1-7）
 ├── backend/
 │   ├── anq-server/              # Spring Boot 后端（WebSocket + REST + JPA）
