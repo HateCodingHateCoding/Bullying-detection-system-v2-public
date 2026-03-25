@@ -9,10 +9,11 @@ D02 (UART1 GPIO15/16) → TTL转USB → 香橙派AIpro (/dev/ttyUSBx)
   N × (x, y, z, vel, snr) 每个字段 float32 LE，共 N×20 字节
 最大 payload 4KB，N 可变。
 
-输出格式: numpy array shape [1, 5, N_max] float32
-  轴0: batch=1
-  轴1: 5 通道 (x, y, z, velocity, snr)
-  轴2: RADAR_STEPS=64 (不足补0，超出截断)
+输出格式: numpy array shape [5, 64] float32
+  轴0: 5 通道 (x, y, z, velocity, snr)
+  轴1: RADAR_STEPS=64 (不足补0，超出随机采样)
+
+每帧单独放入 queue，main_pipeline 负责按 T_FRAMES=4 组装时序窗口。
 """
 
 import serial
@@ -35,6 +36,7 @@ HIF_MAGIC = 0xA5
 HIF_HDR_LEN = 6
 
 RADAR_CHANNELS = 5   # x, y, z, velocity, snr
+RADAR_STEPS = 64     # 固定点数，与 AscendSentinel2 输入 (B,T,5,64) 对齐
 
 # 点云标识字符串（含 \0 共 19 字节）
 _PC_TAG = b"motion_point_cloud\x00"
@@ -76,83 +78,68 @@ def sync_to_header(ser):
         b = ser.read(1)
         if not b:
             return None
-
-        if b[0] == HIF_MAGIC:
-            rest = ser.read(5)
-            if len(rest) < 5:
-                return None
-
-            hdr = bytearray([HIF_MAGIC]) + bytearray(rest)
-            if hif_check8_valid(hdr):
-                if skipped > 0:
-                    print(f"  [SYNC] skipped {skipped} bytes to find header")
-                return bytes(hdr)
-            else:
-                skipped += 1
-                continue
-        else:
+        if b[0] != HIF_MAGIC:
             skipped += 1
-
-    print(f"  [SYNC] failed after skipping {skipped} bytes")
+            continue
+        rest = ser.read(HIF_HDR_LEN - 1)
+        if len(rest) < HIF_HDR_LEN - 1:
+            return None
+        hdr = bytes([b[0]]) + rest
+        if hif_check8_valid(hdr):
+            return hdr
+        skipped += 1
     return None
 
 
-def _parse_pointcloud(payload_bytes):
+def parse_point_cloud_payload(payload):
     """
-    解析一个 HIF payload，返回原始点云 (N, 5) float32，N 为实际点数。
-    若未找到标识或无有效点则返回 None。
-
-    协议格式：
-      "motion_point_cloud\0" (19B) + uint16LE 点数 N + N×5×float32 点数据
-      每个点字段顺序：x, y, z, velocity, snr（均 float32 LE）
+    解析 HIF payload，提取点云数据。
+    返回 numpy array shape (N, 5) float32，或 None。
     """
-    buf = bytes(payload_bytes)
-
-    tag_pos = buf.find(_PC_TAG)
-    if tag_pos == -1:
+    if len(payload) < _PC_TAG_LEN + 2:
         return None
-
-    offset = tag_pos + _PC_TAG_LEN
-    if offset + 2 > len(buf):
+    if payload[:_PC_TAG_LEN] != _PC_TAG:
         return None
-
-    n_points = int.from_bytes(buf[offset:offset + 2], 'little')
+    offset = _PC_TAG_LEN
+    n_points = int.from_bytes(payload[offset:offset+2], 'little')
     offset += 2
-
-    data_bytes = n_points * _POINT_BYTES
-    if offset + data_bytes > len(buf):
-        n_points = (len(buf) - offset) // _POINT_BYTES
-        data_bytes = n_points * _POINT_BYTES
-
-    if n_points == 0:
+    expected_bytes = n_points * _POINT_BYTES
+    if len(payload) < offset + expected_bytes or n_points == 0:
         return None
+    raw = payload[offset:offset + expected_bytes]
+    pts = np.frombuffer(raw, dtype=np.float32).reshape(n_points, RADAR_CHANNELS)
+    return pts
 
-    raw = np.frombuffer(buf[offset:offset + data_bytes], dtype=np.float32)
-    return raw.reshape(n_points, RADAR_CHANNELS)  # (N, 5): x,y,z,vel,snr
+
+def points_to_frame(pts):
+    """
+    将原始点云 (N,5) 转换为固定形状 (5,64):
+    - 若 N >= 64: 随机无放回采样 64 点
+    - 若 N < 64:  补零至 64 点
+    返回 numpy array shape (5, 64) float32。
+    """
+    n = len(pts)
+    if n >= RADAR_STEPS:
+        idx = np.random.choice(n, RADAR_STEPS, replace=False)
+        sampled = pts[idx]
+    else:
+        pad = np.zeros((RADAR_STEPS - n, RADAR_CHANNELS), dtype=np.float32)
+        sampled = np.vstack([pts, pad])
+    return sampled.T.astype(np.float32)  # (5, 64)
 
 
 def radar_receiver_thread(port, baud, out_queue, stop_event):
     """
-    后台线程：持续从串口读取雷达 HIF 数据，每收到一个完整物理帧
-    就将原始点云 (N, 5) float32 numpy array 放入 out_queue。
-    N 为本帧实际点数，由调用方做窗口累积后再采样到固定维度。
-
-    Args:
-        port:       串口设备，如 /dev/ttyUSB0
-        baud:       波特率，默认 921600
-        out_queue:  queue.Queue，接收方从这里取 (N,5) 原始点云
-        stop_event: threading.Event，置位后线程退出
+    后台线程：持续从串口读取 HIF 数据帧，解析点云后
+    将 (5, 64) float32 数组放入 out_queue。
+    main_pipeline 按 T_FRAMES 窗口组装 (T,5,64) 再送模型。
     """
     try:
-        ser = serial.Serial(port, baud, timeout=1.0)
+        ser = serial.Serial(port, baud, timeout=0.5)
         print(f"[radar] 串口已打开: {port} @ {baud} bps")
     except serial.SerialException as e:
         print(f"[radar] 无法打开串口: {e}")
         return
-
-    frame_count = 0
-    hif_count = 0
-    current_frame_payload = bytearray()  # 当前帧累积的 payload 字节
 
     try:
         while not stop_event.is_set():
@@ -160,54 +147,46 @@ def radar_receiver_thread(port, baud, out_queue, stop_event):
             if hdr is None:
                 continue
 
-            hif_type, check_flag, more, msgid, length, seq = hif_parse_header(hdr)
+            _, _, _, _, length, _ = hif_parse_header(hdr)
 
             if is_complete_ack(hdr):
-                # 一帧结束，解析原始点云并放入队列
-                frame_count += 1
-                if current_frame_payload:
-                    pts = _parse_pointcloud(bytes(current_frame_payload))
-                    if pts is not None:
-                        try:
-                            out_queue.put_nowait(pts)
-                        except queue.Full:
-                            # 队列满则丢弃最旧帧，保持实时性
-                            try:
-                                out_queue.get_nowait()
-                            except queue.Empty:
-                                pass
-                            out_queue.put_nowait(pts)
-                    current_frame_payload = bytearray()
-
-                if frame_count % 50 == 0:
-                    print(f"[radar] frames={frame_count} hif_pkts={hif_count}")
                 continue
 
-            if length > 0:
-                payload_len = length + (4 if check_flag else 0)
-                payload = ser.read(payload_len)
-                if len(payload) < payload_len:
-                    print(f"[radar] payload short: expect {payload_len}, got {len(payload)}")
-                    continue
+            if length == 0 or length > 4096:
+                continue
 
-                hif_count += 1
-                # 只取实际数据，去掉 check32 尾部（若有）
-                data_len = length
-                current_frame_payload.extend(payload[:data_len])
+            payload = ser.read(length)
+            if len(payload) < length:
+                continue
+
+            pts = parse_point_cloud_payload(payload)
+            if pts is None:
+                continue
+
+            frame = points_to_frame(pts)  # (5, 64)
+            try:
+                out_queue.put_nowait(frame)
+            except queue.Full:
+                try:
+                    out_queue.get_nowait()
+                except queue.Empty:
+                    pass
+                out_queue.put_nowait(frame)
 
     except Exception as e:
-        print(f"[radar] 异常: {e}")
+        if not stop_event.is_set():
+            print(f"[radar] 线程异常: {e}")
     finally:
         ser.close()
-        print(f"[radar] 线程退出，共接收 {frame_count} 帧")
+        print("[radar] 线程已退出")
 
 
 def start(port="/dev/ttyUSB0", baud=921600, maxsize=32):
     """
     启动雷达接收线程，返回 (out_queue, stop_event, thread)。
 
-    调用方从 out_queue 取原始点云 numpy array (N, 5) float32。
-    N 为本帧实际点数，调用方负责窗口累积和采样。
+    调用方从 out_queue 取单帧 numpy array (5, 64) float32。
+    main_pipeline 按 T_FRAMES=4 组装时序窗口 (T,5,64) 送入 AscendSentinel2。
     结束时调用 stop_event.set() 并 thread.join()。
     """
     out_queue = queue.Queue(maxsize=maxsize)
