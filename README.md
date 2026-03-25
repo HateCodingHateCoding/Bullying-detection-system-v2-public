@@ -53,6 +53,9 @@ Bullying/
 ├── data/
 │   ├── real_radar_normal.npy    # 真实硬件采集雷达数据 [1,5,64]
 │   ├── real_audio_normal.npy    # 真实硬件采集音频数据 [1,1,16000]
+│   ├── audio_mel.npy            # 训练输入音频梅尔特征
+│   ├── radar_X.npy              # 训练输入雷达特征
+│   ├── radar_y.npy              # 训练标签
 │   └── samples/datasets/
 │       ├── DOWNLOAD.md          # 数据集下载说明
 │       └── README.md            # MMFi 数据集说明
