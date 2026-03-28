@@ -218,14 +218,6 @@ python main_pipeline.py \
 | `--threshold` | `0.8` | 霸凌置信度触发阈值 |
 | `--alarm-cooldown` | `10` | 报警冷却时间（秒）|
 
-无硬件时可用 mock 脚本调试完整链路：
-
-```bash
-python scripts/moke_infer_full.py    # 含 OBS + HTTP 上报
-python scripts/moke_infer_iot.py     # 含 IoTDA 上报
-python scripts/moke_infer_simple.py  # 最简推理验证
-```
-
 ### 5. 后端服务（anq-server）
 
 Spring Boot 后端已部署在 `115.120.205.25:8080`，关键端点：
