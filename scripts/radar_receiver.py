@@ -16,12 +16,18 @@ D02 (UART1 GPIO15/16) → TTL转USB → 香橙派AIpro (/dev/ttyUSBx)
 每帧单独放入 queue，main_pipeline 负责按 T_FRAMES=4 组装时序窗口。
 """
 
-import serial
+try:
+    import serial
+except ImportError:
+    serial = None
 import sys
 import time
+import logging
 import threading
 import queue
 import numpy as np
+
+logger = logging.getLogger("radar")
 
 
 # HIF header 结构 (6字节)
@@ -35,8 +41,11 @@ import numpy as np
 HIF_MAGIC = 0xA5
 HIF_HDR_LEN = 6
 
-RADAR_CHANNELS = 5   # x, y, z, velocity, snr
-RADAR_STEPS = 64     # 固定点数，与 AscendSentinel2 输入 (B,T,5,64) 对齐
+try:
+    from sentinel_config import RADAR_CH as RADAR_CHANNELS, RADAR_PTS as RADAR_STEPS
+except ImportError:
+    RADAR_CHANNELS = 5
+    RADAR_STEPS = 64
 
 # 点云标识字符串（含 \0 共 19 字节）
 _PC_TAG = b"motion_point_cloud\x00"
@@ -125,21 +134,35 @@ def points_to_frame(pts):
     else:
         pad = np.zeros((RADAR_STEPS - n, RADAR_CHANNELS), dtype=np.float32)
         sampled = np.vstack([pts, pad])
-    return sampled.T.astype(np.float32)  # (5, 64)
+    result = sampled.T.astype(np.float32)  # (5, 64)
+    # NaN/Inf 保护
+    if not np.isfinite(result).all():
+        logger.warning("点云包含 NaN/Inf，已替换为 0")
+        np.nan_to_num(result, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
+    return result
 
 
-def radar_receiver_thread(port, baud, out_queue, stop_event):
+def radar_receiver_thread(port, baud, out_queue, stop_event, health_flag=None):
     """
     后台线程：持续从串口读取 HIF 数据帧，解析点云后
     将 (5, 64) float32 数组放入 out_queue。
     main_pipeline 按 T_FRAMES 窗口组装 (T,5,64) 再送模型。
+
+    health_flag: threading.Event，线程存活时保持 set，退出时 clear。
     """
+    if serial is None:
+        logger.error("pyserial 未安装，无法启动串口接收")
+        return
     try:
         ser = serial.Serial(port, baud, timeout=0.5)
-        print(f"[radar] 串口已打开: {port} @ {baud} bps")
+        logger.info(f"串口已打开: {port} @ {baud} bps")
     except serial.SerialException as e:
-        print(f"[radar] 无法打开串口: {e}")
+        logger.error(f"无法打开串口: {e}")
         return
+
+    if health_flag is not None:
+        health_flag.set()
+    drop_count = 0
 
     try:
         while not stop_event.is_set():
@@ -164,41 +187,53 @@ def radar_receiver_thread(port, baud, out_queue, stop_event):
                 continue
 
             frame = points_to_frame(pts)  # (5, 64)
+            packet = {
+                "ts": time.monotonic(),
+                "frame": frame,
+                "points": pts.astype(np.float32),
+            }
             try:
-                out_queue.put_nowait(frame)
+                out_queue.put_nowait(packet)
             except queue.Full:
                 try:
                     out_queue.get_nowait()
                 except queue.Empty:
                     pass
-                out_queue.put_nowait(frame)
+                out_queue.put_nowait(packet)
+                drop_count += 1
+                if drop_count % 50 == 1:
+                    logger.warning(f"队列满丢帧，累计丢弃 {drop_count} 帧")
 
     except Exception as e:
         if not stop_event.is_set():
-            print(f"[radar] 线程异常: {e}")
+            logger.error(f"线程异常: {e}", exc_info=True)
     finally:
+        if health_flag is not None:
+            health_flag.clear()
         ser.close()
-        print("[radar] 线程已退出")
+        logger.info(f"线程已退出 (累计丢帧: {drop_count})")
 
 
 def start(port="/dev/ttyUSB0", baud=921600, maxsize=32):
     """
-    启动雷达接收线程，返回 (out_queue, stop_event, thread)。
+    启动雷达接收线程，返回 (out_queue, stop_event, thread, health_flag)。
 
-    调用方从 out_queue 取单帧 numpy array (5, 64) float32。
+    调用方从 out_queue 取单帧字典: {"ts": float, "frame": (5, 64), "points": (N, 5)}。
     main_pipeline 按 T_FRAMES=4 组装时序窗口 (T,5,64) 送入 AscendSentinel2。
+    health_flag: threading.Event，线程存活时 is_set()=True。
     结束时调用 stop_event.set() 并 thread.join()。
     """
     out_queue = queue.Queue(maxsize=maxsize)
     stop_event = threading.Event()
+    health_flag = threading.Event()
     t = threading.Thread(
         target=radar_receiver_thread,
-        args=(port, baud, out_queue, stop_event),
+        args=(port, baud, out_queue, stop_event, health_flag),
         daemon=True,
         name="radar-receiver",
     )
     t.start()
-    return out_queue, stop_event, t
+    return out_queue, stop_event, t, health_flag
 
 
 if __name__ == "__main__":

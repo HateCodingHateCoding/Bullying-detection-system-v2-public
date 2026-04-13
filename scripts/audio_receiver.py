@@ -16,19 +16,32 @@ audio_receiver.py - 从串口接收音频数据，转换为梅尔频谱后放入
   与 AscendSentinel2 的音频分支输入 (B,T,1,64,128) 对齐。
 """
 
-import serial
+import time
+import logging
+try:
+    import serial
+except ImportError:
+    serial = None
 import threading
 import queue
 import numpy as np
 
+logger = logging.getLogger("audio")
 
-# 音频参数 —— 与 notebook Cell 3 保持一致
-AUDIO_SAMPLE_RATE  = 16000   # 16kHz
-FRAME_SEC          = 0.5     # 每帧 0.5 秒（与雷达帧间隔对齐）
-FRAME_SAMPLES      = int(AUDIO_SAMPLE_RATE * FRAME_SEC)  # 8000 samples/帧
-N_MELS             = 64      # 梅尔频带数
-TIME_STEPS         = 128     # 时间步数（频谱列数）
-N_FFT              = 512
+
+# 音频参数 —— 从公共配置导入
+try:
+    from sentinel_config import (
+        AUDIO_SAMPLE_RATE, FRAME_SEC, FRAME_SAMPLES,
+        N_MELS, TIME_STEPS, N_FFT,
+    )
+except ImportError:
+    AUDIO_SAMPLE_RATE  = 16000
+    FRAME_SEC          = 0.5
+    FRAME_SAMPLES      = int(AUDIO_SAMPLE_RATE * FRAME_SEC)
+    N_MELS             = 64
+    TIME_STEPS         = 128
+    N_FFT              = 512
 
 
 def _pcm_to_mel(pcm_int16):
@@ -90,27 +103,41 @@ def _pcm_to_mel(pcm_int16):
     mel_db = (mel_db - mel_db.mean()) / (mel_db.std() + 1e-8)
     mel_db = mel_db[:, :TIME_STEPS]
 
-    return mel_db[np.newaxis].astype(np.float32)  # (1, 64, 128)
+    result = mel_db[np.newaxis].astype(np.float32)  # (1, 64, 128)
+    # NaN/Inf 保护
+    if not np.isfinite(result).all():
+        logger.warning("梅尔频谱包含 NaN/Inf，已替换为 0")
+        np.nan_to_num(result, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
+    return result
 
 
-def audio_receiver_thread(port, baud, out_queue, stop_event):
+def audio_receiver_thread(port, baud, out_queue, stop_event, health_flag=None):
     """
     后台线程：持续从串口读取原始 int16 PCM 音频数据，
     每累积 FRAME_SAMPLES(8000) 个采样点，转换为梅尔频谱
     (1, 64, 128) float32 numpy array 放入 out_queue。
 
+    health_flag: threading.Event，线程存活时保持 set，退出时 clear。
     main_pipeline 按 T_FRAMES=4 组装时序窗口 (T,1,64,128) 送入 AscendSentinel2。
     """
+    if serial is None:
+        logger.error("pyserial 未安装，无法启动串口接收")
+        return
     try:
         ser = serial.Serial(port, baud, timeout=0.1)
-        print(f"[audio] 串口已打开: {port} @ {baud} bps")
+        logger.info(f"串口已打开: {port} @ {baud} bps")
     except serial.SerialException as e:
-        print(f"[audio] 无法打开串口: {e}")
+        logger.error(f"无法打开串口: {e}")
         return
+
+    if health_flag is not None:
+        health_flag.set()
 
     sample_buf = bytearray()  # 累积的 PCM 字节
     frame_count = 0
+    drop_count = 0
     FRAME_BYTES = FRAME_SAMPLES * 2  # int16 = 2 bytes/sample
+    MAX_SAMPLE_BUF = FRAME_BYTES * 4  # 防止 sample_buf 无限增长
     raw_buf = bytearray()
 
     HEADER = bytes([0xAA, 0x55])
@@ -141,6 +168,9 @@ def audio_receiver_thread(port, baud, out_queue, stop_event):
 
                 # 读 payload_len
                 payload_len = int.from_bytes(raw_buf[4:6], 'little')
+                if payload_len > 32768:  # 防止畸形包导致巨量内存分配
+                    raw_buf = raw_buf[2:]
+                    continue
                 pkt_len = MIN_PKT + payload_len
                 if len(raw_buf) < pkt_len:
                     break
@@ -157,6 +187,11 @@ def audio_receiver_thread(port, baud, out_queue, stop_event):
 
                 sample_buf.extend(pcm_bytes)
 
+                # 防止 sample_buf 无限增长
+                if len(sample_buf) > MAX_SAMPLE_BUF:
+                    sample_buf = sample_buf[-FRAME_BYTES:]
+                    logger.warning("sample_buf 溢出，已截断")
+
                 # 每累积够 FRAME_SAMPLES 个 int16 就输出一帧梅尔频谱
                 while len(sample_buf) >= FRAME_BYTES:
                     chunk = bytes(sample_buf[:FRAME_BYTES])
@@ -164,41 +199,53 @@ def audio_receiver_thread(port, baud, out_queue, stop_event):
                     pcm = np.frombuffer(chunk, dtype=np.int16)
                     mel_frame = _pcm_to_mel(pcm)  # (1, 64, 128)
                     frame_count += 1
+                    packet = {
+                        "ts": time.monotonic(),
+                        "frame": mel_frame,
+                        "seq": frame_count,
+                    }
                     try:
-                        out_queue.put_nowait(mel_frame)
+                        out_queue.put_nowait(packet)
                     except queue.Full:
                         try:
                             out_queue.get_nowait()
                         except queue.Empty:
                             pass
-                        out_queue.put_nowait(mel_frame)
+                        out_queue.put_nowait(packet)
+                        drop_count += 1
+                        if drop_count % 50 == 1:
+                            logger.warning(f"队列满丢帧，累计丢弃 {drop_count} 帧")
 
     except Exception as e:
         if not stop_event.is_set():
-            print(f"[audio] 线程异常: {e}")
+            logger.error(f"线程异常: {e}", exc_info=True)
     finally:
+        if health_flag is not None:
+            health_flag.clear()
         ser.close()
-        print("[audio] 线程已退出")
+        logger.info(f"线程已退出 (累计丢帧: {drop_count})")
 
 
 def start(port="/dev/ttyUSB1", baud=921600, maxsize=8):
     """
-    启动音频接收线程，返回 (out_queue, stop_event, thread)。
+    启动音频接收线程，返回 (out_queue, stop_event, thread, health_flag)。
 
-    调用方从 out_queue 取单帧 numpy array (1, 64, 128) float32 梅尔频谱。
+    调用方从 out_queue 取单帧字典: {"ts": float, "frame": (1, 64, 128), "seq": int}。
     main_pipeline 按 T_FRAMES=4 组装时序窗口 (T,1,64,128) 送入 AscendSentinel2。
+    health_flag: threading.Event，线程存活时 is_set()=True。
     结束时调用 stop_event.set() 并 thread.join()。
     """
     out_queue = queue.Queue(maxsize=maxsize)
     stop_event = threading.Event()
+    health_flag = threading.Event()
     t = threading.Thread(
         target=audio_receiver_thread,
-        args=(port, baud, out_queue, stop_event),
+        args=(port, baud, out_queue, stop_event, health_flag),
         daemon=True,
         name="audio-receiver",
     )
     t.start()
-    return out_queue, stop_event, t
+    return out_queue, stop_event, t, health_flag
 
 
 if __name__ == "__main__":
