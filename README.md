@@ -159,7 +159,7 @@ AscendSentinel2
 - 平台：华为 ModelArts Ascend 910 NPU
 - 框架：MindSpore
 - Epochs：100
-- 损失函数：Focal Loss（联合损失 = main + 0.3 x audio + 0.3 x radar）
+- 损失函数：Focal Loss（alpha_pos=0.75, alpha_neg=0.25, gamma=2.0，按类别分配权重缓解 1:3 正负样本不平衡；联合损失 = main + 0.3 x audio + 0.3 x radar）
 - 模态 Dropout：15% 概率随机丢弃雷达或音频输入，迫使模型学会单模态推理
 - 数据划分：先按帧切分 train/val，再各自做滑窗（无泄露）
 
