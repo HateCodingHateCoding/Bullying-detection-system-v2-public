@@ -301,16 +301,23 @@ def load_model(ckpt_path):
     return net
 
 
-def infer(net, radar_window, audio_window, h_prev=None, radar_valid=True):
+def infer(net, radar_window, audio_window, h_prev=None,
+          radar_valid=True, audio_valid=True):
     """
     执行一次推理。
+
+    双模态可用时走主分类头（main_logits）；
+    单模态不可用时，用对应的独立分支头（audio_head / radar_head）直接输出，
+    同时仍然把零输入喂给缺失的那一路（模态 dropout 训练过），
+    让 MindCMA alpha 自动偏向有效模态。
 
     Args:
         net:           AscendSentinel2 实例（或 None）
         radar_window:  list of (5,64) float32，长度 == T_FRAMES
         audio_window:  list of (1,64,128) float32，长度 == T_FRAMES
         h_prev:        上一次推理保留的 GRU hidden state
-        radar_valid:   雷达数据是否可用，False 时降级为 audio-only
+        radar_valid:   雷达数据是否可用
+        audio_valid:   音频数据是否可用
 
     Returns:
         (pred_class, confidence, h_next)  int, float, object
@@ -322,15 +329,31 @@ def infer(net, radar_window, audio_window, h_prev=None, radar_valid=True):
     r_np = np.stack(radar_window, axis=0)[np.newaxis].astype(np.float32)
     a_np = np.stack(audio_window, axis=0)[np.newaxis].astype(np.float32)
 
-    # 单模态降级：雷达不可用时置零（模型训练时通过模态 dropout 见过这种输入）
+    # 缺失模态置零，让 MindCMA alpha 自动偏向有效的那一路
     if not radar_valid:
         r_np = np.zeros_like(r_np)
+    if not audio_valid:
+        a_np = np.zeros_like(a_np)
 
     r_t = Tensor(r_np)
     a_t = Tensor(a_np)
 
-    main_logits, _, _, _, h_next = net(a_t, r_t, h_prev)
-    probs = ms.ops.Softmax(axis=1)(main_logits).asnumpy()[0]
+    main_logits, audio_logits, radar_logits, _, h_next = net(a_t, r_t, h_prev)
+    sm = ms.ops.Softmax(axis=1)
+
+    if radar_valid and audio_valid:
+        # 双模态：用主分类头
+        probs = sm(main_logits).asnumpy()[0]
+    elif audio_valid and not radar_valid:
+        # 仅音频：用音频独立头
+        probs = sm(audio_logits).asnumpy()[0]
+    elif radar_valid and not audio_valid:
+        # 仅雷达：用雷达独立头
+        probs = sm(radar_logits).asnumpy()[0]
+    else:
+        # 双路都挂了，返回低置信度
+        return 0, 0.0, h_next
+
     pred_class = int(np.argmax(probs))
     confidence = float(probs[1])
     return pred_class, confidence, h_next
@@ -685,13 +708,17 @@ def main():
             if len(radar_buffer) == radar_buffer.maxlen:
                 radar_buffer.popleft()
 
-            # 判断雷达是否可用（连续 zero_fill 或线程死亡 → 降级）
+            # 判断各模态是否可用
             radar_valid = (
                 align_stats["fallback_zero"] < 10
                 and radar_health.is_set()
             )
+            audio_valid = audio_health.is_set()
+
             if not radar_valid and infer_count % 50 == 0:
                 logger.warning("雷达不可用，降级为 audio-only 推理")
+            if not audio_valid and infer_count % 50 == 0:
+                logger.warning("音频不可用，降级为 radar-only 推理")
 
             t0 = time.perf_counter()
             pred_class, confidence, stream_hidden_state = infer(
@@ -700,6 +727,7 @@ def main():
                 list(audio_window),
                 stream_hidden_state,
                 radar_valid=radar_valid,
+                audio_valid=audio_valid,
             )
             infer_ms = (time.perf_counter() - t0) * 1000
             infer_count += 1
