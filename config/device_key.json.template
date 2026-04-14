@@ -10,5 +10,12 @@
   "obs_sk": "YOUR_OBS_SK",
   "obs_endpoint": "obs.cn-east-4.myhuaweicloud.com",
   "obs_bucket": "YOUR_BUCKET_NAME",
-  "location": "校园监控点-01"
+  "location": "校园监控点-01",
+
+  "_comment_modelarts": "以下为 ModelArts 远程训练所需配置",
+  "modelarts_ak": "YOUR_MODELARTS_AK",
+  "modelarts_sk": "YOUR_MODELARTS_SK",
+  "modelarts_project_id": "YOUR_PROJECT_ID",
+  "modelarts_region": "cn-east-4",
+  "modelarts_notebook_id": "YOUR_NOTEBOOK_ID"
 }
