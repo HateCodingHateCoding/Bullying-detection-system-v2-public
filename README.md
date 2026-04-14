@@ -7,45 +7,45 @@
 ## 系统架构
 
 ```
-========================= Hardware Sensing Layer ==========================
+======================= Hardware Sensing Layer ========================
 
-  RS6240 mmWave Radar (60GHz)              INMP441 Omni-MEMS Microphone
-  |-- HIF serial output                    |-- AA55 frame serial output
-  |-- 5ch: x, y, z, doppler, SNR           |-- 16kHz PCM sampling
-  |-- 64 points/frame                      |-- 0.5s/frame
-        |                                        |
-        v                                        v
-  radar_receiver.py                        audio_receiver.py
-  HIF parse -> pointcloud(5,64)            PCM -> mel-spectrogram(1,64,128)
-        |                                        |
-        +-------------------+--------------------+
+ RS6240 mmWave Radar (60GHz)         INMP441 Omni-MEMS Microphone
+ |-- HIF serial output               |-- AA55 frame serial output
+ |-- 5ch: x,y,z,doppler,SNR          |-- 16kHz PCM sampling
+ |-- 64 points/frame                  |-- 0.5s/frame
+          |                                    |
+          v                                    v
+    radar_receiver.py                  audio_receiver.py
+    HIF parse -> (5,64)               PCM -> mel-spec (1,64,128)
+          |                                    |
+          +-----------------+------------------+
                             |
                             v
                      main_pipeline.py
-               time-align + sliding window T=4 (2s)
-               single-modality fallback + GRU memory
+             time-align + sliding window T=4 (2s)
+             single-modality fallback + GRU memory
                             |
                             v
                     AscendSentinel2 v3
               (MindSpore, Ascend 310B4 NPU)
                             |
-          +---------+-------+-------+---------+
-          |         |       |       |         |
-          v         v       v       v         v
-       Alarm    OBS Upload IoTDA  HTTP POST HarmonyOS
-      (buzzer)  (evidence) (MQTT) (backend)   App
+        +--------+----------+----------+---------+
+        |        |          |          |         |
+        v        v          v          v         v
+     Alarm   OBS Upload   IoTDA    HTTP POST  HarmonyOS
+    (buzzer) (evidence)   (MQTT)   (backend)    App
 
-============================= Cloud Layer =================================
+========================== Cloud Layer ============================
 
-  Huawei IoTDA ----> anq-server (Spring Boot) --WebSocket--> HarmonyOS App
-  Huawei OBS  ----> Evidence video/audio storage
+ Huawei IoTDA --> anq-server (Spring Boot) --WebSocket--> App
+ Huawei OBS  --> Evidence video/audio storage
 
-========================== Mobile App Layer ===============================
+======================== Mobile App Layer =========================
 
-  HarmonyOS App (AnQ)
-  |-- Alert Page  : real-time WebSocket push, slide-to-accept, progress
-  |-- Stats Page  : historical alert data visualization
-  |-- Profile Page: user settings
+ HarmonyOS App (AnQ)
+ |-- Alert Page   : real-time WebSocket, slide-to-accept, progress
+ |-- Stats Page   : historical alert data visualization
+ |-- Profile Page : user settings
 ```
 
 ---
