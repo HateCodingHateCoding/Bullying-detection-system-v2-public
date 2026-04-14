@@ -57,6 +57,9 @@ fix_*.py
 extract_log.py
 find_log.py
 fix_fuben.py
+scripts/add_comments*.py
+scripts/gen_doc.py
+cookies.txt
 
 # Error logs
 *.log

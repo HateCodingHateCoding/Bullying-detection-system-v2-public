@@ -16,6 +16,7 @@ import serial
 import numpy as np
 import struct
 import sys
+import time
 
 # ========== 配置参数 ==========
 SERIAL_PORT = '/dev/ttyUSB0'

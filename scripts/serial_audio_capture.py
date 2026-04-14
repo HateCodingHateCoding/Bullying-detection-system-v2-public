@@ -23,6 +23,7 @@ AscendSentinel2 模型音频分支输入格式并保存。
 import serial
 import numpy as np
 import sys
+import time
 
 # ========== 配置参数 ==========
 SERIAL_PORT   = '/dev/ttyUSB1'
