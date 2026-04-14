@@ -11,7 +11,7 @@
 
   RS6240 mmWave Radar (60GHz)              INMP441 Omni-MEMS Microphone
   |-- HIF serial output                    |-- AA55 frame serial output
-  |-- 5ch: x, y, z, doppler, SNR          |-- 16kHz PCM sampling
+  |-- 5ch: x, y, z, doppler, SNR           |-- 16kHz PCM sampling
   |-- 64 points/frame                      |-- 0.5s/frame
         |                                        |
         v                                        v
