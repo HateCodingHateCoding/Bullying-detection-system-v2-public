@@ -271,150 +271,12 @@ def send_alarm(alarm_port, baud=115200):
 # ── AI 推理栈 ────────────────────────────────────────────────────
 try:
     import mindspore as ms
-    import mindspore.nn as nn
-    import mindspore.ops as ops
     from mindspore import Tensor, context
+    from sentinel_model import AscendSentinel2
     HAS_MS = True
 except Exception as e:
     HAS_MS = False
     logger.warning(f"MindSpore 不可用，将使用随机推理占位: {e}")
-
-
-# ── AscendSentinel2 完整定义（与 notebook Cell 3 保持一致）────────
-if HAS_MS:
-    class _TNet(nn.Cell):
-        def __init__(self, k=5):
-            super().__init__()
-            self.mlp = nn.SequentialCell([
-                nn.Conv1d(k, 64, 1), nn.BatchNorm1d(64), nn.ReLU(),
-                nn.Conv1d(64, 128, 1), nn.BatchNorm1d(128), nn.ReLU(),
-                nn.Conv1d(128, 1024, 1), nn.BatchNorm1d(1024), nn.ReLU(),
-            ])
-            self.pool = nn.AdaptiveMaxPool1d(1)
-            self.fc = nn.SequentialCell([
-                nn.Dense(1024, 512), nn.ReLU(),
-                nn.Dense(512, 256), nn.ReLU(),
-                nn.Dense(256, k * k),
-            ])
-            self.k = k
-            self._eye = ms.Tensor(np.eye(k, dtype=np.float32))
-
-        def construct(self, x):
-            B = x.shape[0]
-            feat = self.pool(self.mlp(x)).squeeze(-1)
-            mat = self.fc(feat).view(B, self.k, self.k)
-            return mat + self._eye.unsqueeze(0)
-
-    class _AudioMelCNNBranch(nn.Cell):
-        def __init__(self):
-            super().__init__()
-            self.conv = nn.SequentialCell([
-                nn.Conv2d(1, 32, 3, pad_mode='same'), nn.BatchNorm2d(32), nn.ReLU(),
-                nn.MaxPool2d(2, 2),
-                nn.Conv2d(32, 64, 3, pad_mode='same'), nn.BatchNorm2d(64), nn.ReLU(),
-                nn.MaxPool2d(2, 2),
-                nn.Conv2d(64, 128, 3, pad_mode='same'), nn.BatchNorm2d(128), nn.ReLU(),
-                nn.MaxPool2d(2, 2),
-                nn.Conv2d(128, 256, 3, pad_mode='same'), nn.BatchNorm2d(256), nn.ReLU(),
-            ])
-            self.gap = nn.AdaptiveAvgPool2d((1, 1))
-            self.flat = nn.Flatten()
-            self.fc = nn.SequentialCell([nn.Dense(256, 256), nn.ReLU(), nn.Dropout(p=0.3)])
-
-        def construct(self, x):
-            return self.fc(self.flat(self.gap(self.conv(x))))
-
-    class _RadarPointNet(nn.Cell):
-        def __init__(self):
-            super().__init__()
-            self.tnet = _TNet(k=5)
-            self.mlp1 = nn.SequentialCell([
-                nn.Conv1d(5, 64, 1), nn.BatchNorm1d(64), nn.ReLU(),
-                nn.Conv1d(64, 64, 1), nn.BatchNorm1d(64), nn.ReLU(),
-            ])
-            self.mlp2 = nn.SequentialCell([
-                nn.Conv1d(64, 128, 1), nn.BatchNorm1d(128), nn.ReLU(),
-                nn.Conv1d(128, 256, 1), nn.BatchNorm1d(256), nn.ReLU(),
-            ])
-            self.pool = nn.AdaptiveMaxPool1d(1)
-            self.flat = nn.Flatten()
-            self.feat_fc = nn.SequentialCell([
-                nn.Dense(256, 128), nn.BatchNorm1d(128), nn.ReLU(), nn.Dropout(p=0.3)
-            ])
-            self.radar_head = nn.SequentialCell([nn.Dense(128, 64), nn.ReLU(), nn.Dense(64, 2)])
-
-        def construct(self, x):
-            T_mat = self.tnet(x)
-            x = ops.bmm(T_mat, x)
-            x = self.mlp1(x)
-            x = self.mlp2(x)
-            feat = self.feat_fc(self.flat(self.pool(x)))
-            return feat, self.radar_head(feat)
-
-    class _MindCMA(nn.Cell):
-        def __init__(self, audio_dim=256, radar_dim=128, unified=128):
-            super().__init__()
-            self.ap   = nn.SequentialCell([nn.Dense(audio_dim, unified), nn.Tanh()])
-            self.rp   = nn.SequentialCell([nn.Dense(radar_dim,  unified), nn.Tanh()])
-            self.attn = nn.SequentialCell([nn.Dense(unified * 2, 64), nn.ReLU(), nn.Dense(64, 1)])
-            self.sig  = nn.Sigmoid()
-
-        def construct(self, af, rf):
-            ap = self.ap(af)
-            rp = self.rp(rf)
-            alpha = self.sig(self.attn(ops.concat([ap, rp], 1)))
-            return alpha * ap + (1 - alpha) * rp, alpha
-
-    class _GRUTemporalCtx(nn.Cell):
-        def __init__(self, input_dim=128, hidden=64):
-            super().__init__()
-            self.gru = nn.GRU(input_size=input_dim, hidden_size=hidden, batch_first=True)
-
-        def construct(self, x, h_prev=None):
-            if h_prev is None:
-                out, h_next = self.gru(x)
-            else:
-                out, h_next = self.gru(x, h_prev)
-            return out[:, -1, :], h_next
-
-    class AscendSentinel2(nn.Cell):
-        """多模态多帧霸凌检测网络 v3（与 notebook Cell 3 完全一致）"""
-        def __init__(self, t_frames=T_FRAMES):
-            super().__init__()
-            self.T       = t_frames
-            self.ab      = _AudioMelCNNBranch()
-            self.rb      = _RadarPointNet()
-            self.cma_seq = _MindCMA()
-            self.cma_cls = _MindCMA()
-            self.gru     = _GRUTemporalCtx(input_dim=128, hidden=64)
-            self.audio_head = nn.SequentialCell([
-                nn.Dense(256, 64), nn.ReLU(), nn.Dense(64, 2)
-            ])
-            self.clf = nn.SequentialCell([
-                nn.Dense(576, 256), nn.BatchNorm1d(256), nn.ReLU(), nn.Dropout(p=0.5),
-                nn.Dense(256, 128), nn.BatchNorm1d(128), nn.ReLU(), nn.Dropout(p=0.3),
-                nn.Dense(128, 64), nn.ReLU(),
-                nn.Dense(64, 2),
-            ])
-
-        def construct(self, audio, radar, h_prev=None):
-            # audio: (B, T, 1, 64, 128)   radar: (B, T, 5, 64)
-            B, T = audio.shape[0], self.T
-            a_flat = audio.view(B * T, 1, 64, 128)
-            r_flat = radar.view(B * T, 5, 64)
-            af_flat = self.ab(a_flat)                        # (B*T, 256)
-            rf_flat, rl_flat = self.rb(r_flat)               # (B*T, 128), (B*T, 2)
-            fused_flat, _ = self.cma_seq(af_flat, rf_flat)   # (B*T, 128)
-            fused_seq = fused_flat.view(B, T, 128)
-            tc, h_next = self.gru(fused_seq, h_prev)         # (B, 64), (1, B, 64)
-            af_last = af_flat.view(B, T, 256)[:, T-1, :]    # (B, 256)
-            rf_last = rf_flat.view(B, T, 128)[:, T-1, :]    # (B, 128)
-            rl_last = rl_flat.view(B, T, 2)[:, T-1, :]      # (B, 2)
-            fused_last, alpha = self.cma_cls(af_last, rf_last)  # (B,128),(B,1)
-            feat = ops.concat([fused_last, tc, af_last, rf_last], 1)  # (B,576)
-            main_logits  = self.clf(feat)
-            audio_logits = self.audio_head(af_last)
-            return main_logits, audio_logits, rl_last, alpha, h_next
 
 
 def load_model(ckpt_path):
@@ -439,7 +301,7 @@ def load_model(ckpt_path):
     return net
 
 
-def infer(net, radar_window, audio_window, h_prev=None):
+def infer(net, radar_window, audio_window, h_prev=None, radar_valid=True):
     """
     执行一次推理。
 
@@ -448,6 +310,7 @@ def infer(net, radar_window, audio_window, h_prev=None):
         radar_window:  list of (5,64) float32，长度 == T_FRAMES
         audio_window:  list of (1,64,128) float32，长度 == T_FRAMES
         h_prev:        上一次推理保留的 GRU hidden state
+        radar_valid:   雷达数据是否可用，False 时降级为 audio-only
 
     Returns:
         (pred_class, confidence, h_next)  int, float, object
@@ -458,6 +321,10 @@ def infer(net, radar_window, audio_window, h_prev=None):
 
     r_np = np.stack(radar_window, axis=0)[np.newaxis].astype(np.float32)
     a_np = np.stack(audio_window, axis=0)[np.newaxis].astype(np.float32)
+
+    # 单模态降级：雷达不可用时置零（模型训练时通过模态 dropout 见过这种输入）
+    if not radar_valid:
+        r_np = np.zeros_like(r_np)
 
     r_t = Tensor(r_np)
     a_t = Tensor(a_np)
@@ -818,12 +685,21 @@ def main():
             if len(radar_buffer) == radar_buffer.maxlen:
                 radar_buffer.popleft()
 
+            # 判断雷达是否可用（连续 zero_fill 或线程死亡 → 降级）
+            radar_valid = (
+                align_stats["fallback_zero"] < 10
+                and radar_health.is_set()
+            )
+            if not radar_valid and infer_count % 50 == 0:
+                logger.warning("雷达不可用，降级为 audio-only 推理")
+
             t0 = time.perf_counter()
             pred_class, confidence, stream_hidden_state = infer(
                 net,
                 list(radar_window),
                 list(audio_window),
                 stream_hidden_state,
+                radar_valid=radar_valid,
             )
             infer_ms = (time.perf_counter() - t0) * 1000
             infer_count += 1
