@@ -54,8 +54,7 @@
 
 ```
 ├── config/
-│   ├── device_key.json.template   # 凭证模板（IoTDA / OBS / ModelArts）
-│   └── device_key.json            # 真实凭证（.gitignore）
+│   └── device_key.json.template   # 凭证模板（IoTDA / OBS / ModelArts）
 ├── scripts/
 │   ├── sentinel_model.py          # 模型定义（单一真相源）
 │   ├── sentinel_config.py         # 公共配置常量
@@ -68,25 +67,32 @@
 │   ├── download_audioset_subset.py    # AudioSet 训练数据下载
 │   ├── serial_audio_capture.py    # 音频原始数据采集工具
 │   ├── serial_radar_capture.py    # 雷达原始数据采集工具
-│   ├── bullying_analysis_v3_advanced.ipynb  # 训练 Notebook（最终版）
-│   └── moke_infer_*.py            # 各阶段模拟推理测试脚本
+│   └── bullying_analysis_v3_advanced.ipynb  # 训练 Notebook（最终版）
 ├── models/
 │   ├── sentinel_best.ckpt         # 训练最优权重（F1=0.988）
+│   ├── sentinel_final.ckpt        # 最终 epoch 权重
+│   ├── sentinel_model.ckpt        # 部署权重
 │   ├── bullying_model.ckpt        # 导出备份
 │   └── bullying_model.mindir      # MindIR 导出（→ ATC → .om）
 ├── data/
-│   ├── audioset_bullying/         # AudioSet 音频子集（梅尔频谱 .npy）
+│   ├── audio_mel.npy              # 合并后音频梅尔频谱
+│   ├── radar_X.npy                # 合并后雷达点云
+│   ├── radar_y.npy                # 合并后标签
+│   ├── real_audio_normal.npy      # 离线回放用音频
+│   ├── real_radar_normal.npy      # 离线回放用雷达
 │   └── samples/datasets/
-│       ├── MMFi_Dataset/          # MMFi 毫米波雷达点云数据集
-│       └── MIVIA_DB4_dist/        # MIVIA 音频暴力检测数据集
+│       └── DOWNLOAD.md            # 数据集下载说明
+├── logs/
+│   ├── train_log.txt              # 训练日志
+│   └── infer_log.txt              # 推理日志
 ├── backend/
 │   ├── anq-server/                # Spring Boot 后端（WebSocket + REST）
 │   ├── spring-boot/               # 早期后端原型
 │   └── backend_api.py             # Flask 轻量告警中转 API
 ├── frontend/AnQ/                  # 鸿蒙 App（ArkTS）
-├── SDK_Code/                      # RS6240 雷达固件 SDK（C，裸机）
-├── graph/                         # 训练曲线图 & 演示视频
-└── docs/archive/                  # 历史版本代码归档
+└── SDK_Code/
+    ├── RS6240雷达固件SDK/          # RS6240 毫米波雷达固件（C，裸机）
+    └── HH-D02星闪派SDK/            # HH-D02 星闪 SLE 通信 SDK
 ```
 
 ---
