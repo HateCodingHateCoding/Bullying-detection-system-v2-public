@@ -7,47 +7,45 @@
 ## 系统架构
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        硬件感知层 (端侧)                             │
-│                                                                     │
-│   RS6240 毫米波雷达 (60GHz)              INMP441 全向 MEMS 麦克风    │
-│   ├─ HIF 协议串口输出                    ├─ AA55 帧协议串口输出       │
-│   ├─ 5通道: x, y, z, doppler, SNR       ├─ 16kHz PCM 采样           │
-│   └─ 64点/帧                             └─ 0.5s/帧                  │
-│         │                                       │                    │
-│         ▼                                       ▼                    │
-│   radar_receiver.py                       audio_receiver.py          │
-│   HIF解析 → 点云(5,64)                   PCM → 梅尔频谱(1,64,128)   │
-│         │                                       │                    │
-│         └──────────────┬────────────────────────┘                    │
-│                        ▼                                             │
-│                 main_pipeline.py                                     │
-│           时间对齐 + 滑动窗口 T=4帧(2秒)                             │
-│           单模态降级 + GRU 跨窗口记忆                                 │
-│                        ▼                                             │
-│              AscendSentinel2 v3                                      │
-│        (MindSpore, Ascend 310B4 NPU)                                │
-│                        ▼                                             │
-│   ┌──────────┬──────────┬──────────┬──────────┐                     │
-│   ▼          ▼          ▼          ▼          ▼                     │
-│ 声光报警  OBS上传   IoTDA上报  HTTP POST  鸿蒙App                    │
-└─────────────────────────────────────────────────────────────────────┘
+========================= Hardware Sensing Layer ==========================
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                         云端服务层                                    │
-│                                                                     │
-│   华为云 IoTDA ──→ anq-server (Spring Boot) ──WebSocket──→ 鸿蒙App  │
-│   华为云 OBS  ──→ 证据视频/音频存储                                   │
-└─────────────────────────────────────────────────────────────────────┘
+  RS6240 mmWave Radar (60GHz)              INMP441 Omni-MEMS Microphone
+  |-- HIF serial output                    |-- AA55 frame serial output
+  |-- 5ch: x, y, z, doppler, SNR          |-- 16kHz PCM sampling
+  |-- 64 points/frame                      |-- 0.5s/frame
+        |                                        |
+        v                                        v
+  radar_receiver.py                        audio_receiver.py
+  HIF parse -> pointcloud(5,64)            PCM -> mel-spectrogram(1,64,128)
+        |                                        |
+        +-------------------+--------------------+
+                            |
+                            v
+                     main_pipeline.py
+               time-align + sliding window T=4 (2s)
+               single-modality fallback + GRU memory
+                            |
+                            v
+                    AscendSentinel2 v3
+              (MindSpore, Ascend 310B4 NPU)
+                            |
+          +---------+-------+-------+---------+
+          |         |       |       |         |
+          v         v       v       v         v
+       Alarm    OBS Upload IoTDA  HTTP POST HarmonyOS
+      (buzzer)  (evidence) (MQTT) (backend)   App
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                        移动应用层                                     │
-│                                                                     │
-│   鸿蒙 App (AnQ)                                                    │
-│   ├─ 警情页: 实时接收 WebSocket 推送，滑动接警，进度跟踪              │
-│   ├─ 统计页: 历史警情数据可视化                                       │
-│   └─ 我的页: 用户设置                                                │
-└─────────────────────────────────────────────────────────────────────┘
+============================= Cloud Layer =================================
+
+  Huawei IoTDA ----> anq-server (Spring Boot) --WebSocket--> HarmonyOS App
+  Huawei OBS  ----> Evidence video/audio storage
+
+========================== Mobile App Layer ===============================
+
+  HarmonyOS App (AnQ)
+  |-- Alert Page  : real-time WebSocket push, slide-to-accept, progress
+  |-- Stats Page  : historical alert data visualization
+  |-- Profile Page: user settings
 ```
 
 ---
@@ -173,7 +171,7 @@ AscendSentinel2
 | 最终 val F1 | 0.949（epoch 100） |
 | 后融合 F1 | 0.877（P=1.000 R=0.780） |
 | 最终 loss | 1.02e-2 |
-| 参数量 | ~2.4M |
+| 参数量 | 2.4M |
 
 ---
 
