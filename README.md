@@ -157,7 +157,6 @@ AscendSentinel2
 | 模态 | 数据集 | 说明 |
 |---|---|---|
 | 音频 | Google AudioSet (balanced split) | 筛选霸凌相关类别：Screaming, Crying, Slap, Shout, Whack, Children shouting |
-| 音频 | MIVIA DB4 | 暴力音频检测数据集 |
 | 雷达 | MMFi Dataset | 毫米波雷达人体动作点云，40个受试者 |
 
 ### 训练配置
