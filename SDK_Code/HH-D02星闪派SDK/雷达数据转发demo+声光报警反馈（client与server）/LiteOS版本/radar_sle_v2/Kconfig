@@ -1,0 +1,33 @@
+#===============================================================================
+# @brief    Radar SLE v2 sample configuration.
+#===============================================================================
+choice RADAR_SLE_V2_ROLE
+    prompt "Radar SLE V2 role."
+    depends on SAMPLE_SUPPORT_RADAR_SLE_V2
+    default SAMPLE_SUPPORT_RADAR_SLE_SERVER_V2
+
+config SAMPLE_SUPPORT_RADAR_SLE_SERVER_V2
+    bool
+    prompt "Support Radar SLE V2 Server Sample."
+    select SPI_SUPPORT_MASTER
+    select SPI_SUPPORT_DMA
+    help
+        This option enables the RS6x/RS7x radar SPI to SLE server sample.
+
+config SAMPLE_SUPPORT_RADAR_SLE_CLIENT_V2
+    bool
+    prompt "Support Radar SLE V2 Client Sample."
+    help
+        This option enables the SLE to UART radar client sample.
+
+endchoice
+
+config LARGE_THROUGHPUT_RADAR_SERVER
+    bool "Radar server large throughput."
+    default y
+    depends on SAMPLE_SUPPORT_RADAR_SLE_SERVER_V2
+
+config LARGE_THROUGHPUT_RADAR_CLIENT
+    bool "Radar client large throughput."
+    default y
+    depends on SAMPLE_SUPPORT_RADAR_SLE_CLIENT_V2
