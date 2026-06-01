@@ -3,13 +3,14 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import PreferencesUtils from '../utils/PreferencesUtils';
 
-
 import webSocket from '@ohos.net.webSocket';
 import router from '@ohos.router';
 import { AppStorageV2 } from '@kit.ArkUI';
 
 import vibrator from '@ohos.vibrator'
 import promptAction from '@ohos.promptAction'
+import backgroundTaskManager from '@ohos.resourceschedule.backgroundTaskManager';
+import wantAgent, { WantAgent } from '@ohos.app.ability.wantAgent';
 
 
 
@@ -18,8 +19,12 @@ interface AlertData {
   location: string;
   time: string;
   status: string;
+  alarmType?: string;
   eventType?: string;
   confidence?: number;
+  audioLevel?: number;
+  radarData?: string;
+  evidenceUrl?: string;
 }
 
 const DOMAIN = 0x0000;
@@ -27,6 +32,8 @@ const DOMAIN = 0x0000;
 export default class EntryAbility extends UIAbility {
   private ws: webSocket.WebSocket | null = null;
   private hasJumped: boolean = false;
+  private reconnectTimer: number = -1;
+  private readonly RECONNECT_INTERVAL = 5000;
 
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     try {
@@ -37,10 +44,12 @@ export default class EntryAbility extends UIAbility {
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onCreate');
   }
 
-  private showAlertDialog(location: string): void {
+  private showAlertDialog(alertObj: AlertData): void {
+    const confidenceText = alertObj.confidence === undefined ? '' : `\n置信度：${Math.round(alertObj.confidence * 100)}%`;
+    const evidenceText = alertObj.evidenceUrl ? '\n证据已上传 OBS' : '';
     promptAction.showDialog({
       title: '⚠️ 紧急警情',
-      message: `位置：${location}`,
+      message: `位置：${alertObj.location}${confidenceText}${evidenceText}`,
       buttons: [
         {
           text: '查看',
@@ -54,56 +63,90 @@ export default class EntryAbility extends UIAbility {
     })
   }
 
-  private initWebSocket(): void {
-    hilog.info(DOMAIN, 'testTag', '准备连接 WebSocket');
+  private async startBackgroundTask(): Promise<void> {
+    const wantAgentInfo: wantAgent.WantAgentInfo = {
+      wants: [
+        {
+          bundleName: 'com.anq.anq',
+          abilityName: 'EntryAbility'
+        }
+      ],
+      actionType: wantAgent.OperationType.START_ABILITY,
+      requestCode: 0,
+      actionFlags: [wantAgent.WantAgentFlags.UPDATE_PRESENT_FLAG]
+    };
+    const agent = await wantAgent.getWantAgent(wantAgentInfo);
+    await backgroundTaskManager.startBackgroundRunning(this.context, backgroundTaskManager.BackgroundMode.DATA_TRANSFER, agent);
+    hilog.info(DOMAIN, 'testTag', '后台长时任务已启动');
+  }
 
+  private scheduleReconnect(): void {
+    if (this.reconnectTimer !== -1) {
+      return;
+    }
+    let timerId: number = setTimeout(() => {
+      this.reconnectTimer = -1;
+      hilog.info(DOMAIN, 'testTag', 'WebSocket 尝试重连...');
+      this.connectWebSocket();
+    }, this.RECONNECT_INTERVAL);
+    this.reconnectTimer = timerId;
+  }
+
+  private connectWebSocket(): void {
+    if (this.ws) {
+      try { this.ws.close(); } catch (_e) {}
+    }
     this.ws = webSocket.createWebSocket();
-
     const url = 'ws://115.120.205.25:8080/ws/alert';
 
-    this.ws.connect(url, (err) => {
-      if (err) {
-        hilog.error(DOMAIN, 'testTag', 'WebSocket 连接失败 %{public}s', JSON.stringify(err));
-      } else {
-        hilog.info(DOMAIN, 'testTag', 'WebSocket 连接成功');
-      }
+    this.ws.on('open', () => {
+      hilog.info(DOMAIN, 'testTag', 'WebSocket 连接成功');
+    });
+
+    this.ws.on('close', () => {
+      hilog.warn(DOMAIN, 'testTag', 'WebSocket 连接关闭，准备重连');
+      this.scheduleReconnect();
+    });
+
+    this.ws.on('error', (err) => {
+      hilog.error(DOMAIN, 'testTag', 'WebSocket 错误 %{public}s', JSON.stringify(err));
+      this.scheduleReconnect();
     });
 
     this.ws.on('message', (err, data) => {
       if (err) {
-        hilog.error(DOMAIN, 'testTag',
-          '接收消息失败 %{public}s',
-          JSON.stringify(err)
-        );
+        hilog.error(DOMAIN, 'testTag', '接收消息失败 %{public}s', JSON.stringify(err));
         return;
       }
 
-      hilog.info(DOMAIN, 'testTag',
-        '收到消息 %{public}s',
-        JSON.stringify(data)
-      );
+      hilog.info(DOMAIN, 'testTag', '收到消息 %{public}s', JSON.stringify(data));
 
       try {
         const alertObj: AlertData = JSON.parse(data as string) as AlertData;
-        const location = alertObj.location || '未知位置';
 
-        // ✅ 写入 PageOne 需要的三个 StorageProp
         AppStorage.setOrCreate('hasAlert', true);
         AppStorage.setOrCreate('alertData', alertObj);
         AppStorage.setOrCreate('alertRecords', []);
-
-
-        // 如果你想让 App 自动切到第一个 Tab (警情页)
-        // 假设 Index 里的 currentIndex 绑定了 AppStorage
         AppStorage.setOrCreate('mainTabIndex', 0);
 
-        // 🔥🔥🔥 新增：直接触发系统反馈
-        this.showAlertDialog(location);
-
+        this.showAlertDialog(alertObj);
       } catch (e) {
         hilog.error(DOMAIN, 'testTag', 'JSON解析失败');
       }
     });
+
+    this.ws.connect(url, (err) => {
+      if (err) {
+        hilog.error(DOMAIN, 'testTag', 'WebSocket 连接失败 %{public}s', JSON.stringify(err));
+        this.scheduleReconnect();
+      }
+    });
+  }
+
+  private initWebSocket(): void {
+    hilog.info(DOMAIN, 'testTag', '准备连接 WebSocket');
+    this.startBackgroundTask();
+    this.connectWebSocket();
   }
 
   onDestroy(): void {

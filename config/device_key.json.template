@@ -10,6 +10,8 @@
   "obs_sk": "YOUR_OBS_SK",
   "obs_endpoint": "obs.cn-east-4.myhuaweicloud.com",
   "obs_bucket": "YOUR_BUCKET_NAME",
+  "alert_server": "http://115.120.205.25:8080/alert",
+  "websocket_server": "ws://115.120.205.25:8080/ws/alert",
   "location": "校园监控点-01",
 
   "_comment_modelarts": "以下为 ModelArts 远程训练所需配置",

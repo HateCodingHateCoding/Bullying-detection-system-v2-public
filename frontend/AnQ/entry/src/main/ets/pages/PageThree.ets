@@ -1,328 +1,272 @@
 import promptAction from '@ohos.promptAction';
 import PreferencesUtils from '../utils/PreferencesUtils';
 import { router } from '@kit.ArkUI';
+import http from '@ohos.net.http';
+
+interface DeviceStatus {
+  name: string;
+  location: string;
+  online: boolean;
+}
+
+interface StatsData {
+  devices: DeviceStatus[];
+  todayCount: number;
+}
 
 @Entry
 @Component
 export struct PageThree {
   @State appNotify: boolean = true;
   @State smsNotify: boolean = false;
-  @State emailNotify: boolean = false;
-  @State alarmLevel: number = 50;
   @State currentRole: number = 0;
-    async aboutToAppear() {
+  @State deviceOnline: boolean = false;
+  @State deviceName: string = '校园监控终端-01';
+  @State deviceLocation: string = '--';
+  @State totalAlerts: number = 0;
+
+  async aboutToAppear() {
     const role = await PreferencesUtils.getPreferenceValue('MyPreferences', 'currentRole', 0);
     this.currentRole = Number(role) || 0;
+    this.fetchDeviceStatus();
   }
 
-build() {
+  private fetchDeviceStatus() {
+    let httpRequest = http.createHttp();
+    httpRequest.request('http://115.120.205.25:8080/stats', {
+      method: http.RequestMethod.GET,
+      connectTimeout: 8000,
+      readTimeout: 8000
+    }, (err, data) => {
+      if (!err && data.responseCode === 200) {
+        try {
+          const stats: StatsData = JSON.parse(data.result as string) as StatsData;
+          const devices = stats.devices;
+          if (devices && devices.length > 0) {
+            this.deviceOnline = devices[0].online;
+            this.deviceName = devices[0].name;
+            this.deviceLocation = devices[0].location || '--';
+          }
+          this.totalAlerts = stats.todayCount || 0;
+        } catch (e) { /* ignore */ }
+      }
+      httpRequest.destroy();
+    });
+  }
+
+  // === PLACEHOLDER_BUILD ===
+
+  build() {
     Column() {
-      // Top bar
+      // Header
       Row() {
         Text('系统设置')
-          .fontSize(22)
+          .fontSize(24)
           .fontWeight(FontWeight.Bold)
           .fontColor('#111827')
           .layoutWeight(1)
-        Text('保存设置')
-          .fontSize(16)
-          .fontColor('#FFFFFF')
-          .padding({ left: 16, right: 16, top: 8, bottom: 8 })
-          .backgroundColor('#4F7AF7')
-          .borderRadius(10)
       }
-      .padding({ left: 16, right: 16, top: 12, bottom: 12 })
+      .padding({ left: 20, right: 20, top: 14, bottom: 10 })
 
       Scroll() {
         Column() {
-          // Account
-          Row() {
-            Text('👤')
-              .fontSize(18)
-              .margin({ right: 8 })
-            Text('账户管理')
-              .fontSize(18)
-              .fontWeight(FontWeight.Bold)
-              .fontColor('#111827')
-          }
-          .padding({ left: 16, right: 16, top: 8, bottom: 8 })
-
+          // === 设备状态卡片 ===
           Column() {
             Row() {
-              Stack() {
-                Circle({ width: 52, height: 52 }).fill('#E5EEFF')
-                Text('王')
-                  .fontSize(20)
-                  .fontColor('#4F7AF7')
-              }
-              .margin({ right: 12 })
-
               Column() {
-                Text('王保安')
-                  .fontSize(18)
-                  .fontWeight(FontWeight.Medium)
+                Text(this.deviceName)
+                  .fontSize(17)
+                  .fontWeight(FontWeight.Bold)
                   .fontColor('#111827')
-                // Text('值班管理员')
-                //   .fontSize(14)
-                //   .fontColor('#6B7280')
-                //   .margin({ top: 4 })
+                Text(this.deviceLocation)
+                  .fontSize(13)
+                  .fontColor('#6B7280')
+                  .margin({ top: 4 })
               }
+              .alignItems(HorizontalAlign.Start)
               .layoutWeight(1)
-            }
-            .margin({ bottom: 16 })
 
-            // Row() {
-            //   Text('权限设置')
-            //     .fontSize(16)
-            //     .fontColor('#374151')
-            //     .padding({ top: 10, bottom: 10 })
-            //     .border({ width: 1, color: '#D1D5DB' })
-            //     .borderRadius(12)
-            //     .layoutWeight(1)
-            //     .textAlign(TextAlign.Center)
-            //   Text('登录记录')
-            //     .fontSize(16)
-            //     .fontColor('#374151')
-            //     .padding({ top: 10, bottom: 10 })
-            //     .border({ width: 1, color: '#D1D5DB' })
-            //     .borderRadius(12)
-            //     .layoutWeight(1)
-            //     .textAlign(TextAlign.Center)
-            //     .margin({ left: 12 })
-            // }
-          }
-          .padding(16)
-          .backgroundColor('#F6F7F9')
-          .borderRadius(16)
-          .margin({ left: 16, right: 16, bottom: 20 })
-
-          // Notification
-          Text('通知配置')
-            .fontSize(18)
-            .fontWeight(FontWeight.Bold)
-            .fontColor('#111827')
-            .margin({ left: 16, right: 16, bottom: 8 })
-
-          Column() {
-            // Text('报警阈值')
-            //   .fontSize(16)
-            //   .fontWeight(FontWeight.Medium)
-            //   .fontColor('#111827')
-            // Row() {
-            //   Text('低敏感度')
-            //     .fontSize(14)
-            //     .fontColor('#6B7280')
-            //     .layoutWeight(1)
-            //   Text('高敏感度')
-            //     .fontSize(14)
-            //     .fontColor('#6B7280')
-            // }
-            // .margin({ top: 6, bottom: 10 })
-            //
-            // Slider({
-            //   value: this.alarmLevel,
-            //   min: 0,
-            //   max: 100,
-            //   step: 1,
-            //   style: SliderStyle.OutSet
-            // })
-            // .blockColor('#E04B3E')
-            // .trackColor('#E5E7EB')
-            // .selectedColor('#E04B3E')
-            // .showSteps(false)
-            // .width('100%')
-            // .onChange((value: number) => {
-            //   this.alarmLevel = value;
-            // })
-            // .margin({ bottom: 18 })
-
-            Text('推送方式')
-              .fontSize(16)
-              .fontWeight(FontWeight.Medium)
-              .fontColor('#111827')
-              .margin({ bottom: 10 })
-
-            Row() {
-              Text('APP通知')
-                .fontSize(16)
-                .fontColor('#111827')
-                .layoutWeight(1)
-              Toggle({ type: ToggleType.Switch, isOn: this.appNotify })
-                .onChange((isOn: boolean) => {
-                  this.appNotify = isOn;
-                  promptAction.showToast({ message: isOn ? 'APP通知已开启' : 'APP通知已关闭' })
-                })
-            }
-            .margin({ bottom: 12 })
-
-            Row() {
-              Text('短信提醒')
-                .fontSize(16)
-                .fontColor('#111827')
-                .layoutWeight(1)
-              Toggle({ type: ToggleType.Switch, isOn: this.smsNotify })
-                .onChange((isOn: boolean) => {
-                  this.smsNotify = isOn;
-                  promptAction.showToast({ message: isOn ? '短信提醒已开启' : '短信提醒已关闭' })
-                })
-            }
-            .margin({ bottom: 12 })
-
-            // Row() {
-            //   Text('邮件通知')
-            //     .fontSize(16)
-            //     .fontColor('#111827')
-            //     .layoutWeight(1)
-            //   Toggle({ type: ToggleType.Switch, isOn: this.emailNotify })
-            //     .onChange((isOn: boolean) => {
-            //       this.emailNotify = isOn;
-            //       promptAction.showToast({ message: isOn ? '邮件通知已开启' : '邮件通知已关闭' })
-            //     })
-            // }
-          }
-          .padding(16)
-          .backgroundColor('#F6F7F9')
-          .borderRadius(16)
-          .margin({ left: 16, right: 16, bottom: 20 })
-
-          if (this.currentRole === 1) {
-          // Device management
-          Text('设备管理')
-            .fontSize(18)
-            .fontWeight(FontWeight.Bold)
-            .fontColor('#111827')
-            .margin({ left: 16, right: 16, bottom: 8 })
-
-          Column() {
-          //   Text('星闪网络')
-          //     .fontSize(16)
-          //     .fontWeight(FontWeight.Medium)
-          //     .fontColor('#111827')
-          //
-          //   Row() {
-          //     Text('稳定运行')
-          //       .fontSize(14)
-          //       .fontColor('#16A34A')
-          //       .padding({ left: 10, right: 10, top: 4, bottom: 4 })
-          //       .backgroundColor('#DCFCE7')
-          //       .borderRadius(12)
-          //     Text('延迟 < 1ms')
-          //       .fontSize(14)
-          //       .fontColor('#6B7280')
-          //       .margin({ left: 10, top: 4 })
-          //   }
-          //   .margin({ top: 8, bottom: 12 })
-
-            Text('边缘计算节点')
-              .fontSize(16)
-              .fontWeight(FontWeight.Medium)
-              .fontColor('#111827')
-              .margin({ bottom: 6 })
-
-            Row() {
-              Circle({ width: 10, height: 10 }).fill('#22C55E')
-              Text('在线节点: 3/3')
-                .fontSize(14)
-                .fontColor('#6B7280')
-                .margin({ left: 8 })
-            }
-            .margin({ bottom: 16 })
-
-            Button('终端设备配置')
-              .fontSize(16)
-              .fontColor('#374151')
-              .padding({ top: 12, bottom: 12 })
-              .border({ width: 1, color: '#D1D5DB' })
+              Row() {
+                Circle({ width: 8, height: 8 })
+                  .fill(this.deviceOnline ? '#10B981' : '#EF4444')
+                  .margin({ right: 6 })
+                Text(this.deviceOnline ? '运行中' : '离线')
+                  .fontSize(13)
+                  .fontColor(this.deviceOnline ? '#10B981' : '#EF4444')
+                  .fontWeight(FontWeight.Medium)
+              }
+              .padding({ left: 12, right: 12, top: 6, bottom: 6 })
+              .backgroundColor(this.deviceOnline ? '#ECFDF5' : '#FEF2F2')
               .borderRadius(12)
-          }
-          .padding(16)
-          .width("90%")
-          .backgroundColor('#F6F7F9')
-          .borderRadius(16)
-          .margin({ left: 16, right: 16, bottom: 20 })
+            }
+            .width('100%')
+            .margin({ bottom: 16 })
 
-          // System maintenance
-          Text('系统维护')
-            .fontSize(18)
-            .fontWeight(FontWeight.Bold)
-            .fontColor('#111827')
-            .margin({ left: 16, right: 16, bottom: 8 })
-
-          Column() {
+            // 设备信息网格
             Row() {
               Column() {
-                Text('数据备份')
-                  .fontSize(16)
-                  .fontWeight(FontWeight.Medium)
-                  .fontColor('#111827')
-                Text('上次备份: 2025-11-24 22:00')
-                  .fontSize(14)
-                  .fontColor('#6B7280')
-                  .margin({ top: 4 })
+                Text('推理芯片').fontSize(11).fontColor('#9CA3AF')
+                Text('Ascend 310B').fontSize(13).fontWeight(FontWeight.Medium).fontColor('#111827').margin({ top: 2 })
               }
               .layoutWeight(1)
-              Text('立即备份')
-                .fontSize(14)
-                .fontColor('#3B82F6')
-                .padding({ left: 12, right: 12, top: 6, bottom: 6 })
-                .backgroundColor('#EAF2FF')
-                .borderRadius(10)
-            }
-            .margin({ bottom: 14 })
-
-            Divider().color('#E5E7EB').strokeWidth(1).margin({ bottom: 12 })
-
-            Row() {
               Column() {
-                Text('系统日志')
-                  .fontSize(16)
-                  .fontWeight(FontWeight.Medium)
-                  .fontColor('#111827')
-                Text('最近7天无错误记录')
-                  .fontSize(14)
-                  .fontColor('#6B7280')
-                  .margin({ top: 4 })
+                Text('传感器').fontSize(11).fontColor('#9CA3AF')
+                Text('雷达+音频').fontSize(13).fontWeight(FontWeight.Medium).fontColor('#111827').margin({ top: 2 })
               }
               .layoutWeight(1)
-              Text('查看')
-                .fontSize(14)
-                .fontColor('#6B7280')
-                .padding({ left: 12, right: 12, top: 6, bottom: 6 })
-                .backgroundColor('#F3F4F6')
-                .borderRadius(10)
-            }
-            .margin({ bottom: 14 })
-
-            Divider().color('#E5E7EB').strokeWidth(1).margin({ bottom: 12 })
-
-            Column() {
-              Text('明瞳安全系统 V2.3.1')
-                .fontSize(14)
-                .fontColor('#6B7280')
-                .textAlign(TextAlign.Center)
-              Text('©2025 华为全栈技术支持')
-                .fontSize(12)
-                .fontColor('#9CA3AF')
-                .textAlign(TextAlign.Center)
-                .margin({ top: 4 })
+              Column() {
+                Text('今日告警').fontSize(11).fontColor('#9CA3AF')
+                Text(this.totalAlerts.toString() + ' 条').fontSize(13).fontWeight(FontWeight.Medium).fontColor('#4F46E5').margin({ top: 2 })
+              }
+              .layoutWeight(1)
             }
             .width('100%')
           }
-          .padding(16)
-          .backgroundColor('#F6F7F9')
+          .padding(18)
+          .backgroundColor('#FFFFFF')
           .borderRadius(16)
-          .margin({ left: 16, right: 16, bottom: 24 })
+          .margin({ left: 20, right: 20, top: 8 })
+          .shadow({ radius: 8, color: '#0D000000', offsetX: 0, offsetY: 2 })
+
+          // === 通知设置 ===
+          Column() {
+            Text('通知设置')
+              .fontSize(17)
+              .fontWeight(FontWeight.Bold)
+              .fontColor('#111827')
+              .margin({ bottom: 16 })
+
+            Row() {
+              Column() {
+                Text('APP推送通知').fontSize(15).fontColor('#111827')
+                Text('收到告警时弹窗提醒').fontSize(12).fontColor('#9CA3AF').margin({ top: 2 })
+              }
+              .alignItems(HorizontalAlign.Start)
+              .layoutWeight(1)
+              Toggle({ type: ToggleType.Switch, isOn: this.appNotify })
+                .onChange((isOn: boolean) => { this.appNotify = isOn; })
+            }
+            .width('100%')
+            .padding({ top: 10, bottom: 10 })
+
+            Divider().color('#F3F4F6').margin({ top: 4, bottom: 4 })
+
+            Row() {
+              Column() {
+                Text('短信提醒').fontSize(15).fontColor('#111827')
+                Text('紧急告警同步发送短信').fontSize(12).fontColor('#9CA3AF').margin({ top: 2 })
+              }
+              .alignItems(HorizontalAlign.Start)
+              .layoutWeight(1)
+              Toggle({ type: ToggleType.Switch, isOn: this.smsNotify })
+                .onChange((isOn: boolean) => { this.smsNotify = isOn; })
+            }
+            .width('100%')
+            .padding({ top: 10, bottom: 10 })
+          }
+          .padding(18)
+          .backgroundColor('#FFFFFF')
+          .borderRadius(16)
+          .margin({ left: 20, right: 20, top: 12 })
+          .shadow({ radius: 8, color: '#0D000000', offsetX: 0, offsetY: 2 })
+
+          // === 系统信息 ===
+          Column() {
+            Row() {
+              Text('系统信息')
+                .fontSize(17)
+                .fontWeight(FontWeight.Bold)
+                .fontColor('#111827')
+                .layoutWeight(1)
+            }
+            .width('100%')
+            .margin({ bottom: 14 })
+
+            Row() {
+              Text('当前版本').fontSize(14).fontColor('#6B7280').layoutWeight(1)
+              Text('v2.4.1 (build 2026.0531)').fontSize(14).fontColor('#111827')
+            }
+            .width('100%')
+            .padding({ top: 10, bottom: 10 })
+
+            Divider().color('#F3F4F6')
+
+            Row() {
+              Text('服务状态').fontSize(14).fontColor('#6B7280').layoutWeight(1)
+              Row() {
+                Circle({ width: 6, height: 6 }).fill('#10B981').margin({ right: 4 })
+                Text('正常').fontSize(14).fontColor('#10B981')
+              }
+            }
+            .width('100%')
+            .padding({ top: 10, bottom: 10 })
+
+            Divider().color('#F3F4F6')
+
+            Row() {
+              Text('模型版本').fontSize(14).fontColor('#6B7280').layoutWeight(1)
+              Text('Sentinel v4.2').fontSize(14).fontColor('#111827')
+            }
+            .width('100%')
+            .padding({ top: 10, bottom: 10 })
+
+            Divider().color('#F3F4F6')
+
+            Row() {
+              Text('检查更新').fontSize(14).fontColor('#6B7280').layoutWeight(1)
+              Text('已是最新').fontSize(14).fontColor('#9CA3AF')
+            }
+            .width('100%')
+            .padding({ top: 10, bottom: 10 })
+
+            Divider().color('#F3F4F6')
+
+            Row() {
+              Text('用户协议').fontSize(14).fontColor('#6B7280').layoutWeight(1)
+              Text('>').fontSize(14).fontColor('#D1D5DB')
+            }
+            .width('100%')
+            .padding({ top: 10, bottom: 10 })
+
+            Divider().color('#F3F4F6')
+
+            Row() {
+              Text('隐私政策').fontSize(14).fontColor('#6B7280').layoutWeight(1)
+              Text('>').fontSize(14).fontColor('#D1D5DB')
+            }
+            .width('100%')
+            .padding({ top: 10, bottom: 10 })
+          }
+          .padding(18)
+          .backgroundColor('#FFFFFF')
+          .borderRadius(16)
+          .margin({ left: 20, right: 20, top: 12 })
+          .shadow({ radius: 8, color: '#0D000000', offsetX: 0, offsetY: 2 })
+
+          // 退出登录
+          Text('退出登录')
+            .fontSize(16)
+            .fontColor('#EF4444')
+            .fontWeight(FontWeight.Medium)
+            .textAlign(TextAlign.Center)
+            .width('100%')
+            .padding({ top: 14, bottom: 14 })
+            .backgroundColor('#FFFFFF')
+            .borderRadius(16)
+            .margin({ left: 20, right: 20, top: 20, bottom: 30 })
+            .shadow({ radius: 8, color: '#0D000000', offsetX: 0, offsetY: 2 })
+            .onClick(() => {
+              router.replaceUrl({ url: 'pages/Login' });
+            })
         }
-          Button("退出登录").onClick(()=>{
-            router.replace({url:"pages/Login"})
-          })
-            .width("90%")
-            .backgroundColor("#ffa51e1e")
+        .width('100%')
       }
       .layoutWeight(1)
       .width('100%')
     }
     .height('100%')
     .width('100%')
+    .backgroundColor('#F8FAFC')
   }
-}}
+
+}

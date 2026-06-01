@@ -23,14 +23,28 @@ public class Alert {
 
     private String status;
 
+    private String alarmType;
+
+    private Double confidence;
+
+    private Integer audioLevel;
+
+    @Column(length = 1024)
+    private String radarData;
+
+    @Column(length = 1024)
+    private String evidenceUrl;
+
     @Column(updatable = false)
     private LocalDateTime createTime;
 
     @PrePersist
     protected void onCreate() {
-        this.createTime = LocalDateTime.now();
+        if (this.createTime == null) {
+            this.createTime = LocalDateTime.now();
+        }
         if (this.time == null) {
-            this.time = this.createTime.toString();
+            this.time = this.createTime.toString().replace("T", " ").substring(0, 19);
         }
     }
 

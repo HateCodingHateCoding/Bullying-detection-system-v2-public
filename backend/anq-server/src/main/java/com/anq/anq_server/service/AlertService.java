@@ -24,20 +24,29 @@ public class AlertService {
      * 创建告警并推送
      */
     @Transactional
-    public void createAndPushAlert(String location, String status) {
-        // 1. 构建 Alert 对象
+    public Alert createAndPushAlert(String location, String status) {
         Alert alert = new Alert();
         alert.setLocation(location);
         alert.setStatus(status);
         alert.setTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        return saveAndPush(alert);
+    }
 
-        // 2. 存入数据库
+    @Transactional
+    public Alert saveAndPush(Alert alert) {
+        if (alert.getStatus() == null) {
+            alert.setStatus("NEW");
+        }
+        if (alert.getTime() == null) {
+            alert.setTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        }
+
         Alert savedAlert = alertRepository.save(alert);
         System.out.println("💾 告警已入库，ID: " + savedAlert.getId());
 
-        // 3. 通过 WebSocket 实时推送给所有在线 App
         webSocketHandler.sendAlert(savedAlert);
         System.out.println("📢 告警已推送至前端");
+        return savedAlert;
     }
 
     /**

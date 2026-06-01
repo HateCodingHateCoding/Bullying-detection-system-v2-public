@@ -43,12 +43,27 @@ config/device_key.txt
 wheels/
 *.zip
 
-# Model files (optional, uncomment if too large)
-# models/*.ckpt
-# models/*.mindir
+# Model files - 权重/导出文件过大，不入库
+models/*.ckpt
+models/*.mindir
+models/*.onnx
+models/*.onnx.data
+models/*.npz
+models/*.om
 
-# Data files - 保留 npy 样本，排除原始大文件
+# Data files - 保留 npy 样本，排除原始大文件与数据集
 data/samples/MMFi/Zipfiles/
+data/audioset_bullying/
+data/capture2/
+data/capture_real/
+data/samples/datasets/
+
+# Pi 备份与抓取数据
+backup_from_pi/
+graph/
+
+# 临时调试脚本（SSH/部署/检查，含本地凭证）
+scripts/_*.py
 # Old compiled Anq backend (root level only)
 /Anq/
 

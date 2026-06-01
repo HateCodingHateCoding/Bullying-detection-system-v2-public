@@ -44,8 +44,8 @@
 
  HarmonyOS App (AnQ)
  |-- Alert Page   : real-time WebSocket, slide-to-accept, progress
- |-- Stats Page   : historical alert data visualization
- |-- Profile Page : user settings
+ |-- Stats Page   : REST /stats live aggregation, charts (mccharts)
+ |-- Profile Page : device status, notifications, system info
 ```
 
 ---
@@ -219,9 +219,12 @@ AscendSentinel2
   - `POST /alert` — 接收 IoTDA 格式告警（兼容嵌套 services 和顶层 location）
   - `POST /alert/create` — 创建告警（JSON body）
   - `GET /alert/create?location=xxx` — 创建告警（query param，测试用）
-  - `GET /alert/all` — 获取所有历史警情
+  - `GET /alert/all` — 获取最近 10 条历史警情
+  - `GET /stats` — 统计聚合接口（今日/昨日告警数、待处理数、时段分布、高发区域 TOP5、设备在线状态），供统计页实时拉取
+  - `GET /demo/seed` — 生成最近 7 天演示数据（清空后重灌，日均 3-6 条，多点位多时段），用于展示
+  - `POST /iot/callback` — IoTDA 设备回调（告警上报 / 设备遥测）
 - WebSocket：实时推送新警情至已连接的鸿蒙 App 客户端
-- 数据持久化：JPA + H2/MySQL
+- 数据持久化：JPA + MySQL
 - 技术栈：Spring Boot + Spring WebSocket + Spring Data JPA
 
 ### backend_api.py (Flask)
@@ -242,8 +245,8 @@ AscendSentinel2
 | 页面 | 功能 |
 |---|---|
 | 警情页 (PageOne) | 实时接收 WebSocket 推送的警情，显示位置/时间/置信度，滑动接警，进度跟踪（告警→派发→到场→完成），处理记录 |
-| 统计页 (PageTwo) | 历史警情数据可视化图表（使用 mccharts 组件） |
-| 我的页 (PageThree) | 用户设置与个人信息 |
+| 统计页 (PageTwo) | 通过 `/stats` 实时拉取后端聚合数据：今日警情/待处理/本月累计卡片、警情时段分布柱状图、高发区域 TOP5 环形图、终端设备在线状态 |
+| 我的页 (PageThree) | 设备运行状态（芯片/传感器/今日告警）、通知设置、系统信息 |
 
 ### 交互流程
 

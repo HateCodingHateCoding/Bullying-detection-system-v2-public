@@ -1,415 +1,398 @@
-import { McLineChart, McPieChart, Options } from '@mcui/mccharts';
+import { McPieChart, Options } from '@mcui/mccharts';
+import http from '@ohos.net.http';
+
+interface TimePeriod {
+  name: string;
+  count: number;
+}
+
+interface LocationStat {
+  name: string;
+  count: number;
+}
+
+interface DeviceInfo {
+  name: string;
+  online: boolean;
+}
+
+interface PieDataItem {
+  name: string;
+  value: number;
+  color: string;
+}
+
+interface StatsData {
+  todayCount: number;
+  yesterdayCount: number;
+  processingCount: number;
+  timePeriods: TimePeriod[];
+  locationStats: LocationStat[];
+  devices: DeviceInfo[];
+}
+
+const PIE_COLORS: string[] = ['#4F46E5', '#3B82F6', '#06B6D4', '#10B981', '#F59E0B'];
+const BAR_COLORS: string[] = ['#93C5FD', '#60A5FA', '#3B82F6', '#2563EB', '#1D4ED8'];
+const API_BASE = 'http://115.120.205.25:8080';
 
 @Entry
 @Component
 export struct PageTwo {
+  @State todayCount: number = 0;
+  @State yesterdayCount: number = 0;
+  @State processingCount: number = 0;
+  @State timePeriods: TimePeriod[] = [];
+  @State locationStats: LocationStat[] = [];
+  @State devices: DeviceInfo[] = [];
+  @State loading: boolean = true;
+
   @State pieOption: Options = new Options({
     legend: { show: false },
-    series: [
-      {
-        radius: ['45%', '70%'],
+    series: [{ radius: ['50%', '72%'], center: ['50%', '50%'], label: { show: false }, labelLine: { show: false }, data: [] }]
+  });
+
+  aboutToAppear() {
+    this.fetchStats();
+  }
+
+  // === PLACEHOLDER_METHODS ===
+
+  private fetchStats() {
+    let httpRequest = http.createHttp();
+    httpRequest.request(API_BASE + '/stats', {
+      method: http.RequestMethod.GET,
+      connectTimeout: 10000,
+      readTimeout: 10000,
+      header: { 'Content-Type': 'application/json' }
+    }, (err, data) => {
+      if (err) {
+        this.loading = false;
+        httpRequest.destroy();
+        return;
+      }
+      if (data.responseCode === 200) {
+        try {
+          const stats: StatsData = JSON.parse(data.result as string) as StatsData;
+          this.todayCount = stats.todayCount;
+          this.yesterdayCount = stats.yesterdayCount;
+          this.processingCount = stats.processingCount;
+          this.timePeriods = stats.timePeriods || [];
+          this.locationStats = stats.locationStats || [];
+          this.devices = stats.devices || [];
+          this.updatePieChart();
+        } catch (e) { /* ignore */ }
+      }
+      this.loading = false;
+      httpRequest.destroy();
+    });
+  }
+
+  private updatePieChart() {
+    const pieData: PieDataItem[] = this.locationStats.map((item: LocationStat, index: number): PieDataItem => {
+      return { name: item.name, value: item.count, color: PIE_COLORS[index % PIE_COLORS.length] };
+    });
+    this.pieOption = new Options({
+      legend: { show: false },
+      series: [{
+        radius: ['50%', '72%'],
         center: ['50%', '50%'],
         label: { show: false },
         labelLine: { show: false },
-        data: [
-          { name: '图书馆', value: 32, color: '#1D4ED8' },
-          { name: '食堂后院', value: 22, color: '#3B82F6' },
-          { name: '篮球场', value: 18, color: '#93C5FD' },
-          { name: '教学楼走廊', value: 12, color: '#BFDBFE' },
-          { name: '其他', value: 10, color: '#A3A3A3' }
-        ]
-      }
-    ]
-  });
+        data: pieData
+      }]
+    });
+  }
 
-  @State lineOption: Options = new Options({
-    grid: { top: 12, left: 24, right: 12, bottom: 26 },
-    legend: { show: false },
-    xAxis: {
-      data: ['本周', '上周', '2周前'],
-      axisLine: { show: false },
-      axisTick: { show: false },
-      axisLabel: { color: '#6B7280', fontSize: 12 }
-    },
-    yAxis: {
-      show: true,
-      min: 0,
-      max: 100,
-      axisLine: { show: false },
-      axisTick: { show: false },
-      axisLabel: { color: '#9CA3AF', fontSize: 12 },
-      splitLine: { show: false }
-    },
-    series: [
-      {
-        name: '效率',
-        data: [78, 85, 92],
-        smooth: true,
-        lineStyle: { color: '#84CC16', width: 3 },
-        itemStyle: { color: '#84CC16' },
-        symbolSize: 6,
-        label: { show: false }
-      }
-    ]
-  });
+  private barHeight(count: number): number {
+    if (this.timePeriods.length === 0) return 0;
+    const max = Math.max(...this.timePeriods.map((p: TimePeriod) => p.count));
+    if (max === 0) return 0;
+    return Math.round((count / max) * 130);
+  }
+
+  private getTrend(): string {
+    const diff = this.todayCount - this.yesterdayCount;
+    if (diff > 0) return '↑' + diff;
+    if (diff < 0) return '↓' + Math.abs(diff);
+    return '→ 持平';
+  }
+
+  private getTrendColor(): string {
+    const diff = this.todayCount - this.yesterdayCount;
+    if (diff > 0) return '#EF4444';
+    if (diff < 0) return '#10B981';
+    return '#6B7280';
+  }
+
+  private getOnlineCount(): number {
+    return this.devices.filter((d: DeviceInfo) => d.online).length;
+  }
+
+  private getTotalAlerts(): number {
+    return this.timePeriods.reduce((sum: number, p: TimePeriod) => sum + p.count, 0);
+  }
+
+  // === PLACEHOLDER_BUILD ===
 
   build() {
     Column() {
-      // Top bar
+      // Header
       Row() {
-        Text('数据统计')
-          .fontSize(22)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#111827')
-          .layoutWeight(1)
+        Column() {
+          Text('数据统计')
+            .fontSize(24)
+            .fontWeight(FontWeight.Bold)
+            .fontColor('#111827')
+          Text('Ascend Sentinel 智能分析')
+            .fontSize(13)
+            .fontColor('#9CA3AF')
+            .margin({ top: 2 })
+        }
+        .alignItems(HorizontalAlign.Start)
+        .layoutWeight(1)
+
         Row() {
           Text('本月')
-            .fontSize(14)
-            .fontColor('#3B82F6')
-            .margin({ left: 6 })
+            .fontSize(13)
+            .fontColor('#4F46E5')
+            .fontWeight(FontWeight.Medium)
         }
-        .padding({ left: 14, right: 14, top: 8, bottom: 8 })
-        .backgroundColor('#EAF2FF')
+        .padding({ left: 14, right: 14, top: 7, bottom: 7 })
+        .backgroundColor('#EEF2FF')
         .borderRadius(20)
-
-        Text('⇩')
-          .fontSize(16)
-          .fontColor('#3B82F6')
-          .margin({ left: 10 })
-          .padding(10)
-          .backgroundColor('#F3F4F6')
-          .borderRadius(20)
       }
-      .padding({ left: 16, right: 16, top: 12, bottom: 12 })
+      .padding({ left: 20, right: 20, top: 14, bottom: 10 })
 
       Scroll() {
         Column() {
-          // Stat cards 2x2
+          // === 顶部统计卡片 ===
           Row() {
+            // 今日警情
             Column() {
-              Text('今日警情')
-                .fontSize(16)
-                .fontColor('#3B82F6')
               Row() {
-                Text('8')
-                  .fontSize(28)
-                  .fontWeight(FontWeight.Bold)
-                  .fontColor('#111827')
-                Text('-2 较昨日')
-                  .fontSize(14)
-                  .fontColor('#6B7280')
-                  .margin({ left: 10, top: 8 })
+                Text('🚨').fontSize(16)
+                Text('今日警情').fontSize(13).fontColor('#6B7280').margin({ left: 4 })
               }
-              .margin({ top: 8 })
+              Text(this.todayCount.toString())
+                .fontSize(32)
+                .fontWeight(FontWeight.Bold)
+                .fontColor('#111827')
+                .margin({ top: 6 })
+              Row() {
+                Text(this.getTrend())
+                  .fontSize(12)
+                  .fontColor(this.getTrendColor())
+                  .fontWeight(FontWeight.Medium)
+                Text(' 较昨日')
+                  .fontSize(12)
+                  .fontColor('#9CA3AF')
+              }
+              .margin({ top: 4 })
             }
-            .padding(16)
-            .backgroundColor('#EFF6FF')
+            .padding(14)
+            .backgroundColor('#FFFFFF')
             .borderRadius(16)
             .layoutWeight(1)
+            .alignItems(HorizontalAlign.Start)
+            .shadow({ radius: 8, color: '#0D000000', offsetX: 0, offsetY: 2 })
 
+            // 待处理
             Column() {
-              Text('处理中')
-                .fontSize(16)
-                .fontColor('#C2410C')
               Row() {
-                Text('3')
-                  .fontSize(28)
-                  .fontWeight(FontWeight.Bold)
-                  .fontColor('#111827')
+                Text('⏳').fontSize(16)
+                Text('待处理').fontSize(13).fontColor('#6B7280').margin({ left: 4 })
               }
-              .margin({ top: 8 })
+              Text(this.processingCount.toString())
+                .fontSize(32)
+                .fontWeight(FontWeight.Bold)
+                .fontColor('#F59E0B')
+                .margin({ top: 6 })
+              Row() {
+                Text('需关注')
+                  .fontSize(12)
+                  .fontColor('#F59E0B')
+                  .fontWeight(FontWeight.Medium)
+              }
+              .margin({ top: 4 })
             }
-            .padding(16)
-            .backgroundColor('#FFF7ED')
+            .padding(14)
+            .backgroundColor('#FFFFFF')
             .borderRadius(16)
             .layoutWeight(1)
-            .margin({ left: 12 })
+            .alignItems(HorizontalAlign.Start)
+            .margin({ left: 10 })
+            .shadow({ radius: 8, color: '#0D000000', offsetX: 0, offsetY: 2 })
+
+            // 本月累计
+            Column() {
+              Row() {
+                Text('📊').fontSize(16)
+                Text('本月').fontSize(13).fontColor('#6B7280').margin({ left: 4 })
+              }
+              Text(this.getTotalAlerts().toString())
+                .fontSize(32)
+                .fontWeight(FontWeight.Bold)
+                .fontColor('#4F46E5')
+                .margin({ top: 6 })
+              Row() {
+                Text(this.getOnlineCount() + '/' + this.devices.length + ' 在线')
+                  .fontSize(12)
+                  .fontColor('#10B981')
+                  .fontWeight(FontWeight.Medium)
+              }
+              .margin({ top: 4 })
+            }
+            .padding(14)
+            .backgroundColor('#FFFFFF')
+            .borderRadius(16)
+            .layoutWeight(1)
+            .alignItems(HorizontalAlign.Start)
+            .margin({ left: 10 })
+            .shadow({ radius: 8, color: '#0D000000', offsetX: 0, offsetY: 2 })
           }
-          .padding({ left: 16, right: 16, top: 6 })
+          .padding({ left: 20, right: 20, top: 8 })
 
-          // Bar chart section
-          Text('警情时段分布')
-            .fontSize(20)
-            .fontWeight(FontWeight.Bold)
-            .fontColor('#111827')
-            .margin({ left: 16, right: 16, top: 12, bottom: 8 })
-
+          // === 时段分布柱状图 ===
           Column() {
             Row() {
-              Column() {
-                Text('0').fontSize(12).fontColor('#9CA3AF')
-                Text('0').fontSize(12).fontColor('#9CA3AF').margin({ top: 18 })
-                Text('0').fontSize(12).fontColor('#9CA3AF').margin({ top: 18 })
-                Text('0').fontSize(12).fontColor('#9CA3AF').margin({ top: 18 })
-              }
-              .margin({ right: 10 })
-
-              Row() {
-                Column() {
-                  Column()
-                    .width(36)
-                    .height(20)
-                    .backgroundColor('#3B82F6')
-                    .borderRadius(8)
-                    .margin({ top: 140 })
-                  Text('晨间').fontSize(12).fontColor('#D1D5DB').margin({ top: 8 })
-                }
-                .alignItems(HorizontalAlign.Center)
+              Text('警情时段分布')
+                .fontSize(17)
+                .fontWeight(FontWeight.Bold)
+                .fontColor('#111827')
                 .layoutWeight(1)
-
-                Column() {
-                  Column()
-                    .width(36)
-                    .height(60)
-                    .backgroundColor('#3B82F6')
-                    .borderRadius(8)
-                    .margin({ top: 100 })
-                  Text('午休').fontSize(12).fontColor('#D1D5DB').margin({ top: 8 })
-                }
-                .alignItems(HorizontalAlign.Center)
-                .layoutWeight(1)
-
-                Column() {
-                  Column()
-                    .width(36)
-                    .height(110)
-                    .backgroundColor('#3B82F6')
-                    .borderRadius(8)
-                    .margin({ top: 50 })
-                  Text('课间').fontSize(12).fontColor('#D1D5DB').margin({ top: 8 })
-                }
-                .alignItems(HorizontalAlign.Center)
-                .layoutWeight(1)
-
-                Column() {
-                  Column()
-                    .width(36)
-                    .height(80)
-                    .backgroundColor('#3B82F6')
-                    .borderRadius(8)
-                    .margin({ top: 80 })
-                  Text('课后').fontSize(12).fontColor('#D1D5DB').margin({ top: 8 })
-                }
-                .alignItems(HorizontalAlign.Center)
-                .layoutWeight(1)
-
-                Column() {
-                  Column()
-                    .width(36)
-                    .height(40)
-                    .backgroundColor('#3B82F6')
-                    .borderRadius(8)
-                    .margin({ top: 120 })
-                  Text('晚间').fontSize(12).fontColor('#D1D5DB').margin({ top: 8 })
-                }
-                .alignItems(HorizontalAlign.Center)
-                .layoutWeight(1)
-              }
-              .alignItems(VerticalAlign.Bottom)
-              .layoutWeight(1)
-              .height(180)
+              Text('本月数据')
+                .fontSize(12)
+                .fontColor('#9CA3AF')
             }
-            .padding(16)
+            .width('100%')
+            .margin({ bottom: 16 })
+
+            Row() {
+              ForEach(this.timePeriods, (item: TimePeriod, index: number) => {
+                Column() {
+                  Text(item.count.toString())
+                    .fontSize(12)
+                    .fontWeight(FontWeight.Bold)
+                    .fontColor('#4B5563')
+                    .margin({ bottom: 6 })
+                  Column()
+                    .width(32)
+                    .height(this.barHeight(item.count))
+                    .backgroundColor(BAR_COLORS[index % BAR_COLORS.length])
+                    .borderRadius({ topLeft: 6, topRight: 6, bottomLeft: 4, bottomRight: 4 })
+                  Text(item.name)
+                    .fontSize(12)
+                    .fontColor('#6B7280')
+                    .margin({ top: 8 })
+                }
+                .alignItems(HorizontalAlign.Center)
+                .justifyContent(FlexAlign.End)
+                .layoutWeight(1)
+              }, (item: TimePeriod) => item.name)
+            }
+            .alignItems(VerticalAlign.Bottom)
+            .height(180)
+            .width('100%')
           }
+          .padding(18)
           .backgroundColor('#FFFFFF')
           .borderRadius(16)
-          .margin({ left: 16, right: 16, bottom: 16 })
+          .margin({ left: 20, right: 20, top: 16 })
+          .shadow({ radius: 8, color: '#0D000000', offsetX: 0, offsetY: 2 })
 
-          // Donut chart section
-          Text('高发区域分布')
-            .fontSize(20)
-            .fontWeight(FontWeight.Bold)
-            .fontColor('#111827')
-            .margin({ left: 16, right: 16, bottom: 8 })
-
+          // === 高发区域饼图 ===
           Column() {
+            Row() {
+              Text('高发区域分布')
+                .fontSize(17)
+                .fontWeight(FontWeight.Bold)
+                .fontColor('#111827')
+                .layoutWeight(1)
+              Text('TOP 5')
+                .fontSize(12)
+                .fontColor('#4F46E5')
+                .fontWeight(FontWeight.Medium)
+                .padding({ left: 8, right: 8, top: 3, bottom: 3 })
+                .backgroundColor('#EEF2FF')
+                .borderRadius(8)
+            }
+            .width('100%')
+            .margin({ bottom: 4 })
+
             McPieChart({ options: this.pieOption })
               .width('100%')
-              .height(220)
-              .margin({ top: 6, bottom: 10 })
+              .height(200)
+              .margin({ top: 4, bottom: 8 })
 
-            Row() {
-              Text('低发区域')
-                .fontSize(14)
-                .fontColor('#6B7280')
-                .layoutWeight(1)
-              Text('高发区域')
-                .fontSize(14)
-                .fontColor('#6B7280')
-            }
-            .margin({ bottom: 8 })
-
-            Row() {
+            // 图例列表
+            ForEach(this.locationStats, (item: LocationStat, index: number) => {
               Row() {
-                Circle({ width: 8, height: 8 }).fill('#1D4ED8')
-                Text('图书馆').fontSize(14).fontColor('#374151').margin({ left: 6 })
+                Circle({ width: 10, height: 10 }).fill(PIE_COLORS[index % PIE_COLORS.length])
+                Text(item.name)
+                  .fontSize(14)
+                  .fontColor('#374151')
+                  .margin({ left: 8 })
+                  .layoutWeight(1)
+                Text(item.count.toString() + ' 次')
+                  .fontSize(14)
+                  .fontWeight(FontWeight.Medium)
+                  .fontColor('#111827')
               }
-              .layoutWeight(1)
-              Row() {
-                Circle({ width: 8, height: 8 }).fill('#3B82F6')
-                Text('食堂后院').fontSize(14).fontColor('#374151').margin({ left: 6 })
-              }
-              .layoutWeight(1)
-            }
-            .margin({ bottom: 8 })
-
-            Row() {
-              Row() {
-                Circle({ width: 8, height: 8 }).fill('#93C5FD')
-                Text('篮球场').fontSize(14).fontColor('#374151').margin({ left: 6 })
-              }
-              .layoutWeight(1)
-              Row() {
-                Circle({ width: 8, height: 8 }).fill('#BFDBFE')
-                Text('教学楼走廊').fontSize(14).fontColor('#374151').margin({ left: 6 })
-              }
-              .layoutWeight(1)
-            }
+              .width('100%')
+              .padding({ top: 8, bottom: 8 })
+            }, (item: LocationStat, index: number) => item.name)
           }
-          .padding(16)
+          .padding(18)
           .backgroundColor('#FFFFFF')
           .borderRadius(16)
-          .margin({ left: 16, right: 16, bottom: 16 })
+          .margin({ left: 20, right: 20, top: 12 })
+          .shadow({ radius: 8, color: '#0D000000', offsetX: 0, offsetY: 2 })
 
-          // // Efficiency section
-          // Text('处理效率分析')
-          //   .fontSize(20)
-          //   .fontWeight(FontWeight.Bold)
-          //   .fontColor('#111827')
-          //   .margin({ left: 16, right: 16, bottom: 8 })
-
-          // Column() {
-          //   Column() {
-          //     McLineChart({ options: this.lineOption })
-          //       .width('100%')
-          //       .height('100%')
-          //   }
-          //   .width('100%')
-          //   .height(180)
-          //
-          //   Row() {
-          //     Row() {
-          //       Text('预防成功率')
-          //         .fontSize(14)
-          //         .fontColor('#6B7280')
-          //       Text('93%')
-          //         .fontSize(14)
-          //         .fontColor('#16A34A')
-          //         .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-          //         .backgroundColor('#DCFCE7')
-          //         .borderRadius(12)
-          //         .margin({ left: 10 })
-          //     }
-          //     .padding(12)
-          //     .backgroundColor('#FFFFFF')
-          //     .borderRadius(12)
-          //     .layoutWeight(1)
-          //
-          //     Row() {
-          //       Text('误报率')
-          //         .fontSize(14)
-          //         .fontColor('#6B7280')
-          //       Text('5%')
-          //         .fontSize(14)
-          //         .fontColor('#DC2626')
-          //         .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-          //         .backgroundColor('#FEE2E2')
-          //         .borderRadius(12)
-          //         .margin({ left: 10 })
-          //     }
-          //     .padding(12)
-          //     .backgroundColor('#FFFFFF')
-          //     .borderRadius(12)
-          //     .layoutWeight(1)
-          //     .margin({ left: 12 })
-          //   }
-          //   .margin({ top: 8 })
-          // }
-          // .padding(16)
-          // .backgroundColor('#FFFFFF')
-          // .borderRadius(16)
-          // .margin({ left: 16, right: 16, bottom: 16 })
-
-          // Device status
-          Text('终端设备状态')
-            .fontSize(20)
-            .fontWeight(FontWeight.Bold)
-            .fontColor('#111827')
-            .margin({ left: 16, right: 16, bottom: 8 })
-
+          // === 设备状态 ===
           Column() {
+            Row() {
+              Text('终端设备状态')
+                .fontSize(17)
+                .fontWeight(FontWeight.Bold)
+                .fontColor('#111827')
+                .layoutWeight(1)
+              Text(this.getOnlineCount() + '/' + this.devices.length + ' 在线')
+                .fontSize(13)
+                .fontColor('#10B981')
+                .fontWeight(FontWeight.Medium)
+            }
+            .width('100%')
+            .margin({ bottom: 12 })
 
-            Row(){
-              Text('图书馆-1F-卫生间')
-                .fontSize(16)
-                .fontWeight(FontWeight.Medium)
-                .fontColor('#111827')
-                .layoutWeight(1)
-              Text('在线')
-                .fontSize(14)
-                .fontColor('#16A34A')
-                .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-                .backgroundColor('#DCFCE7')
-                .borderRadius(12)
-          }            .padding(16)
-            .backgroundColor('#FFFFFF')
-            .borderRadius(16)
-            .margin({ bottom: 12 })
-            Row(){
-              Text('南操场入口')
-                .fontSize(16)
-                .fontWeight(FontWeight.Medium)
-                .fontColor('#111827')
-                .layoutWeight(1)
-              Text('离线')
-                .fontSize(14)
-                .fontColor('#ffec2c2c')
-                .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-                .backgroundColor('#FEE2E2')
-                .borderRadius(12)
-            }            .padding(16)
-            .backgroundColor('#FFFFFF')
-            .borderRadius(16)
-            .margin({ bottom: 12 })
-            Row(){
-              Text('食堂后院')
-                .fontSize(16)
-                .fontWeight(FontWeight.Medium)
-                .fontColor('#111827')
-                .layoutWeight(1)
-              Text('在线')
-                .fontSize(14)
-                .fontColor('#16A34A')
-                .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-                .backgroundColor('#DCFCE7')
-                .borderRadius(12)
-            }            .padding(16)
-            .backgroundColor('#FFFFFF')
-            .borderRadius(16)
-            .margin({ bottom: 12 })
-            Row(){
-              Text('3号楼楼梯间')
-                .fontSize(16)
-                .fontWeight(FontWeight.Medium)
-                .fontColor('#111827')
-                .layoutWeight(1)
-              Text('在线')
-                .fontSize(14)
-                .fontColor('#16A34A')
-                .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-                .backgroundColor('#DCFCE7')
-                .borderRadius(12)
-            }            .padding(16)
-            .backgroundColor('#FFFFFF')
-            .borderRadius(16)
-            .margin({ bottom: 12 })
+            ForEach(this.devices, (device: DeviceInfo) => {
+              Row() {
+                // 状态指示灯
+                Circle({ width: 8, height: 8 })
+                  .fill(device.online ? '#10B981' : '#EF4444')
+                  .margin({ right: 10 })
+                Text(device.name)
+                  .fontSize(15)
+                  .fontColor('#374151')
+                  .layoutWeight(1)
+                Text(device.online ? '在线' : '离线')
+                  .fontSize(13)
+                  .fontColor(device.online ? '#10B981' : '#EF4444')
+                  .fontWeight(FontWeight.Medium)
+                  .padding({ left: 10, right: 10, top: 4, bottom: 4 })
+                  .backgroundColor(device.online ? '#ECFDF5' : '#FEF2F2')
+                  .borderRadius(10)
+              }
+              .width('100%')
+              .padding({ top: 10, bottom: 10 })
+              .border({ width: { bottom: 1 }, color: '#F3F4F6' })
+            }, (device: DeviceInfo) => device.name)
           }
-          .justifyContent(FlexAlign.Start)
-          .width("100%")
-          .padding({ left: 16, right: 16, bottom: 24 })
+          .padding(18)
           .backgroundColor('#FFFFFF')
           .borderRadius(16)
-          .width("90%")
+          .margin({ left: 20, right: 20, top: 12, bottom: 24 })
+          .shadow({ radius: 8, color: '#0D000000', offsetX: 0, offsetY: 2 })
+
         }
         .width('100%')
       }
@@ -418,5 +401,6 @@ export struct PageTwo {
     }
     .height('100%')
     .width('100%')
+    .backgroundColor('#F8FAFC')
   }
 }

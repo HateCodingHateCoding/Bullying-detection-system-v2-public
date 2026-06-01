@@ -12,8 +12,10 @@ interface AlertData {
   location: string;
   time: string;
   status: string;
-  eventType?: string; // 可选字段
-  confidence?: number; // 可选字段
+  alarmType?: string;
+  eventType?: string;
+  confidence?: number;
+  audioLevel?: number;
 }
 
 @Entry
@@ -204,6 +206,17 @@ export struct PageOne {
     return `${location}异常事件`;
   }
 
+  // 动态生成描述文字
+  private getAlertDescription(): string {
+    if (!this.hasAlert || !this.alertData) {
+      return '';
+    }
+    const confidence = this.alertData.confidence
+      ? `${Math.round(this.alertData.confidence * 100)}%` : '未知';
+    const eventType = this.alertData.alarmType || '异常行为';
+    return `系统检测到疑似${eventType}事件，置信度为${confidence}，建议立即派员核实。`;
+  }
+
   build() {
     Column() {
       // Top bar
@@ -357,7 +370,7 @@ export struct PageOne {
               .fontColor('#111827')
               .margin({ left: 16, right: 16 })
 
-            Text('系统检测到异常呼喊声音并伴随踢打动作片段，疑似暴力事件，置信度为85%，建议立即派员核实。')
+            Text(this.getAlertDescription())
               .fontSize(16)
               .fontColor('#374151')
               .lineHeight(24)
